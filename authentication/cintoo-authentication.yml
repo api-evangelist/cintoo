@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: searched
+source: https://aec.cintoo.com/api/2 (Authentication section) + openapi/cintoo-openapi-original.json
+docs: https://aec.cintoo.com/api/2
+summary:
+  types:
+  - oauth2
+  - http-bearer-jwt
+  oauth2_flows:
+  - authorizationCode
+  token_format: JWT
+model: >-
+  The Cintoo API relies on JWT tokens with the standard Access Token + Refresh Token pair.
+  The first acquisition of the token pair requires a manual step (via the cintoo-login CLI or
+  OAuth authorize flow) for security reasons; afterward it can be fully automated. Every request
+  (except the authentication endpoints) carries `Authorization: Bearer <access_token>`.
+tokens:
+  access_token:
+    ttl: 3h
+    stateless: true
+    usage: authenticates each API call; may be used in parallel (no concurrent limit)
+  refresh_token:
+    ttl: months
+    stateful: true
+    single_use: true
+    concurrent_limit: 10 valid refresh tokens per user
+    usage: used once to obtain a new Access Token + Refresh Token pair; cannot make API calls
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+    refreshUrl: https://aec.cintoo.com/oauth/token
+    scopes: 0
+  sources:
+  - openapi/cintoo-openapi-original.json
+bootstrap:
+  cli: cintoo-login-1.1.0-signed.exe
+  see: cli/cintoo-cli.yml
