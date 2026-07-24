@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cintoo-openapi-original.json
+standards:
+- id: openapi-3.0.3
+  conforms: true
+  evidence: self-published OpenAPI 3.0.3 at https://aec.cintoo.com/api/2/openapi.json
+- id: oauth2
+  conforms: true
+  evidence: components.securitySchemes.oauth2 authorizationCode flow (authorize/token at aec.cintoo.com/oauth)
+- id: jwt-bearer
+  conforms: true
+  evidence: 'Authorization: Bearer JWT access tokens (3h) + refresh tokens documented'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: error envelope resembles Problem Details (status/title/detail) but served as application/json,
+    not application/problem+json
+- id: rfc8594-deprecation-sunset
+  conforms: false
+- id: json-api
+  conforms: false
+- id: scim2
+  conforms: false
+- id: odata
+  conforms: false
+- id: fhir
+  conforms: false
+- id: fapi
+  conforms: false

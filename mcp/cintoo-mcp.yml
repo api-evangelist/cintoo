@@ -1,0 +1,310 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/cintoo-openapi-original.json
+note: Candidate tool list derived one-per-operation from the Cintoo Open API 2.0.0. Cintoo does not publish
+  an official MCP server as of this writing.
+server:
+  name: cintoo
+  transport: http
+tools:
+- name: getAccounts
+  description: List accounts
+  source_operation: openapi/cintoo-openapi-original.json#getAccounts
+- name: getAccount
+  description: Get account
+  source_operation: openapi/cintoo-openapi-original.json#getAccount
+- name: getSubscriptions
+  description: List subscriptions
+  source_operation: openapi/cintoo-openapi-original.json#getSubscriptions
+- name: getSubscription
+  description: Get subscription
+  source_operation: openapi/cintoo-openapi-original.json#getSubscription
+- name: getUsageReport
+  description: Generate an Usage Report
+  source_operation: openapi/cintoo-openapi-original.json#getUsageReport
+- name: inviteUsers
+  description: Invite users
+  source_operation: openapi/cintoo-openapi-original.json#inviteUsers
+- name: getUsers
+  description: List users
+  source_operation: openapi/cintoo-openapi-original.json#getUsers
+- name: getUser
+  description: Get user details
+  source_operation: openapi/cintoo-openapi-original.json#getUser
+- name: getGroups
+  description: List groups
+  source_operation: openapi/cintoo-openapi-original.json#getGroups
+- name: createGroup
+  description: Create group
+  source_operation: openapi/cintoo-openapi-original.json#createGroup
+- name: getGroup
+  description: Get group
+  source_operation: openapi/cintoo-openapi-original.json#getGroup
+- name: deleteGroup
+  description: Delete group
+  source_operation: openapi/cintoo-openapi-original.json#deleteGroup
+- name: addUsersToGroup
+  description: Add users to a group
+  source_operation: openapi/cintoo-openapi-original.json#addUsersToGroup
+- name: removeUsersFromGroup
+  description: Remove users from a group
+  source_operation: openapi/cintoo-openapi-original.json#removeUsersFromGroup
+- name: getRoles
+  description: List Roles
+  source_operation: openapi/cintoo-openapi-original.json#getRoles
+- name: createRole
+  description: Create Role
+  source_operation: openapi/cintoo-openapi-original.json#createRole
+- name: removeUsersFromAccount
+  description: Remove users from an account
+  source_operation: openapi/cintoo-openapi-original.json#removeUsersFromAccount
+- name: updateUserAccountRoles
+  description: Update the account roles of a user
+  source_operation: openapi/cintoo-openapi-original.json#updateUserAccountRoles
+- name: getRole
+  description: Get Role
+  source_operation: openapi/cintoo-openapi-original.json#getRole
+- name: deleteRole
+  description: Delete Role
+  source_operation: openapi/cintoo-openapi-original.json#deleteRole
+- name: updateRole
+  description: Update Role
+  source_operation: openapi/cintoo-openapi-original.json#updateRole
+- name: getAccountIntegrations
+  description: List integrations on the account
+  source_operation: openapi/cintoo-openapi-original.json#getAccountIntegrations
+- name: createAccountIntegrationKonekt
+  description: Create an account integration with Konekt
+  source_operation: openapi/cintoo-openapi-original.json#createAccountIntegrationKonekt
+- name: getKonektAccountIntegrationById
+  description: Get an account integration with Konekt
+  source_operation: openapi/cintoo-openapi-original.json#getKonektAccountIntegrationById
+- name: updateKonektAccountIntegration
+  description: Update an account integration with Konekt
+  source_operation: openapi/cintoo-openapi-original.json#updateKonektAccountIntegration
+- name: deleteKonektAccountIntegration
+  description: Delete an account integration with Konekt
+  source_operation: openapi/cintoo-openapi-original.json#deleteKonektAccountIntegration
+- name: connectKonektAccountIntegration
+  description: Connect an account integration with Konekt
+  source_operation: openapi/cintoo-openapi-original.json#connectKonektAccountIntegration
+- name: deleteKonektAccountIntegrationConnection
+  description: Disconnect an account integration with Konekt
+  source_operation: openapi/cintoo-openapi-original.json#deleteKonektAccountIntegrationConnection
+- name: getProjects
+  description: List Projects
+  source_operation: openapi/cintoo-openapi-original.json#getProjects
+- name: createProject
+  description: Create Project
+  source_operation: openapi/cintoo-openapi-original.json#createProject
+- name: getProject
+  description: Get Project
+  source_operation: openapi/cintoo-openapi-original.json#getProject
+- name: deleteProject
+  description: Delete Project
+  source_operation: openapi/cintoo-openapi-original.json#deleteProject
+- name: updateProject
+  description: Update Project
+  source_operation: openapi/cintoo-openapi-original.json#updateProject
+- name: patchProject
+  description: Patch Project
+  source_operation: openapi/cintoo-openapi-original.json#patchProject
+- name: signProjectCoverURL
+  description: Get a signed URL for project cover file upload
+  source_operation: openapi/cintoo-openapi-original.json#signProjectCoverURL
+- name: updateProjectCover
+  description: Update cloud file as cover for project
+  source_operation: openapi/cintoo-openapi-original.json#updateProjectCover
+- name: restoreProject
+  description: Restore project
+  source_operation: openapi/cintoo-openapi-original.json#restoreProject
+- name: getWorkzones
+  description: List Workzones
+  source_operation: openapi/cintoo-openapi-original.json#getWorkzones
+- name: createWorkzone
+  description: Create a work zone
+  source_operation: openapi/cintoo-openapi-original.json#createWorkzone
+- name: getProjectMembers
+  description: Get Users member of a project
+  source_operation: openapi/cintoo-openapi-original.json#getProjectMembers
+- name: addProjectMembers
+  description: Add members to project
+  source_operation: openapi/cintoo-openapi-original.json#addProjectMembers
+- name: removeMembersFromProject
+  description: Bulk remove users and groups from project
+  source_operation: openapi/cintoo-openapi-original.json#removeMembersFromProject
+- name: removeUserFromProject
+  description: Remove user from project
+  source_operation: openapi/cintoo-openapi-original.json#removeUserFromProject
+- name: removeGroupFromProject
+  description: Remove group from project
+  source_operation: openapi/cintoo-openapi-original.json#removeGroupFromProject
+- name: removeUserFromWorkzone
+  description: Remove user from work zone
+  source_operation: openapi/cintoo-openapi-original.json#removeUserFromWorkzone
+- name: getFiles
+  description: Get files
+  source_operation: openapi/cintoo-openapi-original.json#getFiles
+- name: updateFileName
+  description: Update a file name
+  source_operation: openapi/cintoo-openapi-original.json#updateFileName
+- name: UpdateBulkFilesTransformation
+  description: Update the position and/or rotation of a scan, model, geoImage or video3d
+  source_operation: openapi/cintoo-openapi-original.json#UpdateBulkFilesTransformation
+- name: getShareLinks
+  description: List share links
+  source_operation: openapi/cintoo-openapi-original.json#getShareLinks
+- name: createShareLink
+  description: Create a share link
+  source_operation: openapi/cintoo-openapi-original.json#createShareLink
+- name: getShareLink
+  description: Get a share link
+  source_operation: openapi/cintoo-openapi-original.json#getShareLink
+- name: deleteShareLink
+  description: Delete a share link
+  source_operation: openapi/cintoo-openapi-original.json#deleteShareLink
+- name: updateShareLink
+  description: Update a share link
+  source_operation: openapi/cintoo-openapi-original.json#updateShareLink
+- name: getBlob
+  description: Download a blob
+  source_operation: openapi/cintoo-openapi-original.json#getBlob
+- name: getBlobs
+  description: Get pre-signed urls for multiple blobs
+  source_operation: openapi/cintoo-openapi-original.json#getBlobs
+- name: signUploadURL
+  description: Get a signed URL for cloud file upload
+  source_operation: openapi/cintoo-openapi-original.json#signUploadURL
+- name: registerFiles
+  description: Register cloud files on a workzone
+  source_operation: openapi/cintoo-openapi-original.json#registerFiles
+- name: copyWorkzone
+  description: Copy a work zone
+  source_operation: openapi/cintoo-openapi-original.json#copyWorkzone
+- name: getAnnotationsFromProject
+  description: List annotations in a project
+  source_operation: openapi/cintoo-openapi-original.json#getAnnotationsFromProject
+- name: createAnnotation
+  description: Create an annotation
+  source_operation: openapi/cintoo-openapi-original.json#createAnnotation
+- name: getAnnotationById
+  description: Get annotation
+  source_operation: openapi/cintoo-openapi-original.json#getAnnotationById
+- name: updateAnnotation
+  description: Update an annotation
+  source_operation: openapi/cintoo-openapi-original.json#updateAnnotation
+- name: deleteAnnotation
+  description: Delete an annotation
+  source_operation: openapi/cintoo-openapi-original.json#deleteAnnotation
+- name: createAnnotationComment
+  description: Create a comment on an annotation
+  source_operation: openapi/cintoo-openapi-original.json#createAnnotationComment
+- name: createAnnotationIntegrationLinks
+  description: Create integration links on annotations
+  source_operation: openapi/cintoo-openapi-original.json#createAnnotationIntegrationLinks
+- name: getProjectIntegrations
+  description: List integrations on the project
+  source_operation: openapi/cintoo-openapi-original.json#getProjectIntegrations
+- name: getKonektProjectIntegration
+  description: Get configuration of integration with Konekt on a Project
+  source_operation: openapi/cintoo-openapi-original.json#getKonektProjectIntegration
+- name: createKonektProjectIntegration
+  description: Create configuration of integration with Konekt on Project
+  source_operation: openapi/cintoo-openapi-original.json#createKonektProjectIntegration
+- name: updateKonektProjectIntegration
+  description: Update configuration of the integration with Konekt on Project
+  source_operation: openapi/cintoo-openapi-original.json#updateKonektProjectIntegration
+- name: deleteKonektProjectIntegration
+  description: Delete the integration with Konekt on Project
+  source_operation: openapi/cintoo-openapi-original.json#deleteKonektProjectIntegration
+- name: getAutodeskProjectIntegration
+  description: Get configuration of integration with Autodesk on a Project
+  source_operation: openapi/cintoo-openapi-original.json#getAutodeskProjectIntegration
+- name: createAutodeskProjectIntegration
+  description: Create configuration of integration with Autodesk on Project
+  source_operation: openapi/cintoo-openapi-original.json#createAutodeskProjectIntegration
+- name: updateAutodeskProjectIntegration
+  description: Update configuration of the integration with Autodesk on Project
+  source_operation: openapi/cintoo-openapi-original.json#updateAutodeskProjectIntegration
+- name: deleteAutodeskProjectIntegration
+  description: Delete the integration with Autodesk on Project
+  source_operation: openapi/cintoo-openapi-original.json#deleteAutodeskProjectIntegration
+- name: getCrops
+  description: Get Crops
+  source_operation: openapi/cintoo-openapi-original.json#getCrops
+- name: createCrop
+  description: Create a crop
+  source_operation: openapi/cintoo-openapi-original.json#createCrop
+- name: getCrop
+  description: Get Crop
+  source_operation: openapi/cintoo-openapi-original.json#getCrop
+- name: putCrop
+  description: Update Crop
+  source_operation: openapi/cintoo-openapi-original.json#putCrop
+- name: deleteCrop
+  description: Delete Crop
+  source_operation: openapi/cintoo-openapi-original.json#deleteCrop
+- name: signCropCoverURL
+  description: Get a signed URL for crop cover file upload
+  source_operation: openapi/cintoo-openapi-original.json#signCropCoverURL
+- name: getMeasurements
+  description: Get Measurements
+  source_operation: openapi/cintoo-openapi-original.json#getMeasurements
+- name: getTagsOnProject
+  description: Get tag lists
+  source_operation: openapi/cintoo-openapi-original.json#getTagsOnProject
+- name: createTagList
+  description: Create a tag list
+  source_operation: openapi/cintoo-openapi-original.json#createTagList
+- name: bulkUpdateTagLists
+  description: Update multiple tag lists
+  source_operation: openapi/cintoo-openapi-original.json#bulkUpdateTagLists
+- name: bulkDeleteTagLists
+  description: Delete multiple tag lists
+  source_operation: openapi/cintoo-openapi-original.json#bulkDeleteTagLists
+- name: updateTagList
+  description: Update a tag list
+  source_operation: openapi/cintoo-openapi-original.json#updateTagList
+- name: deleteTagList
+  description: Delete a tag list
+  source_operation: openapi/cintoo-openapi-original.json#deleteTagList
+- name: tagListAiDetection
+  description: Object Detection on a tag list
+  source_operation: openapi/cintoo-openapi-original.json#tagListAiDetection
+- name: addPnIdElementsInTagList
+  description: Add P&ID elements to a tag list
+  source_operation: openapi/cintoo-openapi-original.json#addPnIdElementsInTagList
+- name: getTagsOnList
+  description: Get tags
+  source_operation: openapi/cintoo-openapi-original.json#getTagsOnList
+- name: bulkTags
+  description: Bulk operation on tags
+  source_operation: openapi/cintoo-openapi-original.json#bulkTags
+- name: bulkMoveTags
+  description: Move tags between tag lists
+  source_operation: openapi/cintoo-openapi-original.json#bulkMoveTags
+- name: postExportToMesh
+  description: Trigger Export to mesh job
+  source_operation: openapi/cintoo-openapi-original.json#postExportToMesh
+- name: listPermissions
+  description: List permissions
+  source_operation: openapi/cintoo-openapi-original.json#listPermissions
+- name: listFormats
+  description: List file formats
+  source_operation: openapi/cintoo-openapi-original.json#listFormats
+- name: listSpatialReferences
+  description: List Spatial References
+  source_operation: openapi/cintoo-openapi-original.json#listSpatialReferences
+- name: listAIDetectionClasses
+  description: List AI detection classes
+  source_operation: openapi/cintoo-openapi-original.json#listAIDetectionClasses
+- name: getAutodeskConnection
+  description: Get my connection to Autodesk
+  source_operation: openapi/cintoo-openapi-original.json#getAutodeskConnection
+- name: deleteAutodeskConnection
+  description: Disconnect me from Autodesk
+  source_operation: openapi/cintoo-openapi-original.json#deleteAutodeskConnection
+- name: getAutodeskConnectionUrl
+  description: Create or update Autodesk connection
+  source_operation: openapi/cintoo-openapi-original.json#getAutodeskConnectionUrl

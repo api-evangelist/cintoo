@@ -1,0 +1,32 @@
+# Cintoo
+
+> Cintoo is a cloud-based reality-capture and digital-twin platform that turns 3D laser-scan point-cloud data into high-fidelity, streamable 3D meshes in the cloud. Teams in AEC (architecture, engineering, construction), BIM, GIS, and asset management use Cintoo Cloud to store, visualize, classify, annotate, and share scan data and to run scan-to-BIM and digital-twin workflows. The Cintoo Open API 2.0.0 exposes accounts, users, groups, roles, projects, work zones, files, annotations, crops, measurements, tags, share links, and integrations (Autodesk, Konekt).
+
+## API
+- [Cintoo Open API 2.0.0 (OpenAPI 3.0.3)](https://aec.cintoo.com/api/2/openapi.json): 100 operations across 21 resource groups; JWT Bearer / OAuth2 authorization-code. Base URLs https://aec.cintoo.com/api/2/ and https://eu.cintoo.cloud/api/2/ (BETA).
+- [API documentation](https://aec.cintoo.com/api/2)
+
+## Specs
+- [OpenAPI (original)](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/openapi/cintoo-openapi-original.json)
+- [OpenAPI Overlay (API Evangelist enhancements)](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/overlays/cintoo-openapi-overlay.yaml)
+
+## Artifacts
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/authentication/cintoo-authentication.yml): OAuth2 authorization-code + JWT access (3h) / refresh (months, max 10) tokens.
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/conventions/cintoo-conventions.yml)
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/errors/cintoo-problem-types.yml)
+- [Lifecycle / versioning](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/lifecycle/cintoo-lifecycle.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/data-model/cintoo-data-model.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/conformance/cintoo-conformance.yml)
+- [Sandbox](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/sandbox/cintoo-sandbox.yml)
+- [CLI (cintoo-login)](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/cli/cintoo-cli.yml)
+- [MCP candidate tools](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/mcp/cintoo-mcp.yml)
+- [Agentic access contracts](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/agentic-access/cintoo-agentic-access.yml)
+- [Agent Skills index](https://raw.githubusercontent.com/api-evangelist/cintoo/refs/heads/main/skills/_index.yml)
+
+## Docs
+- [Cintoo website](https://cintoo.com)
+- [Support / Knowledge base](https://help.cintoo.com/en/support/home)
+- [Accessing the Cintoo API](https://help.cintoo.com/en/support/solutions/articles/101000483668-accessing-cintoo-api)
+- [Blog](https://cintoo.com/en/blog)
+- [Terms & Conditions](https://cintoo.com/en/terms-and-conditions)
+- [Privacy Policy](https://cintoo.com/en/privacy-policy)

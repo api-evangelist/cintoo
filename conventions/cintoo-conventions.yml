@@ -1,0 +1,50 @@
+generated: '2026-07-18'
+method: searched
+source: https://aec.cintoo.com/api/2 + openapi/cintoo-openapi-original.json
+docs: https://aec.cintoo.com/api/2
+summary: >-
+  Cross-cutting request/response conventions for the Cintoo Open API 2.0.0. The API is
+  resource-oriented, UTF-8 encoded, and versioned in the URL path (/api/2/). Resources are
+  addressed by URNs (accountRef, projectRef, userRef, ...). Authentication is JWT Bearer.
+base_urls:
+- https://aec.cintoo.com/api/2/
+- https://eu.cintoo.cloud/api/2/
+media_type: application/json
+encoding: utf-8
+resource_model:
+  style: resource-oriented
+  identifiers: URN-based reference ids (accountRef, projectRef, userRef, groupRef, roleRef, ...)
+authentication:
+  style: oauth2-authorization-code + JWT Bearer
+  header: 'Authorization: Bearer <access_token>'
+  access_token_ttl: 3h
+  refresh_token_ttl: months (max 10 concurrently valid per user)
+  see: authentication/cintoo-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or idempotency parameter is documented in the Cintoo Open API 2.0.0.
+pagination:
+  supported: false
+  note: No page/limit/offset/cursor query parameters are declared across the 100 operations of API v2.0.0.
+versioning:
+  scheme: uri-path
+  current: '2'
+  status: beta
+  note: 'API v2 endpoints tagged BETA are in beta; the vendor states changes may be applied later.'
+  see: lifecycle/cintoo-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  fields: [status, title, detail, errorCode, errorValues]
+  note: Problem-Details-like but served as application/json (not application/problem+json).
+  see: errors/cintoo-problem-types.yml
+bulk_operations:
+  note: >-
+    Several endpoints expose bulk variants (users/bulk-invite, groups/{ref}/members,
+    files/bulk-transformation, members/bulk-remove, workzones/{ref}/bulk-files,
+    annotations/bulk-create-integration, tag-lists/bulk-update).
+rate_limiting:
+  documented: false
+  note: No rate-limit headers or quotas are documented in the API reference.
+sandbox:
+  available: true
+  see: sandbox/cintoo-sandbox.yml

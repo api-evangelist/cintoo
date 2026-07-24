@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: https://aec.cintoo.com/api/2 (Cintoo Open API 2.0.0 — Sandbox section) + https://help.cintoo.com/en/support/solutions/articles/101000483668-accessing-cintoo-api
+summary: >-
+  Cintoo Cloud API ships with a Sandbox — a separate testing tenant, isolated from the
+  production Cintoo Cloud platform, so the API can be tested without consequence to production
+  data. Access is granted by invitation via the Support team.
+sandbox:
+  isolated_tenant: true
+  request_access: support@cintoo.com
+  invitation_flow: >-
+    Contact support@cintoo.com to be invited; you receive an invitation link by email and set a
+    new password. The same email as production may be used but requires a distinct password.
+  time_limit: none
+  data_policy: >-
+    Experimental platform — Cintoo reserves the right to refresh/delete Sandbox data at any time
+    (unlike production).
+  restrictions:
+  - Scan capacity of 20 scans per user.
+  - Company SSO (if any) is not applicable — the Sandbox uses a different account.
+  modules_enabled:
+  - BIM & CAD Module (BCM) is activated in the Sandbox.
+login_tool:
+  binary: cintoo-login-1.1.0-signed.exe
+  example: '.\cintoo-login-1.1.0-signed.exe --url https://eu.cintoo.cloud'
+  note: Command-line login tool used to acquire the initial JWT access/refresh token pair.
+  see: cli/cintoo-cli.yml
+test_values:
+  note: >-
+    Cintoo does not publish static magic/test identifiers or fixture values; the Sandbox is a
+    live isolated tenant seeded by the developer. No verbatim test values to record.

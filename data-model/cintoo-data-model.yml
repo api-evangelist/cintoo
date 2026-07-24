@@ -1,0 +1,104 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cintoo-openapi-original.json
+note: Entity-relationship graph derived from the Cintoo Open API 2.0.0 URL hierarchy and *Urn schema types.
+  Resources are identified by URNs.
+id_scheme: URN-based (AccountUrn/ProjectUrn/UserUrn/...); path refs are accountRef/projectRef/userRef/etc.
+entities:
+- Account
+- AccountIntegrationKonekt
+- Annotation
+- AnnotationAttachment
+- AnnotationComment
+- AnnotationCommentAttachment
+- Crop
+- File
+- Format
+- Group
+- Measurement
+- Project
+- Role
+- ShareLink
+- Subscription
+- Tag
+- TagList
+- User
+- WorkflowJob
+- Workzone
+relationships:
+- from: Account
+  type: has_many
+  to: Subscription
+  via: accountRef->subscriptions
+- from: Account
+  type: has_many
+  to: User
+  via: accountRef->users
+- from: Account
+  type: has_many
+  to: Group
+  via: accountRef->groups
+- from: Account
+  type: has_many
+  to: Role
+  via: accountRef->roles
+- from: Account
+  type: has_many
+  to: Project
+  via: accountRef->projects
+- from: Account
+  type: has_many
+  to: Integration
+  via: accountRef->integrations
+- from: Project
+  type: has_many
+  to: Workzone
+  via: projectRef->workzones
+- from: Project
+  type: has_many
+  to: Member
+  via: projectRef->members
+- from: Project
+  type: has_many
+  to: File
+  via: projectRef->files
+- from: Project
+  type: has_many
+  to: ShareLink
+  via: projectRef->share-links
+- from: Project
+  type: has_many
+  to: Annotation
+  via: projectRef->annotations
+- from: Project
+  type: has_many
+  to: Crop
+  via: projectRef->crops
+- from: Project
+  type: has_many
+  to: Measurement
+  via: projectRef->measurements
+- from: Project
+  type: has_many
+  to: TagList
+  via: projectRef->tag-lists
+- from: Project
+  type: has_many
+  to: Integration
+  via: projectRef->integrations
+- from: Group
+  type: has_many
+  to: User
+  via: group members
+- from: TagList
+  type: has_many
+  to: Tag
+  via: tags within a tag list
+- from: Workzone
+  type: has_many
+  to: File
+  via: files uploaded per work zone
+- from: Annotation
+  type: has_many
+  to: Comment
+  via: annotation comments

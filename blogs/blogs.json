@@ -1,0 +1,14 @@
+{
+  "repo": "cintoo",
+  "feeds": [
+    {
+      "source": "https://help.cintoo.com/en/support/home",
+      "feed_url": "https://help.cintoo.com/en/support/home",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-07-20T13:31:34Z"
+}

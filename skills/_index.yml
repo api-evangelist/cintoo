@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+api: openapi/cintoo-openapi-original.json
+skills:
+- file: cintoo-authenticate-and-list-projects.md
+  name: Authenticate and list Cintoo projects
+  operations: [getAccounts, getAccount, getProjects, getProject]
+- file: cintoo-upload-scan-files.md
+  name: Upload scan files to a Cintoo work zone
+  operations: [createProject, createWorkzone, getWorkzones, signUploadURL, registerFiles, getFiles]
+- file: cintoo-manage-project-members.md
+  name: Manage Cintoo project members and roles
+  operations: [getProjectMembers, addProjectMembers, removeMembersFromProject, removeUserFromProject, removeGroupFromProject, getRoles, updateUserAccountRoles]
+- file: cintoo-annotate-and-tag.md
+  name: Annotate and tag a Cintoo project
+  operations: [getAnnotationsFromProject, createAnnotation, createAnnotationComment, getAnnotationById, getTagsOnProject, createTagList, bulkUpdateTagLists]

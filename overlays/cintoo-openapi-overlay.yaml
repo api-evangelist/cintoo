@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cintoo Open API
+  version: 1.0.0
+extends: openapi/cintoo-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: true
+      x-apievangelist-generated: '2026-07-18'
+      x-apievangelist-provider: cintoo
+      x-apievangelist-notes: >-
+        Cintoo Open API 2.0.0 (beta). Resource-oriented, JWT Bearer / OAuth2 authorizationCode.
+        100 operations across 21 resource groups. Sandbox available on request.
+  - target: $.servers
+    update:
+      - url: https://aec.cintoo.com
+        description: Cintoo Cloud (AEC / global) — base for /api/2/
+      - url: https://eu.cintoo.cloud
+        description: Cintoo Cloud (EU region) — base for /api/2/
+  - target: $.info
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/cintoo-authentication.yml
+        scopes: scopes/cintoo-scopes.yml
+        conventions: conventions/cintoo-conventions.yml
+        errors: errors/cintoo-problem-types.yml
+        lifecycle: lifecycle/cintoo-lifecycle.yml
+        data-model: data-model/cintoo-data-model.yml
+        conformance: conformance/cintoo-conformance.yml
+        sandbox: sandbox/cintoo-sandbox.yml
+        agentic-access: agentic-access/cintoo-agentic-access.yml

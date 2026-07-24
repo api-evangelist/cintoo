@@ -1,0 +1,62 @@
+generated: '2026-07-18'
+method: searched
+source: https://aec.cintoo.com/api/2 errors_list documentation section + openapi/cintoo-openapi-original.json
+docs: https://aec.cintoo.com/api/2
+format: application/json
+envelope:
+  fields:
+  - status
+  - title
+  - detail
+  - errorCode
+  - errorValues
+  note: Error responses use a Problem-Details-like JSON envelope (application/json, NOT application/problem+json).
+    status+title are required; detail is a human-readable English message; errorCode maps to a localizable
+    message; errorValues carries the implicated parameter(s).
+observed_status_codes:
+- '400'
+- '403'
+- '409'
+- 4XX
+- '503'
+problems:
+- status: 400
+  title: Bad Request
+  error_codes:
+  - invalid-<type>-urn
+  - invalid-input
+  - users-not-in-groups
+  meaning: A reference (accountRef/projectRef/...) is malformed, or a request element is invalid (e.g.
+    a too-long project name).
+- status: 401
+  title: Unauthorized
+  error_codes:
+  - unauthorized
+  meaning: Request made without authentication, or with an invalid/expired JWT access token. All endpoints
+    except authentication endpoints require a Bearer access token.
+- status: 403
+  title: Forbidden
+  error_codes:
+  - <action>-<resource>-forbidden
+  - not-member-of-project
+  - not-contributor-of-project
+  - list-*-forbidden
+  - view-*-forbidden
+  - remove-contributor-from-work-zone-forbidden
+  meaning: The user lacks the required permissions for the create/update/delete/list/view action. errorValues.requiredPermissions
+    lists the permissions needed.
+- status: 404
+  title: Not Found
+  error_codes:
+  - <type>-not-found
+  - account-not-found
+  - user-email-not-found
+  meaning: A reference is valid but does not exist. errorValues carries the id of the missing reference.
+- status: 409
+  title: Conflict
+  error_codes: []
+  meaning: The request conflicts with the current state of the resource (e.g. duplicate creation).
+- status: 503
+  title: Service Unavailable
+  error_codes: []
+  meaning: The service is temporarily unavailable.

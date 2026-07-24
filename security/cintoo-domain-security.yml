@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: aec.cintoo.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 15 07:30:45 2026 GMT
+  hsts: false
+domains:
+- domain: cintoo.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

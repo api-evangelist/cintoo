@@ -1,0 +1,11 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cintoo-openapi-original.json
+schemes:
+- name: oauth2
+  source: openapi/cintoo-openapi-original.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+scopes: []

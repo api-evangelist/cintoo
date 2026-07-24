@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://aec.cintoo.com/api/2 (Cintoo Open API 2.0.0 documentation)
+versioning:
+  scheme: uri-path
+  current: '2'
+  previous: '1.1.0'
+  status: beta
+  docs: https://aec.cintoo.com/api/2
+  note: >-
+    API v2 endpoints tagged BETA are available in beta-version; the vendor states changes may
+    be applied later. Most v1.1.0 functionality has been replicated in v2. A link to v2
+    documentation is available from the v1.1.0 API documentation page.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No formal deprecation policy or RFC 8594 Sunset/Deprecation header support is documented.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_page_note: No public status page was found for aec.cintoo.com / eu.cintoo.cloud.
+deprecated_operations: []

@@ -1,0 +1,22 @@
+generated: '2026-07-18'
+method: searched
+source: https://help.cintoo.com/en/support/solutions/articles/101000483668-accessing-cintoo-api
+summary: >-
+  Cintoo publishes a signed command-line login tool used to perform the one-time manual token
+  acquisition for the Cintoo Cloud API. It obtains the initial JWT Access Token + Refresh Token
+  pair, after which authentication can be fully automated.
+name: cintoo-login
+binary: cintoo-login-1.1.0-signed.exe
+platform: windows (signed executable)
+install:
+  note: Provided by Cintoo Support alongside Sandbox/API onboarding documentation (not on a public package registry).
+usage:
+  authenticate:
+    command: '.\cintoo-login-1.1.0-signed.exe --url https://eu.cintoo.cloud'
+    flags:
+    - flag: --url
+      description: Target Cintoo Cloud tenant base URL (e.g. https://aec.cintoo.com or https://eu.cintoo.cloud).
+    output: JWT Access Token (3h) + Refresh Token (long-lived) pair for use as Authorization Bearer credentials.
+notes:
+- The first token acquisition requires this manual step for security reasons; subsequent refresh can be automated.
+- Not a full resource CLI — its scope is authentication/token bootstrap for the REST API.
