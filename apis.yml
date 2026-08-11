@@ -389,6 +389,8 @@ apis:
   - type: GettingStarted
     url: https://help.cintoo.com/en/support/solutions/articles/101000483668-accessing-cintoo-api
 common:
+- type: Overlay
+  url: overlays/cintoo-openapi-overlay.yaml
 - type: DeveloperPortal
   url: https://aec.cintoo.com/api/2
 - type: Documentation
