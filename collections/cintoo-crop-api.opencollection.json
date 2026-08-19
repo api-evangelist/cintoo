@@ -1,0 +1,222 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Crop API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Crop",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Crops",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/crops",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "workzones",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of work zone references.\n\nProviding at least 1 invalid (bad format, not exist, unreachable) work zone will return a 400 Bad Request error.\nProviding empty parameter will return empty crops list.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get all crops related to a project.\n\nRequires the permission `workzone:crops:read` on at least one work zone of the project.\nThe crop returned are all crops on work zones the user has this permission.\n"
+        },
+        {
+          "info": {
+            "name": "Create a crop",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/crops",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a crop\n\nRequires the permission `workzone:crops:write` on the work zone.\n"
+        },
+        {
+          "info": {
+            "name": "Get Crop",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/crops/:cropRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "cropRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the crop"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get details about a specific crop, related to a project.\n\nRequires the permission `workzone:crops:read` on the work zone in which the crop has been created.\n"
+        },
+        {
+          "info": {
+            "name": "Update Crop",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/crops/:cropRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "cropRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the crop"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update a Crop. This can also be a work zone move by providing new workzoneId in which you have required permission.\nNote that missing fields, even optionals, are considered as null (useful for removing fields).\n\nRequires the permission `workzone:crops:write` in the work zone in which the crop belong to, and in case of crop move, also in the target work zone.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Crop",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/crops/:cropRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "cropRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the crop"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete a given Crop.\n\nRequires the permission `workzone:crops:write` in the work zone in which the crop belongs to.\n"
+        },
+        {
+          "info": {
+            "name": "Get a signed URL for crop cover file upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/crops/:cropRef/cover",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "cropRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the crop"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>- Get a signed URL for crop cover file upload\n\nRequires the permission `workzone:crops:write`.\n\nAfter this call, use the `url`s from the response to upload the crop cover file.\n\nRequired headers to push the files\n* `Content-MD5: xxx` with `xxx` being a base 64 encode of the md5sum in binary format.\\\n  Example: `MD5SUM=\"$(openssl md5 -binary < \"$FILENAME\" | base64)\"`\n* `Cache-Control: max-age=2592000`\n* `x-ms-blob-type: BlockBlob` mandatory if the storage type is"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

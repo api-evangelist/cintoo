@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts"
+          },
+          "docs": "<span class='tag beta'>BETA</span>List available accounts for the current user"
+        },
+        {
+          "info": {
+            "name": "Get account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get an account details\n\nRequires the permission `account:account:read` on the account (in other words to be a member of the account).\n"
+        },
+        {
+          "info": {
+            "name": "Remove users from an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/members",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Remove users from an account\n\nRequires to be either owner, administrator or manager of the account.\n\nNotes:\n  - The Account Owner cannot be removed from the account. An account cannot be orphaned.\n  - Project Owners cannot be removed from the account. Projects cannot be orphaned.\n"
+        },
+        {
+          "info": {
+            "name": "Update the account roles of a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/members/:userRef/roles",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "userRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update the account roles of a user\n\nRequires to be either owner or administrator of the account.\n\nTo grant/revoke an account role, the permissions are checked:\n- For administrator: `account:administrators:write`\n- For project manager: `account:project-managers:write`\n- For project lister: `account:project-listers:write`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

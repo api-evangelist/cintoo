@@ -1,0 +1,265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account File API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "File",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/files",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of case-sensitive categories of the files we want to list.\n\nProviding at least 1 invalid category will return a 400 Bad Request error.\nProviding empty parameter will return empty files list.\nIf not provided, all files are returned.\n\nThe category of an existing file can be found in its \"type\" field.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>get all files in project.\n\nThis endpoint accepts a \"category\" parameter to restrain the categories of the files that will be listed.\n\nPermissions:\n- the user must have permission `workzone:workzones:read` in work zones in which you can list files.\n"
+        },
+        {
+          "info": {
+            "name": "Update a file name",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/files/:fileRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "fileRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the file"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the name of a file.\n\nRequires write permission on the file workzone:\n  * `workzone:reality-data:write` for scans/geo-images/site maps\n  * `workzone:cad-model:write` for models\n  * `workzone:model-reports:write` for model reports\n  * `workzone:documents:write` for documents/media/misc/archive\n  * `workzone:video3d:write` for video 360\n  * `workzone:workzones:write` for other file types\n"
+        },
+        {
+          "info": {
+            "name": "Update the position and/or rotation of a scan, model, geoImage or video3d",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/files/bulk-transformation",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update the position, rotation and scale for a list of files, with the following restrictions:\n- the scan, model and geoImage files accept update of only the position and rotation.\n- the video3d files accept update of all three fields.\n\nRequired permissions depend on the type of the files being transformed:\n- scan files: `workzone:reality-data:transform`\n- model files: `workzone:cad-model:transform`\n- geoImage files: `workzone:geoimages:transform`\n- video3d files"
+        },
+        {
+          "info": {
+            "name": "Download a blob",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/blobs/:blobRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "blobRef",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a blob, via a redirection to pre-signed URL"
+        },
+        {
+          "info": {
+            "name": "Get pre-signed urls for multiple blobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/blobs",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get pre-signed urls for multiple blobs."
+        },
+        {
+          "info": {
+            "name": "Get a signed URL for cloud file upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/workzones/:workzoneRef/bulk-files",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "workzoneRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the work zone"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get a signed URL for cloud file upload\n\nRequires the permission `workzone:documents:write` and/or `workzone:reality-data:write` on the workzone, depending on the file types\n\nAfter this call, use the `url`s from the response to upload the files.\nNote that there are examples on how to upload the data after calling the endpoints in the example section.\n\nRequired headers to push the files\n* `Content-MD5: xxx` with `xxx` being a base 64 encode of the md5sum in binary"
+        },
+        {
+          "info": {
+            "name": "Register cloud files on a workzone",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/workzones/:workzoneRef/bulk-files",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "workzoneRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the work zone"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Register cloud files on a workzone\n\nRequires the permission `workzone:documents:write` and/or `workzone:reality-data:write` in the work zone, depending on the file types\n\nThis actually adds an already uploaded file in a work zone, so that it appears in the file browser\n"
+        },
+        {
+          "info": {
+            "name": "List file formats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/values/formats"
+          },
+          "docs": "<span class='tag beta'>BETA</span>List supported file formats"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

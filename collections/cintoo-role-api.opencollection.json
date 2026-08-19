@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Role API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Role",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/roles",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List available roles into this account.\n\nRequires the permission `account:roles:read`.\n"
+        },
+        {
+          "info": {
+            "name": "Create Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/roles",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a custom role.\n\nRequires the permission `account:roles:write`.\n\nOne of `permissions` or `legacyPermissions` must be present and non-empty.\nIf both are specified (discouraged) they must be strictly equivalent.\n\nFor the field `permissions`, the allowed combinations are documented [here](#section/API-Specification/Permissions).\n"
+        },
+        {
+          "info": {
+            "name": "Get Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/roles/:roleRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "roleRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the role"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get a role details.\n\nRequires the permission `account:roles:read`.\n"
+        },
+        {
+          "info": {
+            "name": "Update Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/roles/:roleRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "roleRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the role"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update a role.\n\n<span class='block' style='background-color: PapayaWhip;'><span class='icon' style='color: red; font-size:20px;'>&#9888;</span> Overwrites all fields. Missing fields will be considered as null and current values will be erased</span>\n\nPermissions:\n\nRequires the permission `account:roles:write`.\n\nOne of `permissions` or `legacyPermissions` must be present and non-empty.\nIf both are specified (discouraged) they must be strictly equivalent.\n\nFor the"
+        },
+        {
+          "info": {
+            "name": "Delete Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/roles/:roleRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "roleRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the role"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete a Role.\n\nRequires the permission `account:roles:write`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

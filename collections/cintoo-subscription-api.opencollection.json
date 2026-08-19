@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Subscription API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscription",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/subscriptions",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List available subscriptions into this account.\n\nRequires the permission `account:subscriptions:read` on the account.\n\nThe `inviteAccountOwnerInNewProjects` property is only included when the caller is the account owner.\n\nThe `end` property is only included when the caller has the `account:subscriptions:read-sensitive-infos` permission (account owner or administrator).\n"
+        },
+        {
+          "info": {
+            "name": "Get subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/subscriptions/:subscriptionRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "subscriptionRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the subscription"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get a subscription details.\n\nRequires the permission `account:subscriptions:read` on the account.\n\nThe `inviteAccountOwnerInNewProjects` property is only included when the caller is the account owner.\n\nThe `end` property is only included when the caller has the `account:subscriptions:read-sensitive-infos` permission (account owner or administrator).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

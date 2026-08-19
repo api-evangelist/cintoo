@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Autodesk API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Autodesk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get configuration of integration with Autodesk on a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/autodesk",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get the integration with Autodesk configured on the project\n\nRequires the permission `project:integrations:read` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Create configuration of integration with Autodesk on Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/autodesk",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create the configuration for the integration with Autodesk.\n\nRequires the permission `project:integrations:write` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Update configuration of the integration with Autodesk on Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/autodesk",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update the configuration for the integration with Autodesk.\n\nRequires the permission `project:integrations:write` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Delete the integration with Autodesk on Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/autodesk",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete the integration with Autodesk on the project.\n\nRequires the permission `project:integrations:write` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Get my connection to Autodesk",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/integrations/autodesk/connection"
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get the Autodesk user connected for the current user\n\nRequires no permission, but must be logged in as a user.\n\nIf no connection exists, an error 404 is returned. To create a connection, the user needs to follow the\nOAuth flow on Autodesk, using the [/integrations/autodesk/connection/url](#tag/AutodeskConnection/operation/getAutodeskConnectionUrl) endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Disconnect me from Autodesk",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/integrations/autodesk/connection"
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete connection on Autodesk for the current user\n\nRequires no permission, but must be logged in as a user.\n\nRemoving the connection to Autodesk implies that annotations created by the user won't be synchronized on\nAutodesk for all accounts and all projects.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update Autodesk connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/integrations/autodesk/connection/url",
+            "params": [
+              {
+                "name": "redirectUri",
+                "value": "",
+                "type": "query",
+                "description": "The URL to redirect the user once the OAuth flow is successful.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Forward to the OAuth flow on Autodesk. If the user successfully signed in Autodesk and allows Cintoo to\naccess his account, his Autodesk connection is created or updated.\n\nThis endpoint needs to be called using a browser to allow the user to sign in on Autodesk.\n\nOn success, the user is finally redirected to the given query parameter `redirectUri`, allowing your application\nto be notified.\n\nRequires no permission, but must be logged in as a user.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

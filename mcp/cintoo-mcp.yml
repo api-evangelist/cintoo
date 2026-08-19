@@ -308,3 +308,9 @@ tools:
 - name: getAutodeskConnectionUrl
   description: Create or update Autodesk connection
   source_operation: openapi/cintoo-openapi-original.json#getAutodeskConnectionUrl
+deployment:
+  mode: none
+  verified: derived
+  tools: 100
+  checked: '2026-08-12'
+  source: catalog MCP census

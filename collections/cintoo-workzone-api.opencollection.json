@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Workzone API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workzone",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Workzones",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/workzones",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List work zones of a project"
+        },
+        {
+          "info": {
+            "name": "Create a work zone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/workzones",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a work zone in a project, under an existing one (possibly the root work zone of the project).\n\nThe new work zone automatically inherits the contributors (users and groups) from the parent work zone.\n\n**Requires** the permission `workzone` on the parent work zone.\n"
+        },
+        {
+          "info": {
+            "name": "Remove user from work zone",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/workzones/:workzoneRef/members/users/:userRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "workzoneRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the work zone"
+              },
+              {
+                "name": "userRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the user"
+              },
+              {
+                "name": "allowRemoveOnParents",
+                "value": "",
+                "type": "query",
+                "description": "If true the operation is allowed to remove from a parent.\n\nIf false and the operation needs to remove from a parent, a bad request error will be returned.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Remove a user from a work zone and all child work zones.\n\nIf the work zone is not the project's root work zone, and the user to remove is also a contributor on a parent\nwork zone, the user must be removed from the parents for which he is a contributor.\nIf this is the case, and the query parameter 'allowRemoveOnParents' is not specified or set to false, a bad request\nerror will be returned (code 400).\n\n**Requires** the permission `workzone:members:write` on the w"
+        },
+        {
+          "info": {
+            "name": "Copy a work zone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/workzones/:workzoneRef/copy",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "workzoneRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the work zone"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Copy a work zone, its sub-work zones, and the files on these work zones.\n\nThe destination of the copy is provided by:\n- `destinationProject`: if not provided or null, a new project is created, and the copied work zone will\n  be the root work zone of the new project.\n- `destinationWorkzone`: if provided and not null, specify the work zone inside the destination project in which\n  the copied work zone will be. Default is the root work zone of the destination proje"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,289 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Tag List API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tag List",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tag lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get all tag lists in a project.\n\nRequires the permission `workzone:tags:read` on at least one work zone of the project.\nThe tag lists returned are all tag lists on work zones the user has this permission.\n\nThe project must have an active subscription.\n"
+        },
+        {
+          "info": {
+            "name": "Create a tag list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a tag list.\n\nRequires the permission `workzone:tags:write` on the work zone.\n\nThe project must have an active subscription.\n"
+        },
+        {
+          "info": {
+            "name": "Update multiple tag lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/bulk-update",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update tag lists.\n\nRequires the permission `workzone:tags:write` on the work zones of the tag lists.\n\nThe project must have an active subscription.\nThe tag lists must not be pending.\n\nNote that the workzoneId may be updated to perform a move to another work zone. In this case the permission\n`workzone:tags:write` is also required on the target work zone.\n"
+        },
+        {
+          "info": {
+            "name": "Delete multiple tag lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/bulk-delete",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete tag lists.\n\nThe project must have an active subscription.\nThe tag lists must not be pending.\n\nRequires the permission `workzone:tags:write` on the work zones of the tag lists.\n"
+        },
+        {
+          "info": {
+            "name": "Update a tag list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update a tag list.\n\n<span class='block' style='background-color: PapayaWhip;'><span class='icon' style='color: red; font-size:20px;'>&#9888;</span> Overwrites all fields. Missing fields will be considered as null and current values will be erased</span>\n\nRequires the permission `workzone:tags:write` on the work zone of the tag list.\n\nThe project must have an active subscription.\nThe tag list must not be pending.\n\nNote that the workzoneId may be updated to perfor"
+        },
+        {
+          "info": {
+            "name": "Delete a tag list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete a tag list.\n\nThe project must have an active subscription.\nThe tag list must not be pending.\n\nRequires the permission `workzone:tags:write` on the work zone of the tag list.\n"
+        },
+        {
+          "info": {
+            "name": "Object Detection on a tag list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef/ai-detection",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Launch AI Detection on a tag list.\n\nRequired:\n- the permission `workzone:tags:write` on the work zone of the tag list\n- the permissions `workzone:reality-data:read` and `workzone:export-jobs-reality-data:write`\n  on the work zones of the scans\n\nThe project must have an active subscription.\nThe tag list must not be pending.\n\nAfter this call, the tag list will become *pending* until the AI detection is done, meaning no more\noperation can be performed on this tag l"
+        },
+        {
+          "info": {
+            "name": "Add P&ID elements to a tag list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef/pnid-elements/bulk-add",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Add detected P&ID (Piping and Instrumentation Diagram) elements - instruments and pipes -\nas tags on a `2d` tag list.\n\nUse this to upload the elements you have detected on the pages of your diagrams. For each page,\nprovide its instruments and pipes; every instrument and pipe becomes one tag on that page.\n\nEach page is identified by the attachment id string it belongs to (`attachmentId`) and its\nposition in that attachment (`index`). The page must already exist o"
+        },
+        {
+          "info": {
+            "name": "List AI detection classes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/values/ai-detection-classes"
+          },
+          "docs": "<span class='tag beta'>BETA</span>List possible classes for AI detection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Group API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Group",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/groups",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List available groups in this account.\n\nRequires the permission `account:groups:read` on the account.\n"
+        },
+        {
+          "info": {
+            "name": "Create group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/groups",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a new group in this account.\n\nRequires the permission `account:groups:write` on the account.\nReturns the created group resource in body and its URL in `Location` header.\n\nThe group name must be unique within the account (case-insensitive). If a group with the same name already exists on this account, a `409 Conflict` error is returned.\n"
+        },
+        {
+          "info": {
+            "name": "Get group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/groups/:groupRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "groupRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the group"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get a group details.\n\nRequires the permission `account:groups:read` on the account.\n"
+        },
+        {
+          "info": {
+            "name": "Delete group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/groups/:groupRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "groupRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the group"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete a group from this account.\n\nRequires the permission `account:groups:write` on the account.\n"
+        },
+        {
+          "info": {
+            "name": "Add users to a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/groups/:groupRef/members",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "groupRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Add a list of users to a group"
+        },
+        {
+          "info": {
+            "name": "Remove users from a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/groups/:groupRef/members",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "groupRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Removes a list of users from a group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

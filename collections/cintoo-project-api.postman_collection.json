@@ -1,0 +1,2532 @@
+{
+  "item": [
+    {
+      "id": "c40d8e26-9a3f-4c97-8810-33afd2247f10",
+      "name": "Project",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "262384e9-c68c-45e7-98ad-594f5a59493a",
+          "name": "List Projects",
+          "request": {
+            "name": "List Projects",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>List active and deleted projects into this account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "countScans",
+                  "value": "true",
+                  "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countTags",
+                  "value": "true",
+                  "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countWorkzones",
+                  "value": "true",
+                  "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bfe5f4b0-ec39-4acd-871e-e809dd3f192e",
+              "name": "List and content of the Projects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"type\": \"project\",\n    \"accountId\": \"<string>\",\n    \"subscriptionId\": \"string\",\n    \"isdemo\": false,\n    \"region\": \"default\",\n    \"name\": \"New Project\",\n    \"description\": \"string\",\n    \"ownerId\": \"string\",\n    \"location\": {\n      \"lat\": 15.369062045782343,\n      \"lng\": -69.939699992138\n    },\n    \"modificationInfo\": {\n      \"createdBy\": \"string\",\n      \"isDeleted\": false,\n      \"createdAt\": \"2017-08-18T12:41:31Z\",\n      \"updatedAt\": \"2017-08-18T12:41:31Z\",\n      \"updatedBy\": \"string\",\n      \"deletedAt\": \"2017-08-18T12:41:31Z\",\n      \"deletedBy\": \"string\"\n    },\n    \"rootWorkzoneId\": \"urn:cintoo:workzone:7f65e5fd-778d-40c1-9f64-a00c9fd01cc3\",\n    \"permissions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bimOnRootWz\": false,\n    \"statsInfo\": {\n      \"scanCount\": 2063,\n      \"scanSize\": 8679,\n      \"tagCount\": 3715,\n      \"workzoneCount\": 425\n    },\n    \"coverBlobName\": \"string\",\n    \"coverUrl\": \"https://MFPCfuKokcq.iiYV4ruSsQvhF7sWQvBCqhoqcqHHcABjvcDyLH\",\n    \"spatialReference\": {\n      \"authName\": \"string\",\n      \"code\": \"string\"\n    },\n    \"coordinatesTransformation\": {\n      \"type\": \"similarity\",\n      \"affine\": {\n        \"a0\": 7565.373616959095,\n        \"a1\": 6922.78542357752,\n        \"a2\": 175.53869463292182,\n        \"b0\": 9377.46958834826,\n        \"b1\": 705.0358696303405,\n        \"b2\": 6844.316358099009\n      },\n      \"similarity\": {\n        \"ordinate1\": 7009.891317726861,\n        \"ordinate2\": 7445.109675514691,\n        \"scaleFactor\": 8621.082051763366,\n        \"rotationAngle\": 3808.901771647255\n      }\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"type\": \"project\",\n    \"accountId\": \"<string>\",\n    \"subscriptionId\": \"string\",\n    \"isdemo\": false,\n    \"region\": \"default\",\n    \"name\": \"New Project\",\n    \"description\": \"string\",\n    \"ownerId\": \"string\",\n    \"location\": {\n      \"lat\": -26.774863961832494,\n      \"lng\": 145.82234128331817\n    },\n    \"modificationInfo\": {\n      \"createdBy\": \"string\",\n      \"isDeleted\": false,\n      \"createdAt\": \"2017-08-18T12:41:31Z\",\n      \"updatedAt\": \"2017-08-18T12:41:31Z\",\n      \"updatedBy\": \"string\",\n      \"deletedAt\": \"2017-08-18T12:41:31Z\",\n      \"deletedBy\": \"string\"\n    },\n    \"rootWorkzoneId\": \"urn:cintoo:workzone:692d497d-d02d-43b8-b89b-72a628f9b080\",\n    \"permissions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bimOnRootWz\": true,\n    \"statsInfo\": {\n      \"scanCount\": 5063,\n      \"scanSize\": 2023,\n      \"tagCount\": 5828,\n      \"workzoneCount\": 5196\n    },\n    \"coverBlobName\": \"string\",\n    \"coverUrl\": \"https://dWLNKoolZanfluRhsSBDLTFyDHlo.ufkEtcYbC,m2hCv423EVD0gqjnnf6wmlzYx0\",\n    \"spatialReference\": {\n      \"authName\": \"string\",\n      \"code\": \"string\"\n    },\n    \"coordinatesTransformation\": {\n      \"type\": \"affine\",\n      \"affine\": {\n        \"a0\": 3087.9644365307113,\n        \"a1\": 1453.7253661619166,\n        \"a2\": 5777.542241075679,\n        \"b0\": 8104.95225044919,\n        \"b1\": 5929.387504310109,\n        \"b2\": 270.022618616399\n      },\n      \"similarity\": {\n        \"ordinate1\": 3227.498681181009,\n        \"ordinate2\": 915.0347202866693,\n        \"scaleFactor\": 9654.563095984671,\n        \"rotationAngle\": 4999.18256913929\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed940fbf-f19b-4c30-b76b-6b39e956316e",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8967a2b-d444-4432-81ad-e355772cea34",
+          "name": "Create Project",
+          "request": {
+            "name": "Create Project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Create a project.\n\nRequires the permission `account:projects:create` on the account.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"location\": \"<object>\",\n  \"cover\": \"<string>\",\n  \"spatialReference\": \"<object>\",\n  \"coordinatesTransformation\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28782a09-20fe-4c0a-bff1-dd68ca732c8d",
+              "name": "The project was created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"cover\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"project\",\n  \"accountId\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"isdemo\": true,\n  \"region\": \"default\",\n  \"name\": \"New Project\",\n  \"description\": \"string\",\n  \"ownerId\": \"string\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"modificationInfo\": {\n    \"createdBy\": \"string\",\n    \"isDeleted\": true,\n    \"createdAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedBy\": \"string\",\n    \"deletedAt\": \"2017-08-18T12:41:31Z\",\n    \"deletedBy\": \"string\"\n  },\n  \"rootWorkzoneId\": \"urn:cintoo:workzone:3207f79f-aab4-47e8-8222-d900ed2503a1\",\n  \"permissions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"bimOnRootWz\": false,\n  \"statsInfo\": {\n    \"scanCount\": 6902,\n    \"scanSize\": 8336,\n    \"tagCount\": 4908,\n    \"workzoneCount\": 2150\n  },\n  \"coverBlobName\": \"string\",\n  \"coverUrl\": \"http://wwEIu.emJwx-ouN7cFnVqmFqLZlkb18irxqMDP\",\n  \"spatialReference\": {\n    \"authName\": \"string\",\n    \"code\": \"string\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"similarity\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6dc5054d-ad8a-4c2e-b4d3-dd66d8f4779e",
+              "name": "The subscription is not active",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"cover\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\",\n  \"detail\": \"Subscription is not active\",\n  \"errorCode\": \"subscription-not-active\",\n  \"errorValues\": {\n    \"subscriptionId\": \"urn:cintoo:subscription:12345678-1234-4678-9234-123456789abc\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9c36811-8fb6-4972-942b-f23709053c04",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"description\": \"<string>\",\n  \"region\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"cover\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc4af4d6-7e3f-42f5-be4d-c2c993a2e539",
+          "name": "Get Project",
+          "request": {
+            "name": "Get Project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Get a project details.\n\nRequires the permission `project:project:read` on the project.\nIn other words, the requester MUST already be a member of the project at some level:\n- account owner, administrator, project manager or project lister\n- project creator or owner\n- be a contributor of the project, or be a member of a contributing group\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "countScans",
+                  "value": "true",
+                  "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countTags",
+                  "value": "true",
+                  "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countWorkzones",
+                  "value": "true",
+                  "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5cf1aaa1-f035-4ef6-b9f3-24cd768bea34",
+              "name": "Content of the requested Project",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"type\": \"project\",\n  \"accountId\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"isdemo\": false,\n  \"region\": \"default\",\n  \"name\": \"New Project\",\n  \"description\": \"string\",\n  \"ownerId\": \"string\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"modificationInfo\": {\n    \"createdBy\": \"string\",\n    \"isDeleted\": false,\n    \"createdAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedBy\": \"string\",\n    \"deletedAt\": \"2017-08-18T12:41:31Z\",\n    \"deletedBy\": \"string\"\n  },\n  \"rootWorkzoneId\": \"urn:cintoo:workzone:0b045d24-1e3d-4ba0-be58-fe0fb71cc188\",\n  \"permissions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"bimOnRootWz\": false,\n  \"statsInfo\": {\n    \"scanCount\": 6203,\n    \"scanSize\": 7083,\n    \"tagCount\": 443,\n    \"workzoneCount\": 2652\n  },\n  \"coverBlobName\": \"string\",\n  \"coverUrl\": \"https://UxmUCWWnFuGwAcRmpRvYGVeGmXWxXkKZf.frbx3nm8zwT,zozI3nbccqB1YRjeBQLuN\",\n  \"spatialReference\": {\n    \"authName\": \"string\",\n    \"code\": \"string\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"similarity\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "338b89da-7a85-4565-a85a-8b3addd9e4d6",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c38d775-cd31-4eea-9baa-18720ab66e9d",
+          "name": "Delete Project",
+          "request": {
+            "name": "Delete Project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Delete a project.\n\nRequires the permission `project:project:delete` on the project.\n(Note that permission `account:projects:delete` on the account implies the permission\n`project:project:delete` on all projects of the account).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "permanent",
+                  "value": "<boolean>",
+                  "description": "Delete Permanently a project"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6093735-8b63-4308-b7eb-5d66ef22b0f2",
+              "name": "The project was deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "permanent",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ab934c6d-8f60-4cc1-b983-0b20a5cc7d61",
+              "name": "The project is already deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "permanent",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\",\n  \"detail\": \"Project is deleted\",\n  \"errorCode\": \"project-deleted\",\n  \"errorValues\": {\n    \"projectId\": \"1234\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b13be27-9c6b-4cf0-9a9e-b7a76c665638",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "permanent",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c7b12a6-524e-4213-8205-88fe2fed36c5",
+          "name": "Update Project",
+          "request": {
+            "name": "Update Project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Update a Project. \n\n<span class='block' style='background-color: PapayaWhip;'><span class='icon' style='color: red; font-size:20px;'>&#9888;</span> Overwrites all fields. Missing fields will be considered as null and current values will be erased</span>\n\nPermissions:\n- To update everything: be the account owner, administrator, or project owner\n- To update everything EXCEPT the subscription and the owner: have the \"Update, delete or restore projects\" permission on the project\n- When updating the owner of a project, the new owner MUST be a project manager\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "countScans",
+                  "value": "true",
+                  "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countTags",
+                  "value": "true",
+                  "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countWorkzones",
+                  "value": "true",
+                  "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": \"<object>\",\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": \"<object>\",\n  \"coordinatesTransformation\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c382a3c3-f0f9-45b1-abed-e0358ab4d039",
+              "name": "The project was updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New name for my project\",\n  \"description\": \"This is a really interesting project\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"type\": \"project\",\n  \"accountId\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"isdemo\": true,\n  \"region\": \"default\",\n  \"name\": \"New Project\",\n  \"description\": \"string\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"modificationInfo\": {\n    \"createdBy\": \"<string>\",\n    \"isDeleted\": true,\n    \"createdAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedBy\": \"<string>\",\n    \"deletedAt\": \"2017-08-18T12:41:31Z\",\n    \"deletedBy\": \"<string>\"\n  },\n  \"rootWorkzoneId\": \"urn:cintoo:workzone:70cf6709-364c-4b3f-9ed0-254e968c5155\",\n  \"permissions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"bimOnRootWz\": false,\n  \"statsInfo\": {\n    \"scanCount\": 626,\n    \"scanSize\": 8217,\n    \"tagCount\": 5923,\n    \"workzoneCount\": 7099\n  },\n  \"coverBlobName\": \"<string>\",\n  \"coverUrl\": \"http://HyY.cejzyFxmi1IzYY.odg5vKPd7Pud0R99XmZ.dWIkGdq-T2mBt5oMaT6X\",\n  \"spatialReference\": {\n    \"authName\": \"string\",\n    \"code\": \"string\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"affine\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50ef5ccc-e01c-41a5-8abc-4c8d7163025c",
+              "name": "Cannot update subscription because capacity is exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New name for my project\",\n  \"description\": \"This is a really interesting project\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\",\n  \"detail\": \"not enough Scan capacity to accept project on subscription 1234\",\n  \"errorCode\": \"capacity-exceeded-scan\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d26223f-4510-41b6-8b2e-5af2880f4e02",
+              "name": "Update project ownership or subscription forbidden, or New owner must be a Project Manager",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New name for my project\",\n  \"description\": \"This is a really interesting project\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 403,\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have the permission to update project ownership or subscription. It requires to be Project Owner, or Administrator\",\n  \"errorCode\": \"update-project-ownership-or-subscription-forbidden\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a200ddb-7814-467f-ab54-71e6a0f1654b",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New name for my project\",\n  \"description\": \"This is a really interesting project\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e60224d-e929-4fcf-8768-260834623ab8",
+          "name": "Patch Project",
+          "request": {
+            "name": "Patch Project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Patch a Project. \n\n<span class='block' style='background-color: Lavender;'><span class='icon' style='color: blue; font-size:25px;'>&#9432;</span> Unlike the PUT operation (Update a project), the patch updates only the provided fields.</span>\n\nPermissions:\n- To update everything: be the account owner, administrator, or project owner\n- To update everything EXCEPT the subscription and the owner: have the \"Update, delete or restore projects\" permission on the project\n- When updating the owner of a project, the new owner MUST be a project manager\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "countScans",
+                  "value": "true",
+                  "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countTags",
+                  "value": "true",
+                  "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countWorkzones",
+                  "value": "true",
+                  "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": \"<object>\",\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": \"<object>\",\n  \"coordinatesTransformation\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ee53ce94-d8e7-46de-a8dd-06e100340964",
+              "name": "The project was updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New name for my project\",\n  \"description\": \"This is a really interesting project\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"type\": \"project\",\n  \"accountId\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"isdemo\": true,\n  \"region\": \"default\",\n  \"name\": \"New Project\",\n  \"description\": \"string\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"modificationInfo\": {\n    \"createdBy\": \"<string>\",\n    \"isDeleted\": true,\n    \"createdAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedBy\": \"<string>\",\n    \"deletedAt\": \"2017-08-18T12:41:31Z\",\n    \"deletedBy\": \"<string>\"\n  },\n  \"rootWorkzoneId\": \"urn:cintoo:workzone:70cf6709-364c-4b3f-9ed0-254e968c5155\",\n  \"permissions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"bimOnRootWz\": false,\n  \"statsInfo\": {\n    \"scanCount\": 626,\n    \"scanSize\": 8217,\n    \"tagCount\": 5923,\n    \"workzoneCount\": 7099\n  },\n  \"coverBlobName\": \"<string>\",\n  \"coverUrl\": \"http://HyY.cejzyFxmi1IzYY.odg5vKPd7Pud0R99XmZ.dWIkGdq-T2mBt5oMaT6X\",\n  \"spatialReference\": {\n    \"authName\": \"string\",\n    \"code\": \"string\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"affine\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "614ed921-cb5a-44c6-aaf1-b1adf4c4a81f",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New name for my project\",\n  \"description\": \"This is a really interesting project\",\n  \"subscriptionId\": \"<string>\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"coverBlobName\": \"<string>\",\n  \"spatialReference\": {\n    \"authName\": \"<string>\",\n    \"code\": \"<string>\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"<string>\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63bb57a1-0b22-42c5-911a-58940a03c280",
+          "name": "Get a signed URL for project cover file upload",
+          "request": {
+            "name": "Get a signed URL for project cover file upload",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Get a signed URL for project cover file upload\n\nRequires the permission `projects:project:update-details`.\n\nAfter this call, use the `url`s from the response to upload the cover file.\n\nRequired headers to push the files\n* `Content-MD5: xxx` with `xxx` being a base 64 encode of the md5sum in binary format.\\\n  Example: `MD5SUM=\"$(openssl md5 -binary < \"$FILENAME\" | base64)\"`\n* `Cache-Control: max-age=2592000`\n* `x-ms-blob-type: BlockBlob` mandatory if the storage type is Azure. \\\n  Note: always adding the `x-ms-blob-type` could be a good idea as Aws ignores it anyway.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef",
+                "cover"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"extension\": \"<string>\",\n  \"size\": \"<long>\",\n  \"md5\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "66995f83-af42-4d8a-9222-50f12145fa6a",
+              "name": "The signing process succeeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "cover"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"extension\": \"<string>\",\n  \"size\": \"<long>\",\n  \"md5\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"provider\": \"string\",\n  \"expiresIn\": 4202,\n  \"file\": {\n    \"name\": \"string\",\n    \"extension\": \"string\",\n    \"size\": 2494,\n    \"md5\": \"string\",\n    \"url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "290e9ccf-9cb0-4701-9230-513b49496211",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "cover"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"extension\": \"<string>\",\n  \"size\": \"<long>\",\n  \"md5\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e0326dc-05af-4adb-9463-41d846a32374",
+          "name": "Update cloud file as cover for project",
+          "request": {
+            "name": "Update cloud file as cover for project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Update the cover for the project\n\nRequires the permission `projects:project:update-details`\n\nThis actually adds an already uploaded file as cover for a project\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef",
+                "cover"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"extension\": \"<string>\",\n  \"size\": \"<long>\",\n  \"md5\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0c62408a-a8ec-4c7f-ab82-81325945b257",
+              "name": "the cover has been updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "cover"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"extension\": \"<string>\",\n  \"size\": \"<long>\",\n  \"md5\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"extension\": \"string\",\n  \"size\": 7771,\n  \"md5\": \"string\",\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa5ae61f-61c5-48be-9bd6-93ee3e4fe571",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "cover"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"extension\": \"<string>\",\n  \"size\": \"<long>\",\n  \"md5\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "414822f6-b29b-49b4-a28b-1f71aa19f037",
+          "name": "Restore project",
+          "request": {
+            "name": "Restore project",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>Restore a deleted project.\n\nRequires the permission `project:project:delete` on the project.\n(Note that permission `account:projects:delete` on the account implies the permission\n`project:project:delete` on all projects of the account).\n\nError management:\nIf the subscription used by this project does not have enough capacity to restore it,\na 400 error is returned with a message,\nlike \"Target subscription <subscriptionId> does not have enough Scan capacity to accept project\"\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "accounts",
+                ":accountRef",
+                "projects",
+                ":projectRef",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "countScans",
+                  "value": "true",
+                  "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countTags",
+                  "value": "true",
+                  "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "countWorkzones",
+                  "value": "true",
+                  "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountRef",
+                  "description": "(Required) The Id or Urn of the account"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectRef",
+                  "description": "(Required) The Id or Urn of the project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9868eabc-baf9-440f-af3e-5e9ed9858eb9",
+              "name": "The project was restored successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"type\": \"project\",\n  \"accountId\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"isdemo\": true,\n  \"region\": \"default\",\n  \"name\": \"New Project\",\n  \"description\": \"string\",\n  \"ownerId\": \"<string>\",\n  \"location\": {\n    \"lat\": \"<double>\",\n    \"lng\": \"<double>\"\n  },\n  \"modificationInfo\": {\n    \"createdBy\": \"<string>\",\n    \"isDeleted\": true,\n    \"createdAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedAt\": \"2017-08-18T12:41:31Z\",\n    \"updatedBy\": \"<string>\",\n    \"deletedAt\": \"2017-08-18T12:41:31Z\",\n    \"deletedBy\": \"<string>\"\n  },\n  \"rootWorkzoneId\": \"urn:cintoo:workzone:70cf6709-364c-4b3f-9ed0-254e968c5155\",\n  \"permissions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"bimOnRootWz\": false,\n  \"statsInfo\": {\n    \"scanCount\": 626,\n    \"scanSize\": 8217,\n    \"tagCount\": 5923,\n    \"workzoneCount\": 7099\n  },\n  \"coverBlobName\": \"<string>\",\n  \"coverUrl\": \"http://HyY.cejzyFxmi1IzYY.odg5vKPd7Pud0R99XmZ.dWIkGdq-T2mBt5oMaT6X\",\n  \"spatialReference\": {\n    \"authName\": \"string\",\n    \"code\": \"string\"\n  },\n  \"coordinatesTransformation\": {\n    \"type\": \"affine\",\n    \"affine\": {\n      \"a0\": \"<double>\",\n      \"a1\": \"<double>\",\n      \"a2\": \"<double>\",\n      \"b0\": \"<double>\",\n      \"b1\": \"<double>\",\n      \"b2\": \"<double>\"\n    },\n    \"similarity\": {\n      \"ordinate1\": \"<double>\",\n      \"ordinate2\": \"<double>\",\n      \"scaleFactor\": \"<double>\",\n      \"rotationAngle\": \"<double>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e8424b2-5492-4914-b6f6-d0f73b7d7a05",
+              "name": "The project is not deleted, or the subscription is not active, or subscription capacity exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\",\n  \"detail\": \"Project is active\",\n  \"errorCode\": \"project-active\",\n  \"errorValues\": {\n    \"projectId\": \"1234\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fccfe409-5692-4211-9fcc-2d4a1c0de8b1",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "accounts",
+                    ":accountRef",
+                    "projects",
+                    ":projectRef",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countScans",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countTags",
+                      "value": "true"
+                    },
+                    {
+                      "key": "countWorkzones",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountRef",
+                      "description": "(Required) The Id or Urn of the account"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectRef",
+                      "description": "(Required) The Id or Urn of the project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45c4c4a5-ceca-448b-be59-04b1700835d7",
+          "name": "List Spatial References",
+          "request": {
+            "name": "List Spatial References",
+            "description": {
+              "content": "<span class='tag beta'>BETA</span>List official Spatial References from https://spatialreference.org/",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "2",
+                "values",
+                "spatial-references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f16456f-f819-4267-a88c-21ad33b8b811",
+              "name": "List of Spatial References",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "values",
+                    "spatial-references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"authName\": \"string\",\n    \"code\": \"string\",\n    \"deprecated\": true,\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  {\n    \"authName\": \"string\",\n    \"code\": \"string\",\n    \"deprecated\": false,\n    \"name\": \"string\",\n    \"type\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "233f684c-bb57-471a-95f8-9a448fca1429",
+              "name": "unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "2",
+                    "values",
+                    "spatial-references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"title\": \"Bad Request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://aec.cintoo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "redirect_uri",
+        "value": "https://aec.cintoo.com/oauth/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://aec.cintoo.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://aec.cintoo.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1022a02b-5667-4523-ba3d-aba20a488b51",
+    "name": "Cintoo Open Account Project API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cintoo Open API 1.x documentation: https://aec.cintoo.com/api\n\n<span class='tag beta'>BETA</span>: API v2 endpoints tagged \"BETA\" are available in beta-version, meaning that changes may be done later on.\n\n# API Specification\n\nThe Cintoo API specification document you are viewing is compliant with the Open API Specification 3.0.3 and can be\nexported to json or yaml format that can be used by the API tool of your liking.\n\nIt also means the generated json/yaml will contain all the details present in this documentation about the\n\n* JSON Objects schema being returned\n* The status codes\n* The authentication\n* The verbs/paths/resources\n\n## Technical details\n\n* The API is **resource oriented**\n* The encoding is done in **utf-8**\n* Do not hesitate to click on the Download button on the top of this page to get the `openapi.json` or `openapi.yaml`\n  file generated and import in your favorite API client\n* Any Cintoo valid user can use the API\n\n- - -\n\n## Sandbox\n\nWith Cintoo Cloud API comes a Sandbox, which means a testing environment. This Sandbox is a separate tenant from the\nCintoo Cloud platform that you are already familiar with.\n\nThe Sandbox is at your disposal so that you can test and use the API with no consequence on your production data (no\nunfortunate deletion by mistake for example).\n\n### Sandbox restrictions\n\n* Scan capacity of 20 scans per user.\n* Company SSO (if any) is not applicable since the Sandbox uses a different account.\n* Please contact <support@cintoo.com> to get the invitation link to the Sandbox account.\n* You can use the same email but you will be asked to set a new password by clicking on the invitation link.\n* Please note that this is an experimental platform, so we reserve the right to refresh/delete the data (unlike the\n  production platform).\n* There is no limit in time for using the Sandbox.\n* The BIM & CAD Module (BCM) is activated in this Sandbox, so feel free to use your BIM or CAD model in this testing\n  environment.\n\nRegistering to the Sandbox / Cintoo Cloud API\n\nPlease contact our Support Team <support@cintoo.com> to be invited to the Sandbox and get all the documentation for\nCintoo Cloud API.\n\n- - -\n\n## Authentication\n\nThe Cintoo API relies on JWT Tokens for authenticating users with the standard combination `Access Token`+\n`Refresh Token`.\n\nNote that the first acquisition of the token pair requires a manual step (see below) for security reasons, then it can\nbe fully automated.\n\n### Access Tokens and Refresh Tokens\n\nThere are 2 kind of tokens:\n\n* Access token:\n    * is short lived (3h)\n    * is used to authenticate each query\n    * is personal and should not be shared, except for service users (see `Token management recipes` at the end of the\n      documentation)\n    * is a JWT and is stateless, ie. there is *NO* limit of Access Token being valid for a given user simultaneously,\n      and ***can*** be used in parallel.\n    * example of API call to list `accounts`:\n      `curl -H Authorization=\"Bearer $access_token\" https://aec.cintoo.com/api/accounts`\n\n> ***Note***: Calling the API with an already-used/expired token results in a response with status code `401`\n\n* Refresh token:\n    * is long lived (months)\n    * is used **once** to obtain a new `Access Token` + `Refresh Token` pair.\n    * **cannot** be used to make API calls.\n    * is personal and should not be shared, except for service users (see `Token management recipes` at the end of the\n      documentation)\n    * there ***IS*** a limit of 10 Refresh Token being valid for a given user simultaneously\n    * is stateful and ***CANNOT*** be used in parallel, as it is consumed when used\n    * example of refresh token call to get a new pair of \"Access Token\" and \"Refresh Token\":\n      `curl -X POST https://aec.cintoo.com/oauth/token -d \"grant_type=refresh_token&refresh_token=$refresh_token\"`\n\n> ***Note***: Calling the API with an already-used/expired token results in a response with status code `401`\n\n### The token flow\n\nThe Cintoo API follows the OAuth 2.0 Authorization Grant Type flow, and supports the PKCE extension which is recommended\nto provide better security (source: <https://oauth.net/2/grant-types/authorization-code/>)\n\nConcretely, users are supposed to acquire the token once with a manual step (they have to click on approve), to get a\nfirst pair of tokens.\n\nOnce this is done, they can script the refresh with\na [simple curl command](#refreshing-tokens-ie-generating-programmatically-a-new-access-token--refresh-token-pair).\n\n> ***Note:*** a refresh token is valid for 21 days. It can be used only once. The refreshing mechanism can be done **an\nunlimited number of times**\n\n### Generating Tokens\n\n* You are just starting with the Cintoo API and want to test it manually -> look that \"Generating the JWT Bearer Token\n  with the cintoo-login.exe\"\n* You are already familiar with oauth mechanisms/tools -> look at \"Using tools/3rd party to manage Tokens from Cintoo\n  Oauth Service\"\n\n### Generating the Access Token & Refresh Token pair with the cintoo-login.exe\n\nTo generate an Access Token with OAuth please use the following nice CLI\ntool [cintoo-login.exe](https://cintooprodstatic.blob.core.windows.net/api/cintoo-login-1.1.0-signed.exe) and double\nclick on it.\n\n**If you are on a dedicated tenant, please add the argument `--url`.**\n\n```powershell\n.\\cintoo-login-1.1.0-signed.exe --url https://aec.cintoo.com\n\nOpening OAuth page in browser.\nTo receive your JWT token:\n        * Ensure you are logged-in\n        * Click on the 'Allow' button\nINFO: You have 30s to complete these actions\n```\n\nWhich opens this page\n\n> Hint: if you wait more than 30s you will have to run the command again\n> Hint: you can change the timeout duration to another value with `--timeout 60`\n\n![allow-button](./assets/oauth.png#width=500px;height=350px;)\n\nOnce you click on `Allow` the page should lead you to:\n\n![success](./assets/success.png#width=500px;height=350px;)\n\n*AND* (most importantly) the **token** appears magically in your cmd output\n\n> Hint: Copy paste the `Bearer xxxxx` to avoid errors\n\n```powershell\nOpening OAuth page in browser.\nTo receive your JWT token:\n        * Ensure you are logged-in\n        * Click on the 'Allow' button\nINFO: You have 30s to complete these actions\nHere is your token: to use it put in the Authorization header (copy paste below):\n{\"Authorization\": \"Bearer <access_token>\"}\nIts validity is of 3h\nA new token can be-regenerated simply thanks to this refresh_token: <refresh_token>\nValidating token\nSuccess: API Token was successfully validated\n```\n\n### Refreshing tokens ie. Generating programmatically a new Access Token + Refresh Token pair\n\nWhile the Refresh Token is valid (within 21 days), you can consume it to get a new Access-Token + Refresh-Token pair.\n\n> ***Note:*** consuming the Refresh Token can be done before the expiration of the Access Token\n> ***Note:*** consuming the Refresh Token does **NOT** invalidate other **Access Token** as they are short lived\n\nUsing shell (Linux, OSX)\n\n```shell\nrefresh_token=\"<Your refresh token>\"\ncurl -X POST https://aec.cintoo.com/oauth/token -d \"grant_type=refresh_token&refresh_token=$refresh_token\"\n```\n\nWhich returns the following\n\n```json\n{\n  \"access_token\": \"{access_token}\",\n  \"refresh_token\": \"{refresh_token}\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 10800,\n  \"user_id\": \"{user_id}\"\n}\n```\n\nUsing powershell (Windows)\n\n```powershell\n$refresh_token = \"<Your refresh token>\"\n$params = @{\n    Uri         = 'https://aec.cintoo.com/oauth/token'\n    Method      = 'POST'\n    Body        = @{\n        grant_type     = 'refresh_token'\n        refresh_token  = $refresh_token\n    }\n    ContentType = 'application/x-www-form-urlencoded'\n}\nInvoke-RestMethod @params\n```\n\nWhich returns the following\n\n```powershell\naccess_token  : {access_token}\nrefresh_token : {refresh_token}\ntoken_type    : Bearer\nexpires_in    : 10800\nuser_id       : {user_id}\n```\n\n### Using tools/3rd party to manage Tokens from Cintoo Oauth Service\n\nThe Cintoo API follows the oauth\nprotocol [Authorization Code Grant](https://oauth.net/2/grant-types/authorization-code/) to generate the `access-tokens`\nand `refresh-tokens`.\n\nAs such, it is possible to use 3rd party libraries and tools that implement the Oauth2 Authorization Code protocol to\nmanage the tokens (and perform automatic refresh).\n\nThe important fields are the following and they match those defined by\nthe [authorization code request](https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request/), [authorization code request with PKCE](https://www.oauth.com/oauth2-servers/pkce/authorization-request/)\nand [refreshing access tokens](https://www.oauth.com/oauth2-servers/access-tokens/refreshing-access-tokens/) :\n\n| Field                                  | Value                                                                                                                                                                          |\n|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| Grant Type                             | `Authorization Code` or `Authorization Code (With PKCE)`                                                                                                                       |\n| Callback URL                           | `localhost` or `127.0.0.1` or `/`                                                                                                                                              |\n| Auth URL                               | `https://aec.cintoo.com/oauth/authorize`                                                                                                                                     |\n| Access Token URL                       | `https://aec.cintoo.com/oauth/token`                                                                                                                                         |\n| Refresh Token URL                      | `https://aec.cintoo.com/oauth/token`                                                                                                                                         |\n| State                                  | use a random code made of `[a-z0-9]+` with a \"correct length\". More information about the [state-parameters](https://auth0.com/docs/secure/attack-protection/state-parameters) |\n| Code Challenge Method (only with PKCE) | `SHA-256` more info on [PKCE](https://www.oauth.com/oauth2-servers/pkce/)                                                                                                      |\n\n### The flow in detail for acquiring the first Token pair\n\nThis section is here in case you want to **build an oauth client for acquiring the first Token pair without the help of\nthe cintoo-login or without 3rd party software**.\n\nThe term \"Client\" is going to be described as the originator of the oauth token request.\n\n* Client calls the Cintoo `oauth/authorize` endpoint ***from the browser*** with the following query parameters:\n    * the `redirect_uri` (callback-url) it wants Cintoo to send the authorization code to\n    * the `state` uses a random code made of `[a-z0-9]+` with a \"correct length\". More information about\n      the [state-parameters](https://auth0.com/docs/secure/attack-protection/state-parameters)\n    * (optional) `code_challenge` a random code that has been hashed using the SHA256 algorithm. More info\n      on [PKCE](https://www.oauth.com/oauth2-servers/pkce/).\n  > code_verifier = high-entropy cryptographic random STRING using the\n  unreserved characters [A-Z] / [a-z] / [0-9] / \"-\" / \".\" / \"_\" / \"~\"\n  from Section 2.3 of [RFC3986], with a minimum length of 43 characters\n  and a maximum length of 128 characters.\n    * (optional but mandatory if `code_challenge` is set) `code_challenge_method` : \"SHA256\"\n* Cintoo API returns an html element with an `approve` button to be clicked by the user that started the action (the\n  same shown in the previous chapter)\n* Once the `approve` button is pressed there is a `Form Post URL redirect` that will target the `redirect_uri` provided\n  by the Client with the query parameters : `code` and `state` (+ `code_challenge` and `code_challenge_method` if\n  specified before)\n* The Client ***should check*** that the `state` sent and received are the same to avoid CSRF attacks.\n* If they are the same, the Client can then send a `POST` query to the `oauth/token` endpoint with the following payload\n  that contains the `code` it received on the previous steps.\n\n  ```json\n  {\n      \"code\": \"{code}\",\n      \"grant_type\": \"authorization_code\",\n      \"authorization_code\": \"{redirect_uri}\"\n  }\n  ```\n\n  or with PKCE\n\n  ```json\n  {\n      \"code\": \"{code}\",\n      \"grant_type\": \"authorization_code\",\n      \"authorization_code\": \"{redirect_uri}\",\n      \"code_verifier\": \"{code_verifier}\"\n  }\n  ```\n\n* Finally the Cintoo API answers the `oauth/token` with a json object that contains the `access_token` and\n  `refresh_token` pair:\n\n  ```json\n  {\n      \"access_token\": \"{access_token}\",\n      \"refresh_token\": \"{refresh_token}\",\n      \"token_type\": \"Bearer\",\n      \"expires_in\": 10800,\n      \"user_id\": \"{user_id}\"\n  }\n  ```\n\n- - -\n\n## Doing queries\n\nBelow you will find an example on how to use the token to do a query.\n\nA good endpoint to start with is the `isLogged` **resource** which simply returns `200` and `{\"success\": true}` if the\ntoken was recognized by the Cintoo API.\n\nWe highly recommend that you try it, then start changing the resource type (like `accounts` for instance) to get used to\nthe API.\n\n### Query example for Windows\n\n#### with cUrl\n\n```sh\nexport HOST=aec.cintoo.com\nexport TOKEN=...\n\ncurl --url \"https://{host}/api/2/accounts\" --header \"Authorization: Bearer $TOKEN\"\n```\n\n#### with Python\n\n```python\nimport requests\n\nhost = \"{host}\"\ntoken = \"...\"\n\nresponse = requests.get(\n  \"https://%s/api/2/accounts\" % host,\n  headers = { \"Authorization\": \"Bearer %s\" % token}\n)\nprint(response.status_code)\nprint(response.json())\n```\n\n#### with Powershell\n\nCopy the code below and try it in your Powershell terminal.\n\n> Hint: copy paste this while replacing the `xxxxxxx` with your token, and call as many `Invoke-RestMethod` as you want.\n> Note: the token is surrounded by `\"`\n\n```powershell\n$token = \"xxxxxxxxxxxxxxxxxx\"\n$headers = @{\n    Authorization=\"Bearer $token\"\n    Content='application/json'\n}\nInvoke-RestMethod -Headers $headers -Method Get -Uri \"https://aec.cintoo.com/api/isLogged\"\n```\n\nThe powershell command line should return this\n\n```powershell\nsuccess\n-------\n   True\n```\n\n## URNs\n\nURNs are standard [Uniform Resource Names](https://fr.wikipedia.org/wiki/Uniform_Resource_Name).\n\nOur NID is of course \"cintoo\", so they look like: ```urn:cintoo:{object type}:{object id}```.\n\nAll the endpoints that return an object or a list of objects include a field giving the URN of the object, that you can\nin turn use to reference this object whenever you need to mention it.\n\n## References\n\nThroughout the API, most endpoints need you to give *references* to existing objects,\nlike accounts, projects, roles, etc. For example, getting the details of an account will look like:\n\n```\nGET /api/2/accounts/{accountRef}\n```\n\nA *reference* can be any unambiguous identifier for the object. It typically is either:\n\n- the raw uuid or numerical id, depending on the type of the object:\n    - ```c41aec8b-3b85-4bdd-81e5-c2cfdb8980e8```\n    - ```5```\n- a URN (Uniform Resource Name), looking like: ``urn:cintoo:<object type>:<raw uuid or id>``. For example:\n    - ```urn:cintoo:account:c41aec8b-3b85-4bdd-81e5-c2cfdb8980e8```\n    - ```urn:cintoo:user:5```\n\nThe URN is the most durable option and should be preferred, each object returned by the API has an ```urn``` field\nholding it,\nwhereas at some point the raw id/uuid objects fields will be deprecated or removed from the objects content.\n\nIf your client needs to store identifiers for objects, **you should choose the URN**,\n\n- - -\n\n## Errors\n\nTo communicate errors, the Cintoo API\n\n* fills the HTTP status code defined by the\n  standard: [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)\n\nIt is consensus in the industry that the ***status code is the source of truth*** on whether an API call was successful\nor not, the ***body is merely a BONUS***.\n\n### Error-body returned\n\nWe are following this [RFC](https://www.rfc-editor.org/rfc/rfc9457) whose content is the following\n\n> * The \"status\" member is a JSON number indicating The HTTP status code ([HTTP], Section 15) generated by the origin\n    server for this occurrence of the problem.\n    >\n    >   The \"status\" member, if present, is only advisory; it conveys the HTTP status code used for the convenience of\n    the consumer. Generators MUST use the same status code in the actual HTTP response, to assure that generic HTTP\n    software that does not understand this format still behaves correctly. See Section 5 for further caveats regarding\n    its use.\n    >\n    >   Consumers can use the status member to determine what the original status code used by the generator was when it\n    has been changed (e.g., by an intermediary or cache) and when a message's content is persisted without HTTP\n    information. Generic HTTP software will still use the HTTP status code.\n> * The \"title\" member is a JSON string containing a short, human-readable summary of the problem type.\n    >\n    >   It SHOULD NOT change from occurrence to occurrence of the problem, except for localization (e.g., using\n    proactive content negotiation; see [HTTP], Section 12.1).\n    >\n    >   The \"title\" string is advisory and is included only for users who are unaware of and cannot discover the\n    semantics of the type URI (e.g., during offline log analysis).\n> * \"detail\" (string) - The \"detail\" member is a JSON string containing a human-readable explanation specific to this\n    occurrence of the problem.\n    >\n    >   The \"detail\" string, if present, ought to focus on helping the client correct the problem, rather than giving\n    debugging information.\n    >\n    >   Consumers SHOULD NOT parse the \"detail\" member for information; extensions are more suitable and less\n    error-prone ways to obtain such information.\n\nIn addition, 2 extension fields are added:\n\n* `errorCode`: detailed code describing the error, can be used to map to a localized message\n* `errorValues`: values implied in the error, typically an input parameter, can be used to include in a localized\n  message\n\nThe mandatory fields that are always present are : `status` and `title`. Others are optional.\n\nExample:\n\n```json\n{\n  \"status\": 404,\n  \"title\": \"Not Found\",\n  \"detail\": \"Account 1234 not found\",\n  \"errorCode\": \"account-not-found\",\n  \"errorValues\": {\n    \"accountId\": \"1234\"\n  }\n}\n```\n\nSo the HTTP response status code is both in the HTTP header, and in the `status` attribute of the returned JSON object.\n\nFor a list of `errorCode` and `errorValues`, see the dedicated section [Errors List](#tag/errors_list)\n\n- - -\n\n## Permissions\n\nEach resource needs to have a permission to be accessed.\nPermissions are represented by three elements:\n\n* *domain*: the level on which the resource is: `tenant`, `account`, `project` or `workzone`\n* *resource*: the type of resource, for example `users` or `tags`\n* *right*: the right on the resource the permission is giving.\n  Most of the time it will be either `read` (get/list resource) or `write` (create, update, delete)\n  but can be another action when finer granularity is needed.\n\nThis is represented by a string containing those 3 elements separated by a colon: `<domain>:<resource>:<right>`.\nFor example `account:users:read` is the permission to *read* (view/list) users on the account level.\n\nHere is the list of the currently supported permissions:\n\n* `tenant:user-permissions:read`\n* `tenant:user-permissions:write`\n* `account:account:read`\n* `account:account:update-owner`\n* `account:administrators:read`\n* `account:administrators:write`\n* `account:integrations:read`\n* `account:integrations:write`\n* `account:project-listers:read`\n* `account:project-listers:write`\n* `account:project-managers:read`\n* `account:project-managers:write`\n* `account:projects:read` (implies `project:project:read` on all projects of the account)\n* `account:projects:create`\n* `account:projects:update` (implies `project:project:update-details` on all projects of the account)\n* `account:projects:delete` (implies `project:project:delete` on all projects of the account)\n* `account:roles:read`\n* `account:roles:write`\n* `account:subscriptions:read`\n* `account:subscriptions:update-name`\n* `account:users:read`\n* `account:users:write` (implies `workzone:members:write` on all workzones in the account)\n* `account:groups:read`\n* `project:project:read`\n* `project:project:delete`\n* `project:project:update-details`\n* `project:project:update-owner`\n* `project:project:update-subscription`\n* `project:members:list`\n* `project:annotations:create-integration-link`\n* `project:integrations:read`\n* `project:integrations:write`\n* `workzone:annotations:read`\n* `workzone:annotations:write`\n* `workzone:crops:read`\n* `workzone:crops:write`\n* `workzone:documents:read`\n* `workzone:documents:write`\n* `workzone:export-jobs-reality-data:read`\n* `workzone:export-jobs-reality-data:write`\n* `workzone:import-jobs-reality-data:write`\n* `workzone:measurements:read`\n* `workzone:measurements:write`\n* `workzone:members:write`\n* `workzone:share-links:read`\n* `workzone:share-links:write`\n* `workzone:own-share-links:read`\n* `workzone:own-share-links:write`\n* `workzone:reality-data:read`\n* `workzone:reality-data:write`\n* `workzone:reality-data:transform`\n* `workzone:savedviews:read`\n* `workzone:savedviews:write`\n* `workzone:tags:read`\n* `workzone:tags:write`\n* `workzone:workzones:read`\n* `workzone:workzones:write`\n* `workzone:progress-monitoring-jobs:read`\n* `workzone:progress-monitoring-jobs:write`\n* `workzone:own-progress-monitoring-jobs:read`\n* `workzone:own-progress-monitoring-jobs:write`\n* `workzone:model-reports:read`\n* `workzone:model-reports:write`\n* `workzone:cad-model:read`\n* `workzone:cad-model:write`\n* `workzone:cad-model:transform`\n* `workzone:own-import-jobs-cad-model:read`\n* `workzone:own-import-jobs-cad-model:write`\n* `workzone:import-jobs-cad-model:read`\n* `workzone:import-jobs-cad-model:write`\n* `workzone:video3d:read`\n* `workzone:video3d:write`\n* `workzone:import-video3d:write`\n\n### Roles\n\nA user is given permissions through roles. There are roles on the different levels detailed below.\n\n#### Roles at the account level\n\nRoles on an account are currently not modifiable, and are the following:\n\n* *Account Member* is any user invited to the account\n* *Account Owner*\n* *Account Administrator*\n* *Project Manager*\n* *Project Lister*\n\nAn *account member* has the following permissions:\n\n* `account:account:read` to view the account\n* `account:roles:read` to view roles on the account\n* `account:groups:read` to view groups on the account\n\nAn *account owner* or *account administrator* are account members, and have the following additional permissions:\n\n* `account:projects:read` to list and view all projects on the account\n* `account:projects:update` to update any project on the account\n* `account:roles:write` to create, edit and delete roles on the account\n* `account:users:read` to list users members of the account\n* `account:users:write` to invite or remove users on the account\n* `account:subscriptions:read` to view subscriptions of the account\n* `account:subscriptions:update-name` to rename a subscription of the account\n* `account:administrators:read` to list administrators on the account\n* `account:administrators:write` to invite or remove an administrator\n* `account:project-managers:read` to list project managers on the account\n* `account:project-managers:write` to invite or remove a project manager\n* `account:project-listers:read` to list project listers on the account\n* `account:project-listers:write` to invite or remove a project lister\n* `account:integrations:read` to list and view all integrations configured on the account\n* `account:integrations:write` to create, update and delete integrations on the account\n\nAn account owner has also the permission `account:account:update-owner` that an account administrator does not have,\nto set another user as the account owner\n\nA *project manager* is an account member with the following additional permissions:\n\n* `account:projects:read` to list and view all projects on the account\n* `account:projects:create` to create new projects\n* `account:projects:update` to update any project\n* `account:projects:delete` to delete any project\n* `account:roles:write` to create, edit and delete roles on the account\n* `account:users:read` to list users of the account\n* `account:users:write` to invite or remove users on the account\n* `account:subscriptions:read` to view subscriptions of the account\n* `account:project-managers:read` to list project managers on the account\n* `account:project-managers:write` to invite or remove a project manager\n\nA *project lister* is an account member with the following additional permission:\n\n* `account:projects:read` to list and view all projects of the account\n\n#### Roles at project and workzone levels\n\nRoles can be created on an account to give permissions on project and workzone levels.\n\nUsers and groups are invited to a project with a specific role, thus a user has the role assigned to him,\nbut also the roles of the groups he belongs to.\nA user's permissions are determined by adding the permissions of all his roles.\n\nCurrently the permissions given to a role are restricted to the following:\n\n* `project:project:update-details` + `project:project:delete`\n  allows the user to manage the project\n* `workzone:workzones:read` + `workzone:workzones:write`\n  allows the user to create, modify and delete work zones\n* `workzone:reality-data:read` + `workzone:crops:read` allows the user to view reality data\n* `workzone:reality-data:write` + `workzone:import-jobs-reality-data:write`\n  allows the user to import or delete scans\n* `workzone:reality-data:transform`\n  allows the user to modify the position and/or rotation of a scan\n* `workzone:export-jobs-reality-data:write`\n  allows the user to export and download reality data\n* `workzone:annotations:read` allows the user to view annotations\n* `workzone:annotations:read` + `workzone:annotations:write`\n  allows the user to create, edit and delete annotations, and assign notes to team members\n* `workzone:measurements:read` + `workzone:measurements:write` + `workzone:crops:write`\n  allows the user to add and view 3D measurements (and add/update crops)\n* `workzone:share-links:read` + `workzone:share-links:write`\n  allows the user to create, edit and delete share links\n* `workzone:own-share-links:read` + `workzone:own-share-links:write`\n  allows the user to create, edit and delete the share links they created\n* `workzone:documents:read` + `workzone:documents:write`\n  allows the user to upload and download documents\n* `workzone:tags:read` allows the user to view tags\n* `workzone:tags:write`\n  allows the user to import, create, edit and delete tags\n* `workzone:savedviews:read` allows the user to view saved views\n* `workzone:savedviews:read` + `workzone:savedviews:write`\n  allows the user to create, edit and delete saved views\n* `workzone:members:write` allows the user to add and remove team members\n* `workzone:progress-monitoring-jobs:read` + `workzone:progress-monitoring-jobs:write`\n    + `workzone:own-progress-monitoring-jobs:read` + `workzone:own-progress-monitoring-jobs:write`\n    + `workzone:model-reports:read` + `workzone:model-reports:write`\n      allows the user to create, edit, download and delete progress monitoring reports\n* `workzone:cad-model:read` + `workzone:cad-model:write` + `workzone:own-import-jobs-cad-model:read` +\n  `workzone:own-import-jobs-cad-model:write` + `workzone:import-jobs-cad-model:read` +\n  `workzone:import-jobs-cad-model:write` allow the user to create, edit, download and delete CAD Model and to import\n  them from different sources.\n* `workzone:cad-model:transform`\n  allows the user to modify the position and/or rotation of a 3D model\n* `workzone:video3d:write` + `workzone:import-video3d:write` allow the user to trigger the Add 360Video job\n\nAny member of a project also automatically has the following permissions:\n\n* `project:project:read` and `project:members:list` on the project\n* `workzone:workzones:read` on the workzone he is member and all its child workzones\n\nA project owner automatically has all permissions on the project and all its workzones.\n\nA member having permission `workzone:annotations:write` on the root work zone of a project,\nautomatically has the following permissions on the project:\n\n* `project:annotations:create-integration-link`\n* `project:integrations:read`\n* `project:integrations:write`\n\n- - -\n\n## API 1 and API 2\n\n### What to expect with API 2\n\n* Stage 1: API 2 provides features not covered by API 1.\\\n  Most of features are tagged `BETA` showing that they will continue to mature\n* Stage 2: API 2 `BETA` tags are removed, and API 2 starts covering API 1 features\n* Stage 3: API 2 fully covers API 1 scope\n* Stage 4: API 1 will have a end of life support date communicated\n* Stage 5: API 1 will be decommissioned\n\n### Similarities\n\n* Authentication system is the same. Tokens used on API 1 can be used in API 2.\n* Do follow the same kind of path ex: `/accounts/{accountRef}/projects/{projectRef}/...`\n\n### Differences\n\n* Reference system is different: API 2 handles new Reference types (URNs), classic references (UUID) and \"legacy\n  references\" coming from API 1.\\\n  API 1 supports UUID and \"legacy references\" only.\n* Error messages in API 2 follow\n  the [RFC 9457 (Problem Details for HTTP APIs)](https://www.rfc-editor.org/rfc/rfc9457).\\\n  In short `{\"code\": ...,  \"message\": ...}` becomes `{\"status\": ...,  \"title\": ...}`.\n* All resources returned by API 2 have multiple ref types (always an URN + UUID or INT)\n* POST and PUT endpoints do return full objets (normally available with a GET)\n* Objects returned from API 1 and API 2 differ\n\n### Endpoints only in API 1\n\n* Report Projects Last Accessed Date\n* Report Users Last Activity Date\n\nContact Support:\n Name: API Support\n Email: support@cintoo.com",
+      "type": "text/plain"
+    }
+  }
+}

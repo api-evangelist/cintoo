@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Tag API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tag",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef/tags",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              },
+              {
+                "name": "afterVersion",
+                "value": "",
+                "type": "query",
+                "description": "If specified, return changes after the given version. A negative value or 0 is ignored.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get tags from a tag list.\n\nRequires the permission `workzone:tags:read` on the work zone of the tag list.\n\nThe project must have an active subscription.\n\nIf the parameter `afterVersion` is not specified (or 0 or negative value), all tags of the tag list are returned.\nIf it is specified, it will return all changes after the given version, including new tags, updated tags,\nbut also deleted tags (with `isDeleted` set to true in the response).\n"
+        },
+        {
+          "info": {
+            "name": "Bulk operation on tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef/tags/bulk",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Bulk operation on tags inside a tag list.\n\nRequires the permission `workzone:tags:write` on the work zone of the tag list.\nThe tag list must not be pending, and must not exceed the maximum number of tags for a tag list (50000).\n\nThe bulk operation perform all requests together, if any fails nothing is done (no partial execution).\n"
+        },
+        {
+          "info": {
+            "name": "Move tags between tag lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/tag-lists/:tagListRef/tags/bulk-move",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "tagListRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the tag list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Move tags from different tag lists to a common target tag list.\n\n- Requires the permission `workzone:tags:write` on the work zones of all tag lists\n- The project must have a valid subscription\n- All tag lists must not be pending\n- The target tag list must not exceed the maximum number of tags for a tag list (50000)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

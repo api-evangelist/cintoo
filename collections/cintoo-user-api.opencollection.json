@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account User API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invite users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/users/bulk-invite",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Invite users to an account\n\nThis endpoint is *idempotent* which means it applies the state requested by the caller.\nIt can be used to invite users to an account with a set of accountRole\nor it can be used to grant new accountRoles to existing users.\n\nUsers that are new to the Cintoo cloud platform are expected to receive an invitation email where they will be able to define a password.\n\nRequires the caller:\n* to have permission `account:administrators:write` to "
+        },
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/users",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List available users into this account.\nData is anonymized for not confirmed users.\n\nRequires the caller to have one of following permissions: \n* `account:users:read`\n* `workzone:members:write` on any work zone inside the account\n"
+        },
+        {
+          "info": {
+            "name": "Get user details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/users/:userRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "userRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the user"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Details about a given user into this account.\nData is anonymized in case the user is not confirmed.\n\nRequires the caller to have one of following:\n* `account:users:read`\n* `workzone:members:write` on any work zone inside the account\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

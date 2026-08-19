@@ -1,0 +1,240 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Annotation API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Annotation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List annotations in a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/annotations",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "includeComments",
+                "value": "",
+                "type": "query",
+                "description": "If true the operation retrieves comments attached to each annotation,\nelse the comments field will not be returned.\n"
+              },
+              {
+                "name": "includeAttachments",
+                "value": "",
+                "type": "query",
+                "description": "If true the operation retrieves information about files attached to each annotation or comment,\nelse the attachments field will not be returned.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List all annotations in a project\n\nOnly annotations on work zones where the user has the permission `workzone:annotations:read` are returned.\n"
+        },
+        {
+          "info": {
+            "name": "Create an annotation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/annotations",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create an annotation\n\nRequires the permission `workzone:annotations:write` on the work zone.\n\nA maximum of 3000 annotations are allowed on the same project. If this limit is reached, an error 400 with\nerror code `project-max-annotations` is returned.\n"
+        },
+        {
+          "info": {
+            "name": "Get annotation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/annotations/:annotationRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "annotationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the annotation"
+              },
+              {
+                "name": "includeComments",
+                "value": "",
+                "type": "query",
+                "description": "If true the operation retrieves comments attached to each annotation,\nelse the comments field will not be returned.\n"
+              },
+              {
+                "name": "includeAttachments",
+                "value": "",
+                "type": "query",
+                "description": "If true the operation retrieves information about files attached to each annotation or comment,\nelse the attachments field will not be returned.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Retrieve an annotation, optionally with comments and attachments\n\nRequires the permission `workzone:annotations:read` on the work zone where the annotation is.\n"
+        },
+        {
+          "info": {
+            "name": "Update an annotation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/annotations/:annotationRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "annotationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the annotation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update an annotation\n\n<span class='block' style='background-color: PapayaWhip;'><span class='icon' style='color: red; font-size:20px;'>&#9888;</span> Overwrites all fields. Missing fields will be considered as null and current values will be erased</span>\n\nRequires the permission `workzone:annotations:write` on the work zone.\n"
+        },
+        {
+          "info": {
+            "name": "Delete an annotation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/annotations/:annotationRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "annotationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the annotation"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete an annotation\n\nRequires the permission `workzone:annotations:write` on the work zone.\n"
+        },
+        {
+          "info": {
+            "name": "Create a comment on an annotation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/annotations/:annotationRef/comments",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "annotationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the annotation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a comment on an annotation\n\nRequires the permission `workzone:annotations:write` on the work zone.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

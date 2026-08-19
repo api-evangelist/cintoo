@@ -1,0 +1,370 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Project API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "countScans",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+              },
+              {
+                "name": "countTags",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+              },
+              {
+                "name": "countWorkzones",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>List active and deleted projects into this account."
+        },
+        {
+          "info": {
+            "name": "Create Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create a project.\n\nRequires the permission `account:projects:create` on the account.\n"
+        },
+        {
+          "info": {
+            "name": "Get Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "countScans",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+              },
+              {
+                "name": "countTags",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+              },
+              {
+                "name": "countWorkzones",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get a project details.\n\nRequires the permission `project:project:read` on the project.\nIn other words, the requester MUST already be a member of the project at some level:\n- account owner, administrator, project manager or project lister\n- project creator or owner\n- be a contributor of the project, or be a member of a contributing group\n"
+        },
+        {
+          "info": {
+            "name": "Update Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "countScans",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+              },
+              {
+                "name": "countTags",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+              },
+              {
+                "name": "countWorkzones",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update a Project. \n\n<span class='block' style='background-color: PapayaWhip;'><span class='icon' style='color: red; font-size:20px;'>&#9888;</span> Overwrites all fields. Missing fields will be considered as null and current values will be erased</span>\n\nPermissions:\n- To update everything: be the account owner, administrator, or project owner\n- To update everything EXCEPT the subscription and the owner: have the \"Update, delete or restore projects\" permission o"
+        },
+        {
+          "info": {
+            "name": "Patch Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "countScans",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+              },
+              {
+                "name": "countTags",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+              },
+              {
+                "name": "countWorkzones",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Patch a Project. \n\n<span class='block' style='background-color: Lavender;'><span class='icon' style='color: blue; font-size:25px;'>&#9432;</span> Unlike the PUT operation (Update a project), the patch updates only the provided fields.</span>\n\nPermissions:\n- To update everything: be the account owner, administrator, or project owner\n- To update everything EXCEPT the subscription and the owner: have the \"Update, delete or restore projects\" permission on the projec"
+        },
+        {
+          "info": {
+            "name": "Delete Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "permanent",
+                "value": "",
+                "type": "query",
+                "description": "Delete Permanently a project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete a project.\n\nRequires the permission `project:project:delete` on the project.\n(Note that permission `account:projects:delete` on the account implies the permission\n`project:project:delete` on all projects of the account).\n"
+        },
+        {
+          "info": {
+            "name": "Get a signed URL for project cover file upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/cover",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get a signed URL for project cover file upload\n\nRequires the permission `projects:project:update-details`.\n\nAfter this call, use the `url`s from the response to upload the cover file.\n\nRequired headers to push the files\n* `Content-MD5: xxx` with `xxx` being a base 64 encode of the md5sum in binary format.\\\n  Example: `MD5SUM=\"$(openssl md5 -binary < \"$FILENAME\" | base64)\"`\n* `Cache-Control: max-age=2592000`\n* `x-ms-blob-type: BlockBlob` mandatory if the storage "
+        },
+        {
+          "info": {
+            "name": "Update cloud file as cover for project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/cover",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update the cover for the project\n\nRequires the permission `projects:project:update-details`\n\nThis actually adds an already uploaded file as cover for a project\n"
+        },
+        {
+          "info": {
+            "name": "Restore project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/restore",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "countScans",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `scanCount` and `scanSize` in the `statsInfo` field of the response.\nIf false, these fields will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `scanCount` or `scanSize` should start passing `countScans=true` explicitly.\n"
+              },
+              {
+                "name": "countTags",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `tagCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `tagCount` should start passing `countTags=true` explicitly.\n"
+              },
+              {
+                "name": "countWorkzones",
+                "value": "",
+                "type": "query",
+                "description": "If true, includes `workzoneCount` in the `statsInfo` field of the response.\nIf false, this field will not be included in `statsInfo`.\n\n**Upcoming change:** The default value will change from `true` to `false` in a future release.\nClients that rely on `workzoneCount` should start passing `countWorkzones=true` explicitly.\n"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Restore a deleted project.\n\nRequires the permission `project:project:delete` on the project.\n(Note that permission `account:projects:delete` on the account implies the permission\n`project:project:delete` on all projects of the account).\n\nError management:\nIf the subscription used by this project does not have enough capacity to restore it,\na 400 error is returned with a message,\nlike \"Target subscription <subscriptionId> does not have enough Scan capacity to acc"
+        },
+        {
+          "info": {
+            "name": "List Spatial References",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/values/spatial-references"
+          },
+          "docs": "<span class='tag beta'>BETA</span>List official Spatial References from https://spatialreference.org/"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

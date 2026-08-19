@@ -1,0 +1,294 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Konekt API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Konekt",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an account integration with Konekt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/integrations/konekt",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Configure an integration on the account with Newforma Konekt.\n\nRequires the permission `account:integrations:write` automatically granted for account administrators and account owner.\n"
+        },
+        {
+          "info": {
+            "name": "Get an account integration with Konekt",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/integrations/konekt/:integrationRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "integrationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Urn of the integration"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get an integration with Newforma Konekt configured on the account\n\nRequires the permission `account:integrations:read` automatically granted for account administrators and account owner.\n"
+        },
+        {
+          "info": {
+            "name": "Update an account integration with Konekt",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/integrations/konekt/:integrationRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "integrationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Urn of the integration"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update the configuration for the integration with Newforma Konekt.\n\nRequires the permission `account:integrations:write` automatically granted for account administrators and account owner.\n"
+        },
+        {
+          "info": {
+            "name": "Delete an account integration with Konekt",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/integrations/konekt/:integrationRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "integrationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Urn of the integration"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete an integration with Newforma Konekt on the account.\n\nRequires the permission `account:integrations:write` automatically granted for account administrators and account owner.\n"
+        },
+        {
+          "info": {
+            "name": "Connect an account integration with Konekt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/integrations/konekt/:integrationRef/connection",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "integrationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Urn of the integration"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Connect an integration previously disconnected.\n\nRequires the permission `account:integrations:write` automatically granted for account administrators and account owner.\n"
+        },
+        {
+          "info": {
+            "name": "Disconnect an account integration with Konekt",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/integrations/konekt/:integrationRef/connection",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "integrationRef",
+                "value": "",
+                "type": "path",
+                "description": "The Urn of the integration"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Disconnect an integration without removing it.\n\nRequires the permission `account:integrations:write` automatically granted for account administrators and account owner.\n"
+        },
+        {
+          "info": {
+            "name": "Get configuration of integration with Konekt on a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/konekt",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Get the integration with Newforma Konekt configured on the project\n\nRequires the permission `project:integrations:read` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Create configuration of integration with Konekt on Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/konekt",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Create the configuration for the integration with Newforma Konekt.\n\nRequires the permission `project:integrations:write` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Update configuration of the integration with Konekt on Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/konekt",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Update the configuration for the integration with Newforma Konekt.\n\nRequires the permission `project:integrations:write` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Delete the integration with Konekt on Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/integrations/konekt",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Delete the integration with Newforma Konekt on the project.\n\nRequires the permission `project:integrations:write` automatically granted for users having\n`workzone:annotations:write` on the root work zone of the project.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

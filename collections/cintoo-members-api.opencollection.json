@@ -1,0 +1,175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Members API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Users member of a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/members",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>GetUsers member of a project.\n\nRequires the permission `project:members:list`.\n"
+        },
+        {
+          "info": {
+            "name": "Add members to project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/members",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Add members to a project.\n\n#### Role assignment\n * Each member is assigned to a role.\n * Each user or group item accepts an optional `expirationDate` (ISO-8601 UTC timestamp). When set, the member access expires automatically around that time (actual removal may be delayed by up to a few hours). When absent or null, the member has no expiration.\n * A member must not be already assigned to a different role on any work zone of the project.\n * If a member already h"
+        },
+        {
+          "info": {
+            "name": "Bulk remove users and groups from project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/members/bulk-remove",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<span class='tag beta'>BETA</span>Remove users and groups from the project.\n\nThis endpoint will ignore users or groups that are not really contributors of the project.\n\nPermissions:\nRequires a role with \"Manage User\" permission on the top most work zone of the project.\n"
+        },
+        {
+          "info": {
+            "name": "Remove user from project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/members/users/:userRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "userRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the user"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Remove a user from the project.\n\nRequires the permission `workzone:members:write` on the top most work zone of the project.\n\n**Note** can be invoked on self. Any user can remove himself from a project.\n"
+        },
+        {
+          "info": {
+            "name": "Remove group from project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/projects/:projectRef/members/groups/:groupRef",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "projectRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the project"
+              },
+              {
+                "name": "groupRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the group"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>Remove a group from the project.\n\nPermissions:\n\nRequires the permission `workzone:members:write` on the top most work zone of the project.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

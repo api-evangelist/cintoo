@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cintoo Open Account Usage Report API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://aec.cintoo.com/oauth/authorize",
+      "accessTokenUrl": "https://aec.cintoo.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage Report",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate an Usage Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://aec.cintoo.com/api/2/accounts/:accountRef/subscriptions/:subscriptionRef/usage-report",
+            "params": [
+              {
+                "name": "accountRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the account"
+              },
+              {
+                "name": "subscriptionRef",
+                "value": "",
+                "type": "path",
+                "description": "The Id or Urn of the subscription"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The date to start to retrieve usage report data from (included)"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "The date to start to retrieve usage report data from (included)"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Also export deleted (including permanently deleted) projects"
+              }
+            ]
+          },
+          "docs": "<span class='tag beta'>BETA</span>- Generate an Usage Report, listing actions done per day, per user, per project on a given subscription.\n\nThis endpoint is unavailable when the tenant setting `hidePrivacyData` is enabled.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
