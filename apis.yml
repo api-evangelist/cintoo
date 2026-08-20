@@ -36,6 +36,18 @@ created: '2026-07-17'
 modified: '2026-07-18'
 tags:
 - Company
+- Infrastructure Saas
+- Reality Capture
+- Digital Twin
+- Point Cloud
+- 3D
+- AEC
+- BIM
+- Construction
+- Scan-to-BIM
+- GIS
+tags_raw:
+- Company
 - Infrastructure SaaS
 - Reality Capture
 - Digital Twin
@@ -170,6 +182,8 @@ apis:
   humanURL: https://aec.cintoo.com/api/2
   baseURL: https://aec.cintoo.com/api/2/
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -202,6 +216,8 @@ apis:
   humanURL: https://aec.cintoo.com/api/2
   baseURL: https://aec.cintoo.com/api/2/
   tags:
+  - Measurements
+  tags_raw:
   - Measurement
   properties:
   - type: OpenAPI
@@ -346,6 +362,8 @@ apis:
   humanURL: https://aec.cintoo.com/api/2
   baseURL: https://aec.cintoo.com/api/2/
   tags:
+  - UsageReport
+  tags_raw:
   - Usage Report
   properties:
   - type: OpenAPI
@@ -378,6 +396,8 @@ apis:
   humanURL: https://aec.cintoo.com/api/2
   baseURL: https://aec.cintoo.com/api/2/
   tags:
+  - Work Zone
+  tags_raw:
   - Workzone
   properties:
   - type: OpenAPI
