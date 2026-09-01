@@ -48,7 +48,7 @@ created: '2026-07-17'
 modified: '2026-07-18'
 tags:
 - Company
-- Infrastructure SaaS
+- Infrastructure Saas
 - Reality Capture
 - Digital Twin
 - Point Cloud
@@ -374,7 +374,7 @@ apis:
   humanURL: https://aec.cintoo.com/api/2
   baseURL: https://aec.cintoo.com/api/2/
   tags:
-  - Usage Report
+  - UsageReport
   tags_raw:
   - Usage Report
   properties:
@@ -408,7 +408,7 @@ apis:
   humanURL: https://aec.cintoo.com/api/2
   baseURL: https://aec.cintoo.com/api/2/
   tags:
-  - Workzone
+  - Work Zone
   tags_raw:
   - Workzone
   properties:
