@@ -11,8 +11,29 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 2
+edge_count: 4
 edges:
+- tag: Group
+  spec_file: cintoo-group-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: '"Create group", "Add users to a group", "Remove users from a group"'
+  reason: User group membership administration within an account — access-management/identity grouping.
+    Classic IAM plumbing mapped to Identity & Access Management.
+  recovered_from: vertical-engineering-services-edges.json
+- tag: Members
+  spec_file: cintoo-members-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: '"Add members to project", "Remove user from project", "Bulk remove users and groups from
+    project"; schemas "RoleUrn", "AccountRoles"'
+  reason: Assignment of users and groups (with roles) to projects — access provisioning. Best read as
+    identity/access administration rather than any project-delivery capability.
+  recovered_from: vertical-engineering-services-edges.json
 - tag: Role
   spec_file: cintoo-role-api-openapi.yml
   capability_id: BC-620.20
