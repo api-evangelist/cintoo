@@ -171,152 +171,6 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst projectUUID = \"...\";\nconst targetTagListUUID = \"...\";\nconst token = \"...\";\nconst sourceTagListUUID = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/projects/${projectUUID}/tag-lists/${targetTagListUUID}`;\nconst res = await fetch(url, {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    [{\"sourceTagListId\":sourceTagListUUID,\"tagsIds\":[...]}]\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    TagDataModelOrientedList:
-      title: Tag Data Model Using Oriented Bounding Box List
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          enum:
-          - OrientedList
-        list:
-          type: array
-          maxItems: 500
-          items:
-            $ref: '#/components/schemas/TagBoundingBox'
-        groupedOBBList:
-          type: array
-          maxItems: 500
-          items:
-            $ref: '#/components/schemas/TagSharedOrientedBoundingBox'
-        orientedBoundingBoxList:
-          type: array
-          maxItems: 500
-          items:
-            $ref: '#/components/schemas/TagOrientedBoundingBox'
-    TagListAttachment:
-      type: object
-      description: 'Attachment as returned by the API. All fields are always present (nullable ones are returned as
-
-        `null` when unset). The request shape used when creating/updating a tag list is
-
-        `TagListAttachmentInput.yaml`.
-
-        '
-      required:
-      - id
-      - name
-      - blob
-      - pages
-      properties:
-        id:
-          type: string
-          minLength: 1
-          maxLength: 255
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        blob:
-          type:
-          - string
-          - 'null'
-        pages:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - index
-            properties:
-              id:
-                type: string
-                minLength: 1
-                maxLength: 255
-              index:
-                type: integer
-              scale:
-                type: number
-              width:
-                type: number
-              height:
-                type: number
-              name:
-                type: string
-                minLength: 1
-                maxLength: 255
-              hidden:
-                type: boolean
-    WorkzoneUrn:
-      type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    TagBoundingBox:
-      title: Bounding Box
-      description: '[xMin, yMin, zMin, xMax, yMax, zMax]:
-
-        * (xMin, yMin, zMin) min position
-
-        * (xMax, yMax, zMax) max position
-
-        '
-      type: array
-      minItems: 6
-      maxItems: 6
-      items:
-        type: number
-        format: float
-    TagDataCustomFields:
-      title: Tag Data Custom Fields
-      type: array
-      minItems: 0
-      maxItems: 10
-      items:
-        type: object
-        properties:
-          name:
-            type: string
-            maxLength: 50
-          value:
-            type: string
-            maxLength: 1000
-        required:
-        - name
-        - value
-        additionalProperties: false
-    TagDataModelBinarizedAxisAlignedList:
-      title: Tag Data Model Using Binary Bounding Box List
-      type: object
-      required:
-      - type
-      - binary
-      properties:
-        type:
-          type: string
-          enum:
-          - BinarizedAxisAlignedList
-        binary:
-          type: string
-          maxLength: 32000
-      additionalProperties: false
-    TagListRef:
-      oneOf:
-      - $ref: '#/components/schemas/TagListUrn'
-      - $ref: '#/components/schemas/TagListId'
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
     TagDataModelAxisAlignedList:
       title: Tag Data Model Using Bounding Box List
       type: object
@@ -335,152 +189,36 @@ components:
           minItems: 2
           maxItems: 1000
       additionalProperties: false
-    TagUrn:
-      type: string
-      description: '"urn:cintoo:tag:" followed by an UUIDv4
-
-        '
-    TagId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    TagSharedOrientedBoundingBox:
-      title: Tag Oriented Bounding Box List With Shared Orientation
-      type: array
-      minItems: 16
-      maxItems: 505
-      items:
-        type: number
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
     AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    TagOrientedBoundingBox:
-      title: Oriented Bounding Box
-      description: '[xPos, yPos, zPos, xQuat, yQuat, zQuat, wQuat, xScale, yScale, zScale]:
-
-        * (xPos, yPos, zPos) position of the center of the box, in meters
-
-        * (xQuat, yQuat, zQuat, wQuat) rotation (as a quaternion) of the box, using the center of the box as a pivot
-
-        * (xScale, yScale, zScale) scale of the box, in meters
-
-        '
-      type: array
-      minItems: 10
-      maxItems: 10
-      items:
-        type: number
-        format: float
-    TagRef:
-      oneOf:
-      - $ref: '#/components/schemas/TagUrn'
-      - $ref: '#/components/schemas/TagId'
-    Vector3:
-      type: array
-      minItems: 3
-      maxItems: 3
-      items:
-        type: number
-    TagDataNature:
-      title: Tag Data Nature
-      type: string
-      enum:
-      - AI
-      - file
-      - manual
-      - model
-    TagList:
+    Error:
       type: object
-      x-tags:
-      - Tag List
       required:
-      - id
-      - type
-      - workzoneId
-      - tagListType
-      - name
-      - description
-      - color
-      - metadataDefinition
-      - attachments
-      - pending
-      - createdBy
-      - createdAt
-      - updatedBy
-      - updatedAt
-      - tagsVersion
+      - status
+      - title
       properties:
-        id:
-          $ref: '#/components/schemas/TagListUrn'
-        type:
-          type: string
-          enum:
-          - tag-list
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneUrn'
-        tagListType:
-          type: string
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-          maxLength: 1000
-        color:
-          type: string
-          maxLength: 20
-        metadataDefinition:
-          type: array
-          minItems: 0
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/TagListMetadataDefinition'
-          description: 'Defines for each metadata id a displayable name.
-
-            Note that tags inside the list may have metadata not defined in the list, but only those defined on the
-
-            list will be displayed on the webapp.
-
-            '
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TagListAttachment'
-        pending:
-          type: boolean
-        createdBy:
-          $ref: '#/components/schemas/UserUrn'
-        createdAt:
-          $ref: '#/components/schemas/DateTime'
-        updatedBy:
-          $ref: '#/components/schemas/UserUrn'
-        updatedAt:
-          $ref: '#/components/schemas/DateTime'
-        tagsVersion:
+        status:
           type: integer
-    TagListUrn:
-      type: string
-      description: '"urn:cintoo:tag-list:" followed by an UUIDv4
-
-        '
-    TagListId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    Vector4:
+      type: array
+      minItems: 4
+      maxItems: 4
+      items:
+        type: number
     TagListMetadataDefinition:
       type: object
       required:
@@ -558,12 +296,43 @@ components:
             - nature
             - confidence
             - needValidation
-    Vector4:
-      type: array
-      minItems: 4
-      maxItems: 4
-      items:
-        type: number
+    TagDataModelOrientedList:
+      title: Tag Data Model Using Oriented Bounding Box List
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - OrientedList
+        list:
+          type: array
+          maxItems: 500
+          items:
+            $ref: '#/components/schemas/TagBoundingBox'
+        groupedOBBList:
+          type: array
+          maxItems: 500
+          items:
+            $ref: '#/components/schemas/TagSharedOrientedBoundingBox'
+        orientedBoundingBoxList:
+          type: array
+          maxItems: 500
+          items:
+            $ref: '#/components/schemas/TagOrientedBoundingBox'
+    TagListRef:
+      oneOf:
+      - $ref: '#/components/schemas/TagListUrn'
+      - $ref: '#/components/schemas/TagListId'
+    TagDataNature:
+      title: Tag Data Nature
+      type: string
+      enum:
+      - AI
+      - file
+      - manual
+      - model
     TagData:
       title: Tag Data
       description: For more information about how the geometry of a tag is represented, see the dedicated section [Understand Tag Data](#tag/understand_tag_data)
@@ -644,167 +413,6 @@ components:
         metadata:
           $ref: '#/components/schemas/TagDataMetadata'
       additionalProperties: false
-    tagsMoveBulkRequest:
-      type: array
-      items:
-        type: object
-        required:
-        - sourceTagListId
-        - tagsIds
-        properties:
-          sourceTagListId:
-            $ref: '#/components/schemas/TagListRef'
-          tagsIds:
-            type: array
-            items:
-              $ref: '#/components/schemas/TagRef'
-          metadataIdMapping:
-            type:
-            - array
-            - 'null'
-            items:
-              type: object
-              required:
-              - sourceId
-              - targetId
-              properties:
-                sourceId:
-                  type: string
-                  minLength: 1
-                  maxLength: 255
-                  description: metadata id in the source tag list
-                targetId:
-                  type: string
-                  minLength: 1
-                  maxLength: 255
-                  description: metadata id in the target tag list
-    tagsBulkResponse:
-      type: object
-      required:
-      - tagsVersion
-      - created
-      - updated
-      - deleted
-      properties:
-        tagsVersion:
-          type: integer
-        created:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-        updated:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-        deleted:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagUrn'
-    tagsBulkRequest:
-      type: object
-      properties:
-        create:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            required:
-            - data
-            properties:
-              data:
-                $ref: '#/components/schemas/TagData'
-        update:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            required:
-            - id
-            - data
-            properties:
-              id:
-                $ref: '#/components/schemas/TagRef'
-              data:
-                $ref: '#/components/schemas/TagData'
-        delete:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TagRef'
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    TagDataCameraState:
-      title: Camera State
-      type: object
-      properties:
-        position:
-          $ref: '#/components/schemas/Vector3'
-        target:
-          $ref: '#/components/schemas/Vector3'
-        rotation:
-          $ref: '#/components/schemas/Vector3'
-        overviewAngle:
-          type: string
-          maxLength: 10
-        viewDirection:
-          type: string
-          maxLength: 10
-        rotationQuaternion:
-          $ref: '#/components/schemas/Vector4'
-        fov:
-          type: number
-        overviewScale:
-          type: number
-        ortho:
-          type: boolean
-        camType:
-          type: string
-          maxLength: 10
-      additionalProperties: false
-    tagsMoveBulkResponse:
-      type: array
-      items:
-        type: object
-        required:
-        - tagList
-        - updatedTags
-        properties:
-          tagList:
-            $ref: '#/components/schemas/TagList'
-          updatedTags:
-            type: array
-            items:
-              $ref: '#/components/schemas/Tag'
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     Tag:
       type: object
       x-tags:
@@ -860,6 +468,406 @@ components:
           type: integer
         data:
           $ref: '#/components/schemas/TagData'
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    TagOrientedBoundingBox:
+      title: Oriented Bounding Box
+      description: '[xPos, yPos, zPos, xQuat, yQuat, zQuat, wQuat, xScale, yScale, zScale]:
+
+        * (xPos, yPos, zPos) position of the center of the box, in meters
+
+        * (xQuat, yQuat, zQuat, wQuat) rotation (as a quaternion) of the box, using the center of the box as a pivot
+
+        * (xScale, yScale, zScale) scale of the box, in meters
+
+        '
+      type: array
+      minItems: 10
+      maxItems: 10
+      items:
+        type: number
+        format: float
+    tagsMoveBulkResponse:
+      type: array
+      items:
+        type: object
+        required:
+        - tagList
+        - updatedTags
+        properties:
+          tagList:
+            $ref: '#/components/schemas/TagList'
+          updatedTags:
+            type: array
+            items:
+              $ref: '#/components/schemas/Tag'
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    tagsBulkResponse:
+      type: object
+      required:
+      - tagsVersion
+      - created
+      - updated
+      - deleted
+      properties:
+        tagsVersion:
+          type: integer
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagUrn'
+    TagListAttachment:
+      type: object
+      description: 'Attachment as returned by the API. All fields are always present (nullable ones are returned as
+
+        `null` when unset). The request shape used when creating/updating a tag list is
+
+        `TagListAttachmentInput.yaml`.
+
+        '
+      required:
+      - id
+      - name
+      - blob
+      - pages
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        blob:
+          type:
+          - string
+          - 'null'
+        pages:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - index
+            properties:
+              id:
+                type: string
+                minLength: 1
+                maxLength: 255
+              index:
+                type: integer
+              scale:
+                type: number
+              width:
+                type: number
+              height:
+                type: number
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              hidden:
+                type: boolean
+    TagList:
+      type: object
+      x-tags:
+      - Tag List
+      required:
+      - id
+      - type
+      - workzoneId
+      - tagListType
+      - name
+      - description
+      - color
+      - metadataDefinition
+      - attachments
+      - pending
+      - createdBy
+      - createdAt
+      - updatedBy
+      - updatedAt
+      - tagsVersion
+      properties:
+        id:
+          $ref: '#/components/schemas/TagListUrn'
+        type:
+          type: string
+          enum:
+          - tag-list
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneUrn'
+        tagListType:
+          type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1000
+        color:
+          type: string
+          maxLength: 20
+        metadataDefinition:
+          type: array
+          minItems: 0
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/TagListMetadataDefinition'
+          description: 'Defines for each metadata id a displayable name.
+
+            Note that tags inside the list may have metadata not defined in the list, but only those defined on the
+
+            list will be displayed on the webapp.
+
+            '
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TagListAttachment'
+        pending:
+          type: boolean
+        createdBy:
+          $ref: '#/components/schemas/UserUrn'
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+        updatedBy:
+          $ref: '#/components/schemas/UserUrn'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+        tagsVersion:
+          type: integer
+    tagsMoveBulkRequest:
+      type: array
+      items:
+        type: object
+        required:
+        - sourceTagListId
+        - tagsIds
+        properties:
+          sourceTagListId:
+            $ref: '#/components/schemas/TagListRef'
+          tagsIds:
+            type: array
+            items:
+              $ref: '#/components/schemas/TagRef'
+          metadataIdMapping:
+            type:
+            - array
+            - 'null'
+            items:
+              type: object
+              required:
+              - sourceId
+              - targetId
+              properties:
+                sourceId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: metadata id in the source tag list
+                targetId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: metadata id in the target tag list
+    TagSharedOrientedBoundingBox:
+      title: Tag Oriented Bounding Box List With Shared Orientation
+      type: array
+      minItems: 16
+      maxItems: 505
+      items:
+        type: number
+    TagDataCameraState:
+      title: Camera State
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/Vector3'
+        target:
+          $ref: '#/components/schemas/Vector3'
+        rotation:
+          $ref: '#/components/schemas/Vector3'
+        overviewAngle:
+          type: string
+          maxLength: 10
+        viewDirection:
+          type: string
+          maxLength: 10
+        rotationQuaternion:
+          $ref: '#/components/schemas/Vector4'
+        fov:
+          type: number
+        overviewScale:
+          type: number
+        ortho:
+          type: boolean
+        camType:
+          type: string
+          maxLength: 10
+      additionalProperties: false
+    TagDataCustomFields:
+      title: Tag Data Custom Fields
+      type: array
+      minItems: 0
+      maxItems: 10
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            maxLength: 50
+          value:
+            type: string
+            maxLength: 1000
+        required:
+        - name
+        - value
+        additionalProperties: false
+    TagListId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    TagListUrn:
+      type: string
+      description: '"urn:cintoo:tag-list:" followed by an UUIDv4
+
+        '
+    TagId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    TagRef:
+      oneOf:
+      - $ref: '#/components/schemas/TagUrn'
+      - $ref: '#/components/schemas/TagId'
+    Vector3:
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: number
+    TagDataModel2DKonva:
+      title: Tag 2d Data Model Using Konva Shapes
+      type: object
+      required:
+      - type
+      - data
+      properties:
+        type:
+          type: string
+          enum:
+          - konva
+        data:
+          type: string
+    TagDataModelBinarizedAxisAlignedList:
+      title: Tag Data Model Using Binary Bounding Box List
+      type: object
+      required:
+      - type
+      - binary
+      properties:
+        type:
+          type: string
+          enum:
+          - BinarizedAxisAlignedList
+        binary:
+          type: string
+          maxLength: 32000
+      additionalProperties: false
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    TagBoundingBox:
+      title: Bounding Box
+      description: '[xMin, yMin, zMin, xMax, yMax, zMax]:
+
+        * (xMin, yMin, zMin) min position
+
+        * (xMax, yMax, zMax) max position
+
+        '
+      type: array
+      minItems: 6
+      maxItems: 6
+      items:
+        type: number
+        format: float
+    tagsBulkRequest:
+      type: object
+      properties:
+        create:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                $ref: '#/components/schemas/TagData'
+        update:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - data
+            properties:
+              id:
+                $ref: '#/components/schemas/TagRef'
+              data:
+                $ref: '#/components/schemas/TagData'
+        delete:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TagRef'
     TagDataMetadata:
       title: Tag Data Metadata
       type: array
@@ -886,57 +894,11 @@ components:
         - id
         - value
         additionalProperties: false
-    TagDataModel2DKonva:
-      title: Tag 2d Data Model Using Konva Shapes
-      type: object
-      required:
-      - type
-      - data
-      properties:
-        type:
-          type: string
-          enum:
-          - konva
-        data:
-          type: string
-  parameters:
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
-    afterVersion:
-      name: afterVersion
-      in: query
-      required: false
-      description: 'If specified, return changes after the given version. A negative value or 0 is ignored.
+    TagUrn:
+      type: string
+      description: '"urn:cintoo:tag:" followed by an UUIDv4
 
         '
-      schema:
-        type: integer
-        default: 0
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
-    tagListRef:
-      name: tagListRef
-      in: path
-      required: true
-      description: The Id or Urn of the tag list
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/TagListUrn'
-        - $ref: '#/components/schemas/TagListId'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -969,6 +931,44 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
+  parameters:
+    tagListRef:
+      name: tagListRef
+      in: path
+      required: true
+      description: The Id or Urn of the tag list
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/TagListUrn'
+        - $ref: '#/components/schemas/TagListId'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
+    afterVersion:
+      name: afterVersion
+      in: query
+      required: false
+      description: 'If specified, return changes after the given version. A negative value or 0 is ignored.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
   securitySchemes:
     oauth2:
       type: oauth2

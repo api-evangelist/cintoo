@@ -294,17 +294,46 @@ components:
       description: '"urn:cintoo:crop:" followed by an UUIDv4
 
         '
-    WorkzoneUrn:
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    WorkzoneId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Url:
       type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    AccountUrn:
+      format: uri
+      description: Link that will redirect to 302 signed link to download the corresponding file.
+    BlobName:
       type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
+      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
     DateTime:
       type: string
       format: date-time
@@ -315,26 +344,26 @@ components:
       description: '"urn:cintoo:project:" followed by an UUIDv4
 
         '
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    CropId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     UserUrn:
       type: string
       description: '"urn:cintoo:user:" followed by an UUIDv4
 
         '
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    BlobName:
+    AccountUrn:
       type: string
-      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
-    CropId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
     cropUpdate:
       type: object
       required:
@@ -388,6 +417,63 @@ components:
           type:
           - string
           - 'null'
+    cropCreate:
+      type: object
+      required:
+      - workzoneId
+      - name
+      - crop
+      - actualCrop
+      - rotation
+      - cameraType
+      - cameraState
+      - scan
+      properties:
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneRef'
+        name:
+          type: string
+        crop:
+          type: string
+          description: Description of the plans defining the bounding box of the crop in the scene
+        actualCrop:
+          type: string
+          description: Description of the plans defining the bounding box of the crop related to the camera
+        rotation:
+          type: string
+          description: Description about the rotation of the crop inside the camera
+        layers:
+          type:
+          - string
+          - 'null'
+          description: Scans related to the crop
+        cameraType:
+          type: string
+          description: Details about the camera (overview, ground, scan, arcrotate)
+        cameraState:
+          type: string
+          description: Description of source and direction of the camera of the scene
+        scan:
+          type: string
+          description: root scan for the crop
+        thumbnailBlobName:
+          type:
+          - string
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BlobName'
+        oview:
+          type:
+          - number
+          - 'null'
+        settings:
+          type:
+          - string
+          - 'null'
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     Crop:
       type: object
       required:
@@ -479,146 +565,6 @@ components:
       oneOf:
       - $ref: '#/components/schemas/WorkzoneUrn'
       - $ref: '#/components/schemas/WorkzoneId'
-    Url:
-      type: string
-      format: uri
-      description: Link that will redirect to 302 signed link to download the corresponding file.
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    cropCreate:
-      type: object
-      required:
-      - workzoneId
-      - name
-      - crop
-      - actualCrop
-      - rotation
-      - cameraType
-      - cameraState
-      - scan
-      properties:
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneRef'
-        name:
-          type: string
-        crop:
-          type: string
-          description: Description of the plans defining the bounding box of the crop in the scene
-        actualCrop:
-          type: string
-          description: Description of the plans defining the bounding box of the crop related to the camera
-        rotation:
-          type: string
-          description: Description about the rotation of the crop inside the camera
-        layers:
-          type:
-          - string
-          - 'null'
-          description: Scans related to the crop
-        cameraType:
-          type: string
-          description: Details about the camera (overview, ground, scan, arcrotate)
-        cameraState:
-          type: string
-          description: Description of source and direction of the camera of the scene
-        scan:
-          type: string
-          description: root scan for the crop
-        thumbnailBlobName:
-          type:
-          - string
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/BlobName'
-        oview:
-          type:
-          - number
-          - 'null'
-        settings:
-          type:
-          - string
-          - 'null'
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-  parameters:
-    cropRef:
-      name: cropRef
-      in: path
-      required: true
-      description: The Id or Urn of the crop
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/CropUrn'
-        - $ref: '#/components/schemas/CropId'
-    workzonesFilter:
-      name: workzones
-      in: query
-      required: false
-      description: 'Comma-separated list of work zone references.
-
-
-        Providing at least 1 invalid (bad format, not exist, unreachable) work zone will return a 400 Bad Request error.
-
-        Providing empty parameter will return empty crops list.
-
-        '
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/WorkzoneRef'
-      examples:
-        oneId:
-          summary: Example of single work zone
-          value:
-          - 9260cd6f-a27b-456f-a5e3-b9c9fd4689f9
-        multipleIds:
-          summary: Example of multiple work zones
-          value:
-          - 9260cd6f-a27b-456f-a5e3-b9c9fd4689f9
-          - urn:cintoo:workzone:e7868b89-80a6-429d-949f-66e3834651f2
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -651,6 +597,60 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
+  parameters:
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
+    workzonesFilter:
+      name: workzones
+      in: query
+      required: false
+      description: 'Comma-separated list of work zone references.
+
+
+        Providing at least 1 invalid (bad format, not exist, unreachable) work zone will return a 400 Bad Request error.
+
+        Providing empty parameter will return empty crops list.
+
+        '
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/WorkzoneRef'
+      examples:
+        oneId:
+          summary: Example of single work zone
+          value:
+          - 9260cd6f-a27b-456f-a5e3-b9c9fd4689f9
+        multipleIds:
+          summary: Example of multiple work zones
+          value:
+          - 9260cd6f-a27b-456f-a5e3-b9c9fd4689f9
+          - urn:cintoo:workzone:e7868b89-80a6-429d-949f-66e3834651f2
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
+    cropRef:
+      name: cropRef
+      in: path
+      required: true
+      description: The Id or Urn of the crop
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/CropUrn'
+        - $ref: '#/components/schemas/CropId'
   securitySchemes:
     oauth2:
       type: oauth2

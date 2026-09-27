@@ -249,116 +249,6 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst projectUUID = \"...\";\nconst shareLinkId = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/projects/${projectUUID}/share-links/${shareLinkId}`;\nconst res = await fetch(url, {\n  method: \"PUT\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    {\n        \"name\": \"my new link\",\n        \"membershipRequired\": false,\n        \"password\": \"this is my new very long passphrase\",\n        \"expiresAt\": \"2027-02-24T12:24:42Z\",\n        \"shareOptions\": {\n          \"workzones\": true,\n          \"notes\": true,\n          \"issues\": true,\n          \"measurements\": true,\n          \"crops\": false,\n          \"tags\": false\n        },\n        \"logoBlob\": \"dXJuOmNpbnRvbzpmaWxlOjg3NmE3MGJhLTNjNjItNGRkMS05YjUyLTc5YzdmOTJlMDVmYw\\/967dfd9cba4f5b8d9d029e6dc2243a9e.png\",\n        \"savedView\": {}\n      }\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    WorkzoneUrn:
-      type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    ShareLinkOptions:
-      type: object
-      required:
-      - workzones
-      - notes
-      - issues
-      - measurements
-      - crops
-      - tags
-      x-tags:
-      - Share Link
-      properties:
-        workzones:
-          type: boolean
-          description: when enabled, multiple work zones are shared if specified in `sharedWorkzonesIds`
-        notes:
-          type: boolean
-          description: when enabled, annotations of type NOTE are visible using the share link
-        issues:
-          type: boolean
-          description: when enabled, annotations of type ISSUE or RESOLVED are visible using the share link
-        measurements:
-          type: boolean
-          description: when enabled, measurements are visible using the share link
-        crops:
-          type: boolean
-          description: when enabled, crops are visible using the share link
-        tags:
-          type: boolean
-          description: when enabled, tags are visible using the share link
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    shareLinkUpdate:
-      type: object
-      required:
-      - name
-      - sharedWorkzonesIds
-      - password
-      - expiresAt
-      - logoBlob
-      - membershipRequired
-      - shareOptions
-      - savedView
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        sharedWorkzonesIds:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WorkzoneUrn'
-          description: 'Additional work zones to share.
-
-            This is taken into account only if `workzones` is enabled in `shareOptions`.
-
-            '
-        password:
-          allOf:
-          - $ref: '#/components/schemas/ShareLinkPassword'
-          type:
-          - string
-          - 'null'
-        expiresAt:
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-          type:
-          - string
-          - 'null'
-        logoBlob:
-          type:
-          - string
-          - 'null'
-        membershipRequired:
-          type: boolean
-          description: Indicates if the user must be already logged in to use the share link
-        shareOptions:
-          $ref: '#/components/schemas/ShareLinkOptions'
-        savedView:
-          allOf:
-          - $ref: '#/components/schemas/SavedViewData'
-          type:
-          - object
-          - 'null'
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
     AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
@@ -384,20 +274,26 @@ components:
             type: string
             description: structure will be defined in the future
         additionalProperties: true
-    ShareLinkPassword:
-      type: string
-      description: 'Password must be at least 12 characters long and contain at least 3 of the following:
-
-        uppercase, lowercase, digit, special characters, or be at least 24 characters long with no
-
-        character set constraints
-
-        '
-    ShareLinkUrn:
-      type: string
-      description: '"urn:cintoo:sharelink:" followed by a string
-
-        '
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
     ShareLink:
       type: object
       required:
@@ -518,62 +414,139 @@ components:
           type:
           - object
           - 'null'
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
     Uuid:
       type: string
       description: UUIDv4
       format: uuid
       example: 156fff1a-0ef7-4335-891a-627928a19e29
+    ShareLinkUrn:
+      type: string
+      description: '"urn:cintoo:sharelink:" followed by a string
+
+        '
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    ShareLinkOptions:
+      type: object
+      required:
+      - workzones
+      - notes
+      - issues
+      - measurements
+      - crops
+      - tags
+      x-tags:
+      - Share Link
+      properties:
+        workzones:
+          type: boolean
+          description: when enabled, multiple work zones are shared if specified in `sharedWorkzonesIds`
+        notes:
+          type: boolean
+          description: when enabled, annotations of type NOTE are visible using the share link
+        issues:
+          type: boolean
+          description: when enabled, annotations of type ISSUE or RESOLVED are visible using the share link
+        measurements:
+          type: boolean
+          description: when enabled, measurements are visible using the share link
+        crops:
+          type: boolean
+          description: when enabled, crops are visible using the share link
+        tags:
+          type: boolean
+          description: when enabled, tags are visible using the share link
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
     ProjectId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-  parameters:
-    shareLinkRef:
-      name: shareLinkRef
-      in: path
-      required: true
-      description: The Urn of the share link
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ShareLinkUrn'
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
+    ShareLinkPassword:
+      type: string
+      description: 'Password must be at least 12 characters long and contain at least 3 of the following:
+
+        uppercase, lowercase, digit, special characters, or be at least 24 characters long with no
+
+        character set constraints
+
+        '
+    shareLinkUpdate:
+      type: object
+      required:
+      - name
+      - sharedWorkzonesIds
+      - password
+      - expiresAt
+      - logoBlob
+      - membershipRequired
+      - shareOptions
+      - savedView
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        sharedWorkzonesIds:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WorkzoneUrn'
+          description: 'Additional work zones to share.
+
+            This is taken into account only if `workzones` is enabled in `shareOptions`.
+
+            '
+        password:
+          allOf:
+          - $ref: '#/components/schemas/ShareLinkPassword'
+          type:
+          - string
+          - 'null'
+        expiresAt:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+          type:
+          - string
+          - 'null'
+        logoBlob:
+          type:
+          - string
+          - 'null'
+        membershipRequired:
+          type: boolean
+          description: Indicates if the user must be already logged in to use the share link
+        shareOptions:
+          $ref: '#/components/schemas/ShareLinkOptions'
+        savedView:
+          allOf:
+          - $ref: '#/components/schemas/SavedViewData'
+          type:
+          - object
+          - 'null'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -606,6 +579,33 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
+  parameters:
+    shareLinkRef:
+      name: shareLinkRef
+      in: path
+      required: true
+      description: The Urn of the share link
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ShareLinkUrn'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
   securitySchemes:
     oauth2:
       type: oauth2

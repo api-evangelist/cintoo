@@ -818,160 +818,6 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/values/spatial-references`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    SubscriptionRef:
-      oneOf:
-      - $ref: '#/components/schemas/SubscriptionUrn'
-      - $ref: '#/components/schemas/SubscriptionId'
-    WorkzoneUrn:
-      type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    SimilarityTransformation:
-      type: object
-      required:
-      - ordinate1
-      - ordinate2
-      - scaleFactor
-      - rotationAngle
-      properties:
-        ordinate1:
-          type: number
-          format: double
-          description: 'Translation in the first axis (unit: meter, precision: 3 decimal places)'
-        ordinate2:
-          type: number
-          format: double
-          description: 'Translation in the second axis (unit: meter, precision: 3 decimal places)'
-        scaleFactor:
-          type: number
-          format: double
-          description: 'Uniform scale factor on all axes (unit: coefficient, precision: 9 decimal places)'
-        rotationAngle:
-          type: number
-          format: double
-          description: 'Rotation angle around the up axis (unit: degree, precision: 9 decimal places)'
-    CoordinatesTransformationBody:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          enum:
-          - affine
-          - similarity
-          description: 'The active transformation method. When null, no transformation is active.
-
-            Both `affine` and `similarity` blocks may be present simultaneously (to preserve user input when switching methods),
-
-            but only the one indicated by `type` is active.
-
-            '
-        affine:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/AffineTransformation'
-        similarity:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/SimilarityTransformation'
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    FileUrn:
-      type: string
-      description: '"urn:cintoo:file:" followed by an UUIDv4
-
-        '
-    ProjectStatsInfo:
-      type: object
-      description: 'Statistics about the project. By default all fields are included.
-
-        Use the query parameters `countScans`, `countTags`, and `countWorkzones` to control which fields are returned.
-
-        When all query parameters are set to `false`, `statsInfo` is `null`.
-
-
-        **Upcoming change:** In a future release, all `count*` query parameters will default to `false`,
-
-        meaning `statsInfo` will be `null` by default. Clients that need statistics should start passing the
-
-        desired `count*` parameters explicitly set to `true`.
-
-        '
-      properties:
-        scanCount:
-          type: integer
-        scanSize:
-          type: integer
-        tagCount:
-          type: integer
-        workzoneCount:
-          type: integer
-          description: Number of workzones in a project (includes root workzone)
-    SpatialReferenceProject:
-      type: object
-      required:
-      - authName
-      - code
-      properties:
-        authName:
-          type: string
-          description: The authority defining the used code (IGNF, NKG, OGC, IAU_2015, EPSG, ESRI)
-        code:
-          type: string
-          description: The code of the geographic reference to be used for this project
-    SubscriptionUrn:
-      type: string
-      description: '"urn:cintoo:subscription:" followed by an UUIDv4
-
-        '
-    CoordinatesTransformation:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          enum:
-          - affine
-          - similarity
-          description: 'The active transformation method. When null, no transformation is active.
-
-            Both `affine` and `similarity` blocks may be present simultaneously (to preserve user input when switching methods),
-
-            but only the one indicated by `type` is active.
-
-            '
-        affine:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/AffineTransformation'
-        similarity:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/SimilarityTransformation'
     SpatialReferenceValue:
       type: object
       required:
@@ -996,21 +842,123 @@ components:
         type:
           type: string
           description: The kind of Coordinate Reference System.
-    UserId:
+    AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    ProjectUrn:
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    UserRef:
+      oneOf:
+      - $ref: '#/components/schemas/UserUrn'
+      - $ref: '#/components/schemas/UserId'
+    Url:
       type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    UserUrn:
+      format: uri
+      description: Link that will redirect to 302 signed link to download the corresponding file.
+    ErrorForbidden:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 403
+        title:
+          type: string
+          enum:
+          - Forbidden
+        detail:
+          type: string
+          description: human readable description of the error in english
+    BlobName:
       type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    AccountId:
+      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
+    AffineTransformation:
+      type: object
+      required:
+      - a0
+      - a1
+      - a2
+      - b0
+      - b1
+      - b2
+      properties:
+        a0:
+          type: number
+          format: double
+          description: 'Translation for the first output ordinate (unit: meter, precision: 3 decimal places)'
+        a1:
+          type: number
+          format: double
+          description: 'First output ordinate coefficient for the first input ordinate (unit: coefficient, precision: 9 decimal places)'
+        a2:
+          type: number
+          format: double
+          description: 'First output ordinate coefficient for the second input ordinate (unit: coefficient, precision: 9 decimal places)'
+        b0:
+          type: number
+          format: double
+          description: 'Translation for the second output ordinate (unit: meter, precision: 3 decimal places)'
+        b1:
+          type: number
+          format: double
+          description: 'Second output ordinate coefficient for the first input ordinate (unit: coefficient, precision: 9 decimal places)'
+        b2:
+          type: number
+          format: double
+          description: 'Second output ordinate coefficient for the second input ordinate (unit: coefficient, precision: 9 decimal places)'
+    SimilarityTransformation:
+      type: object
+      required:
+      - ordinate1
+      - ordinate2
+      - scaleFactor
+      - rotationAngle
+      properties:
+        ordinate1:
+          type: number
+          format: double
+          description: 'Translation in the first axis (unit: meter, precision: 3 decimal places)'
+        ordinate2:
+          type: number
+          format: double
+          description: 'Translation in the second axis (unit: meter, precision: 3 decimal places)'
+        scaleFactor:
+          type: number
+          format: double
+          description: 'Uniform scale factor on all axes (unit: coefficient, precision: 9 decimal places)'
+        rotationAngle:
+          type: number
+          format: double
+          description: 'Rotation angle around the up axis (unit: degree, precision: 9 decimal places)'
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    UserId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
@@ -1100,27 +1048,21 @@ components:
             - `false`: the user does not have the BIM role on the root workzone (also when the user lacks permission to compute it)
 
             '
-    BlobName:
+    DateTime:
       type: string
-      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
-    ErrorForbidden:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-          enum:
-          - 403
-        title:
-          type: string
-          enum:
-          - Forbidden
-        detail:
-          type: string
-          description: human readable description of the error in english
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    FileUrn:
+      type: string
+      description: '"urn:cintoo:file:" followed by an UUIDv4
+
+        '
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
     ModificationInfo:
       type: object
       required:
@@ -1151,7 +1093,17 @@ components:
           - $ref: '#/components/schemas/UserUrn'
         isDeleted:
           type: boolean
-    SpatialReference:
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    SubscriptionId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    SpatialReferenceProject:
       type: object
       required:
       - authName
@@ -1159,105 +1111,41 @@ components:
       properties:
         authName:
           type: string
-          minLength: 1
-          maxLength: 128
           description: The authority defining the used code (IGNF, NKG, OGC, IAU_2015, EPSG, ESRI)
         code:
           type: string
-          minLength: 1
-          maxLength: 128
           description: The code of the geographic reference to be used for this project
-    UserRef:
-      oneOf:
-      - $ref: '#/components/schemas/UserUrn'
-      - $ref: '#/components/schemas/UserId'
-    AffineTransformation:
+    CoordinatesTransformationBody:
       type: object
       required:
-      - a0
-      - a1
-      - a2
-      - b0
-      - b1
-      - b2
+      - type
       properties:
-        a0:
-          type: number
-          format: double
-          description: 'Translation for the first output ordinate (unit: meter, precision: 3 decimal places)'
-        a1:
-          type: number
-          format: double
-          description: 'First output ordinate coefficient for the first input ordinate (unit: coefficient, precision: 9 decimal places)'
-        a2:
-          type: number
-          format: double
-          description: 'First output ordinate coefficient for the second input ordinate (unit: coefficient, precision: 9 decimal places)'
-        b0:
-          type: number
-          format: double
-          description: 'Translation for the second output ordinate (unit: meter, precision: 3 decimal places)'
-        b1:
-          type: number
-          format: double
-          description: 'Second output ordinate coefficient for the first input ordinate (unit: coefficient, precision: 9 decimal places)'
-        b2:
-          type: number
-          format: double
-          description: 'Second output ordinate coefficient for the second input ordinate (unit: coefficient, precision: 9 decimal places)'
-    Location:
-      type: object
-      required:
-      - lat
-      - lng
-      properties:
-        lat:
-          type: number
-          format: double
-          minimum: -90
-          maximum: 90
-        lng:
-          type: number
-          format: double
-          minimum: -180
-          maximum: 180
-    SubscriptionId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Url:
-      type: string
-      format: uri
-      description: Link that will redirect to 302 signed link to download the corresponding file.
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+        type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - affine
+          - similarity
+          description: 'The active transformation method. When null, no transformation is active.
+
+            Both `affine` and `similarity` blocks may be present simultaneously (to preserve user input when switching methods),
+
+            but only the one indicated by `type` is active.
+
+            '
+        affine:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/AffineTransformation'
+        similarity:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/SimilarityTransformation'
     ErrorBadRequest:
       type: object
       required:
@@ -1276,6 +1164,118 @@ components:
         detail:
           type: string
           description: human readable description of the error in english
+    SpatialReference:
+      type: object
+      required:
+      - authName
+      - code
+      properties:
+        authName:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: The authority defining the used code (IGNF, NKG, OGC, IAU_2015, EPSG, ESRI)
+        code:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: The code of the geographic reference to be used for this project
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    SubscriptionRef:
+      oneOf:
+      - $ref: '#/components/schemas/SubscriptionUrn'
+      - $ref: '#/components/schemas/SubscriptionId'
+    CoordinatesTransformation:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - affine
+          - similarity
+          description: 'The active transformation method. When null, no transformation is active.
+
+            Both `affine` and `similarity` blocks may be present simultaneously (to preserve user input when switching methods),
+
+            but only the one indicated by `type` is active.
+
+            '
+        affine:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/AffineTransformation'
+        similarity:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/SimilarityTransformation'
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    ProjectStatsInfo:
+      type: object
+      description: 'Statistics about the project. By default all fields are included.
+
+        Use the query parameters `countScans`, `countTags`, and `countWorkzones` to control which fields are returned.
+
+        When all query parameters are set to `false`, `statsInfo` is `null`.
+
+
+        **Upcoming change:** In a future release, all `count*` query parameters will default to `false`,
+
+        meaning `statsInfo` will be `null` by default. Clients that need statistics should start passing the
+
+        desired `count*` parameters explicitly set to `true`.
+
+        '
+      properties:
+        scanCount:
+          type: integer
+        scanSize:
+          type: integer
+        tagCount:
+          type: integer
+        workzoneCount:
+          type: integer
+          description: Number of workzones in a project (includes root workzone)
+    SubscriptionUrn:
+      type: string
+      description: '"urn:cintoo:subscription:" followed by an UUIDv4
+
+        '
+    Location:
+      type: object
+      required:
+      - lat
+      - lng
+      properties:
+        lat:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+        lng:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
   parameters:
     countTags:
       name: countTags

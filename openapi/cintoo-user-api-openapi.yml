@@ -165,6 +165,13 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst userRef = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/users/${userRef}`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   parameters:
+    userRef:
+      name: userRef
+      in: path
+      required: true
+      description: The Id or Urn of the user
+      schema:
+        $ref: '#/components/schemas/UserRef'
     accountRef:
       name: accountRef
       in: path
@@ -174,24 +181,64 @@ components:
         oneOf:
         - $ref: '#/components/schemas/AccountUrn'
         - $ref: '#/components/schemas/AccountId'
-    userRef:
-      name: userRef
-      in: path
-      required: true
-      description: The Id or Urn of the user
-      schema:
-        $ref: '#/components/schemas/UserRef'
   schemas:
-    UserRef:
-      oneOf:
-      - $ref: '#/components/schemas/UserUrn'
-      - $ref: '#/components/schemas/UserId'
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    UserId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    UserOldId:
+      type: string
+      pattern: ^[-_0-9a-zA-Z]+$
+      description: Base64url encoding of "user-{id}"
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
     AccountRoles:
       type: string
       enum:
       - administrator
       - projectLister
       - projectManager
+    UserRef:
+      oneOf:
+      - $ref: '#/components/schemas/UserUrn'
+      - $ref: '#/components/schemas/UserId'
     User:
       type: object
       required:
@@ -238,53 +285,6 @@ components:
           example:
           - administrator
           - projectManager
-    UserOldId:
-      type: string
-      pattern: ^[-_0-9a-zA-Z]+$
-      description: Base64url encoding of "user-{id}"
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    UserId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
   responses:
     UnexpectedError:
       description: unexpected error

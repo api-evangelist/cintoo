@@ -427,350 +427,31 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/values/ai-detection-classes`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    tagListUpdate:
-      type: object
-      required:
-      - workzoneId
-      - tagListType
-      - name
-      properties:
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneRef'
-        tagListType:
-          type: string
-          minLength: 1
-          maxLength: 36
-          description: 'The tag list type determines how to display and handle it on the webapp. Currently only `2d` and `3d` are
-
-            supported by the webapp.
-
-            '
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        color:
-          type:
-          - string
-          - 'null'
-          maxLength: 20
-        metadataDefinition:
-          type:
-          - array
-          - 'null'
-          minItems: 0
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/TagListMetadataDefinition'
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TagListAttachmentInput'
-    TagListAttachment:
-      type: object
-      description: 'Attachment as returned by the API. All fields are always present (nullable ones are returned as
-
-        `null` when unset). The request shape used when creating/updating a tag list is
-
-        `TagListAttachmentInput.yaml`.
-
-        '
-      required:
-      - id
-      - name
-      - blob
-      - pages
-      properties:
-        id:
-          type: string
-          minLength: 1
-          maxLength: 255
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        blob:
-          type:
-          - string
-          - 'null'
-        pages:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - index
-            properties:
-              id:
-                type: string
-                minLength: 1
-                maxLength: 255
-              index:
-                type: integer
-              scale:
-                type: number
-              width:
-                type: number
-              height:
-                type: number
-              name:
-                type: string
-                minLength: 1
-                maxLength: 255
-              hidden:
-                type: boolean
-    WorkzoneUrn:
-      type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    TagListAttachmentInput:
-      type: object
-      description: 'Attachment shape accepted when creating or updating a tag list. Optional fields may be omitted;
-
-        the response shape (all fields always present) is `TagListAttachment.yaml`.
-
-        '
-      required:
-      - id
-      - name
-      - pages
-      properties:
-        id:
-          type: string
-          minLength: 1
-          maxLength: 255
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        blob:
-          type:
-          - string
-          - 'null'
-        pages:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - index
-            properties:
-              id:
-                type: string
-                minLength: 1
-                maxLength: 255
-              index:
-                type:
-                - integer
-                - 'null'
-              scale:
-                type:
-                - number
-                - 'null'
-              width:
-                type:
-                - number
-                - 'null'
-              height:
-                type:
-                - number
-                - 'null'
-              name:
-                type:
-                - string
-                - 'null'
-                minLength: 1
-                maxLength: 255
-              hidden:
-                type:
-                - boolean
-                - 'null'
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    TagListRef:
-      oneOf:
-      - $ref: '#/components/schemas/TagListUrn'
-      - $ref: '#/components/schemas/TagListId'
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    FileUrn:
-      type: string
-      description: '"urn:cintoo:file:" followed by an UUIDv4
-
-        '
-    tagListCreate:
-      type: object
-      required:
-      - workzoneId
-      - tagListType
-      - name
-      properties:
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneRef'
-        tagListType:
-          type: string
-          minLength: 1
-          maxLength: 36
-          description: 'The tag list type determines how to display and handle it on the webapp. Currently only `2d` and `3d` are
-
-            supported by the webapp.
-
-            '
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        color:
-          type:
-          - string
-          - 'null'
-          maxLength: 20
-        metadataDefinition:
-          type:
-          - array
-          - 'null'
-          minItems: 0
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/TagListMetadataDefinition'
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TagListAttachmentInput'
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
     AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    FileRef:
-      oneOf:
-      - $ref: '#/components/schemas/FileUrn'
-      - $ref: '#/components/schemas/FileId'
-    TagList:
+    Error:
       type: object
-      x-tags:
-      - Tag List
       required:
-      - id
-      - type
-      - workzoneId
-      - tagListType
-      - name
-      - description
-      - color
-      - metadataDefinition
-      - attachments
-      - pending
-      - createdBy
-      - createdAt
-      - updatedBy
-      - updatedAt
-      - tagsVersion
+      - status
+      - title
       properties:
-        id:
-          $ref: '#/components/schemas/TagListUrn'
-        type:
-          type: string
-          enum:
-          - tag-list
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneUrn'
-        tagListType:
-          type: string
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-          maxLength: 1000
-        color:
-          type: string
-          maxLength: 20
-        metadataDefinition:
-          type: array
-          minItems: 0
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/TagListMetadataDefinition'
-          description: 'Defines for each metadata id a displayable name.
-
-            Note that tags inside the list may have metadata not defined in the list, but only those defined on the
-
-            list will be displayed on the webapp.
-
-            '
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TagListAttachment'
-        pending:
-          type: boolean
-        createdBy:
-          $ref: '#/components/schemas/UserUrn'
-        createdAt:
-          $ref: '#/components/schemas/DateTime'
-        updatedBy:
-          $ref: '#/components/schemas/UserUrn'
-        updatedAt:
-          $ref: '#/components/schemas/DateTime'
-        tagsVersion:
+        status:
           type: integer
-    AIDetectionClass:
-      type: object
-      required:
-      - name
-      - category
-      properties:
-        name:
+          format: int32
+        title:
           type: string
-          description: Identifier of the AI detection class
-        category:
+        detail:
           type: string
-          description: Category associated with the class
-    TagListUrn:
-      type: string
-      description: '"urn:cintoo:tag-list:" followed by an UUIDv4
-
-        '
-    TagListId:
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    FileId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
@@ -851,43 +532,177 @@ components:
             - nature
             - confidence
             - needValidation
-    FileId:
+    WorkzoneId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneRef:
+    TagListRef:
       oneOf:
-      - $ref: '#/components/schemas/WorkzoneUrn'
-      - $ref: '#/components/schemas/WorkzoneId'
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+      - $ref: '#/components/schemas/TagListUrn'
+      - $ref: '#/components/schemas/TagListId'
     Uuid:
       type: string
       description: UUIDv4
       format: uuid
       example: 156fff1a-0ef7-4335-891a-627928a19e29
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    FileUrn:
+      type: string
+      description: '"urn:cintoo:file:" followed by an UUIDv4
+
+        '
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    TagListAttachment:
+      type: object
+      description: 'Attachment as returned by the API. All fields are always present (nullable ones are returned as
+
+        `null` when unset). The request shape used when creating/updating a tag list is
+
+        `TagListAttachmentInput.yaml`.
+
+        '
+      required:
+      - id
+      - name
+      - blob
+      - pages
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        blob:
+          type:
+          - string
+          - 'null'
+        pages:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - index
+            properties:
+              id:
+                type: string
+                minLength: 1
+                maxLength: 255
+              index:
+                type: integer
+              scale:
+                type: number
+              width:
+                type: number
+              height:
+                type: number
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              hidden:
+                type: boolean
+    AIDetectionClass:
+      type: object
+      required:
+      - name
+      - category
+      properties:
+        name:
+          type: string
+          description: Identifier of the AI detection class
+        category:
+          type: string
+          description: Category associated with the class
+    TagList:
+      type: object
+      x-tags:
+      - Tag List
+      required:
+      - id
+      - type
+      - workzoneId
+      - tagListType
+      - name
+      - description
+      - color
+      - metadataDefinition
+      - attachments
+      - pending
+      - createdBy
+      - createdAt
+      - updatedBy
+      - updatedAt
+      - tagsVersion
+      properties:
+        id:
+          $ref: '#/components/schemas/TagListUrn'
+        type:
+          type: string
+          enum:
+          - tag-list
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneUrn'
+        tagListType:
+          type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1000
+        color:
+          type: string
+          maxLength: 20
+        metadataDefinition:
+          type: array
+          minItems: 0
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/TagListMetadataDefinition'
+          description: 'Defines for each metadata id a displayable name.
+
+            Note that tags inside the list may have metadata not defined in the list, but only those defined on the
+
+            list will be displayed on the webapp.
+
+            '
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TagListAttachment'
+        pending:
+          type: boolean
+        createdBy:
+          $ref: '#/components/schemas/UserUrn'
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+        updatedBy:
+          $ref: '#/components/schemas/UserUrn'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+        tagsVersion:
+          type: integer
     tagListPnIdElementsBulkAdd:
       type: object
       required:
@@ -1001,34 +816,191 @@ components:
                         maxItems: 2
                         items:
                           type: number
-  parameters:
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
-    tagListRef:
-      name: tagListRef
-      in: path
-      required: true
-      description: The Id or Urn of the tag list
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/TagListUrn'
-        - $ref: '#/components/schemas/TagListId'
+    TagListAttachmentInput:
+      type: object
+      description: 'Attachment shape accepted when creating or updating a tag list. Optional fields may be omitted;
+
+        the response shape (all fields always present) is `TagListAttachment.yaml`.
+
+        '
+      required:
+      - id
+      - name
+      - pages
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        blob:
+          type:
+          - string
+          - 'null'
+        pages:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - index
+            properties:
+              id:
+                type: string
+                minLength: 1
+                maxLength: 255
+              index:
+                type:
+                - integer
+                - 'null'
+              scale:
+                type:
+                - number
+                - 'null'
+              width:
+                type:
+                - number
+                - 'null'
+              height:
+                type:
+                - number
+                - 'null'
+              name:
+                type:
+                - string
+                - 'null'
+                minLength: 1
+                maxLength: 255
+              hidden:
+                type:
+                - boolean
+                - 'null'
+    tagListUpdate:
+      type: object
+      required:
+      - workzoneId
+      - tagListType
+      - name
+      properties:
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneRef'
+        tagListType:
+          type: string
+          minLength: 1
+          maxLength: 36
+          description: 'The tag list type determines how to display and handle it on the webapp. Currently only `2d` and `3d` are
+
+            supported by the webapp.
+
+            '
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        color:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        metadataDefinition:
+          type:
+          - array
+          - 'null'
+          minItems: 0
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/TagListMetadataDefinition'
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TagListAttachmentInput'
+    TagListId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    tagListCreate:
+      type: object
+      required:
+      - workzoneId
+      - tagListType
+      - name
+      properties:
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneRef'
+        tagListType:
+          type: string
+          minLength: 1
+          maxLength: 36
+          description: 'The tag list type determines how to display and handle it on the webapp. Currently only `2d` and `3d` are
+
+            supported by the webapp.
+
+            '
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        color:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        metadataDefinition:
+          type:
+          - array
+          - 'null'
+          minItems: 0
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/TagListMetadataDefinition'
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TagListAttachmentInput'
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    TagListUrn:
+      type: string
+      description: '"urn:cintoo:tag-list:" followed by an UUIDv4
+
+        '
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    FileRef:
+      oneOf:
+      - $ref: '#/components/schemas/FileUrn'
+      - $ref: '#/components/schemas/FileId'
+    WorkzoneRef:
+      oneOf:
+      - $ref: '#/components/schemas/WorkzoneUrn'
+      - $ref: '#/components/schemas/WorkzoneId'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -1061,6 +1033,34 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
+  parameters:
+    tagListRef:
+      name: tagListRef
+      in: path
+      required: true
+      description: The Id or Urn of the tag list
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/TagListUrn'
+        - $ref: '#/components/schemas/TagListId'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
   securitySchemes:
     oauth2:
       type: oauth2

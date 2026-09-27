@@ -97,15 +97,6 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst subscriptionId = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/subscriptions/${subscriptionId}`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   parameters:
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
     subscriptionRef:
       name: subscriptionRef
       in: path
@@ -115,16 +106,20 @@ components:
         oneOf:
         - $ref: '#/components/schemas/SubscriptionUrn'
         - $ref: '#/components/schemas/SubscriptionId'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
   schemas:
-    SubscriptionId:
+    AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    SubscriptionUrn:
-      type: string
-      description: '"urn:cintoo:subscription:" followed by an UUIDv4
-
-        '
     Error:
       type: object
       required:
@@ -145,20 +140,30 @@ components:
         errorValues:
           type: object
           description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     Uuid:
       type: string
       description: UUIDv4
       format: uuid
       example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    SubscriptionId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    SubscriptionUrn:
+      type: string
+      description: '"urn:cintoo:subscription:" followed by an UUIDv4
+
+        '
     Subscription:
       type: object
       required:
@@ -221,11 +226,6 @@ components:
           description: 'When true, the account owner is automatically invited to every new project in the subscription. This property is only included in responses when the requester is the account owner.
 
             '
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
   responses:
     UnexpectedError:
       description: unexpected error
