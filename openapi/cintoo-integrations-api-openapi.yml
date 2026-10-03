@@ -142,99 +142,11 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst projectUUID = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/projects/${projectUUID}/integrations`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    AccountIntegrationNewformaKonektOptions:
-      type: object
-      required:
-      - allowCreateNewUsersOnHub
-      - syncStrategy
-      properties:
-        allowCreateNewUsersOnHub:
-          type: boolean
-          description: if true it allows to create automatically new users on the Konekt Hub when synchronizing data
-        syncStrategy:
-          type: string
-          enum:
-          - CONFIG_ON_PROJECT
-          - BOTH_WAY
-          - UPDATES_ONLY_FROM_KONEKT
-          description: 'CONFIG_ON_PROJECT means the option needs to be configured on each project.
+    AccountIntegrationKonektUrn:
+      type: string
+      description: '"urn:cintoo:newforma-konekt-hub:" followed by an UUIDv4
 
-
-            BOTH_WAY means an update on Cintoo triggers an update on Konekt.
-
-
-            UPDATES_ONLY_FROM_KONEKT means an update on Cintoo does not trigger an update on Konekt.
-
-
-            BOTH_WAY and UPDATES_ONLY_FROM_KONEKT means an update on Konekt will trigger an update on Cintoo.
-
-            '
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    ProjectIntegrationKonekt:
-      type: object
-      x-tags:
-      - Konekt
-      required:
-      - projectId
-      - hubId
-      - konektId
-      - options
-      - link
-      - createdAt
-      - createdBy
-      - updatedAt
-      - updatedBy
-      properties:
-        projectId:
-          $ref: '#/components/schemas/ProjectUrn'
-        hubId:
-          type: string
-          description: id of the hub on Konekt
-        konektId:
-          type: integer
-          description: id of the project on Konekt
-        options:
-          $ref: '#/components/schemas/ProjectIntegrationNewformaKonektOptions'
-        link:
-          type: string
-        createdAt:
-          $ref: '#/components/schemas/DateTime'
-        createdBy:
-          $ref: '#/components/schemas/UserUrn'
-        updatedAt:
-          $ref: '#/components/schemas/DateTime'
-        updatedBy:
-          $ref: '#/components/schemas/UserUrn'
-    ProjectIntegrations:
-      type: object
-      properties:
-        konekt:
-          $ref: '#/components/schemas/ProjectIntegrationKonekt'
-        autodesk:
-          $ref: '#/components/schemas/ProjectIntegrationAutodesk'
+        '
     AccountIntegrationKonekt:
       type: object
       x-tags:
@@ -286,14 +198,65 @@ components:
       description: UUIDv4
       format: uuid
       example: 156fff1a-0ef7-4335-891a-627928a19e29
-    DateTime:
+    ProjectIntegrations:
+      type: object
+      properties:
+        konekt:
+          $ref: '#/components/schemas/ProjectIntegrationKonekt'
+        autodesk:
+          $ref: '#/components/schemas/ProjectIntegrationAutodesk'
+    AccountIntegrations:
+      type: object
+      required:
+      - konekt
+      properties:
+        konekt:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountIntegrationKonekt'
+    annotationCreateIntegrationLinks:
+      type: object
+      required:
+      - integrationTypes
+      properties:
+        annotations:
+          type:
+          - array
+          - 'null'
+          description: If omitted or null, all annotations of the project will be processed.
+          items:
+            $ref: '#/components/schemas/AnnotationUrn'
+        integrationTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - AUTODESK
+            - NEWFORMA_KONEKT
+            - PROCORE
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    UserUrn:
       type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
+      description: '"urn:cintoo:user:" followed by an UUIDv4
 
         '
     ModificationInfo:
@@ -331,110 +294,15 @@ components:
       description: '"urn:cintoo:annotation:" followed by an UUIDv4
 
         '
-    AccountIntegrationNewformaKonektLinkedProject:
-      type: object
-      required:
-      - id
-      - konektId
-      - options
-      properties:
-        id:
-          $ref: '#/components/schemas/ProjectUrn'
-        konektId:
-          type: integer
-        options:
-          $ref: '#/components/schemas/ProjectIntegrationNewformaKonektOptions'
-    annotationCreateIntegrationLinks:
-      type: object
-      required:
-      - integrationTypes
-      properties:
-        annotations:
-          type:
-          - array
-          - 'null'
-          description: If omitted or null, all annotations of the project will be processed.
-          items:
-            $ref: '#/components/schemas/AnnotationUrn'
-        integrationTypes:
-          type: array
-          items:
-            type: string
-            enum:
-            - AUTODESK
-            - NEWFORMA_KONEKT
-            - PROCORE
-    AccountIntegrations:
-      type: object
-      required:
-      - konekt
-      properties:
-        konekt:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountIntegrationKonekt'
-    AccountIntegrationKonektUrn:
-      type: string
-      description: '"urn:cintoo:newforma-konekt-hub:" followed by an UUIDv4
-
-        '
-    ProjectInKonektHub:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          type: string
-          description: id of the project on Konekt
-        name:
-          type: string
-          description: name of the project on Konekt
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    AnnotationBulkCreateIntegrationLinksResponse:
-      type: object
-      required:
-      - created
-      properties:
-        created:
-          type: object
-          description: Each key is an annotation URN, values are integration types initialized for the annotation
-          additionalProperties:
-            x-additionalPropertiesName: urn:cintoo:annotation:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-            type: array
-            items:
-              type: string
-              enum:
-              - AUTODESK
-              - NEWFORMA_KONEKT
-              - PROCORE
-          example:
-            urn:cintoo:annotation:956b7fb8-ad08-4f63-bed2-f958f0bf2e2c:
-            - AUTODESK
-            - PROCORE
-            urn:cintoo:annotation:2d90addd-e3fb-4a0c-b54a-af09e17687e2:
-            - NEWFORMA_KONEKT
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    ProjectIntegrationAutodesk:
+    ProjectIntegrationKonekt:
       type: object
       x-tags:
-      - Autodesk
+      - Konekt
       required:
       - projectId
-      - autodeskHubId
-      - autodeskProjectId
+      - hubId
+      - konektId
+      - options
       - link
       - createdAt
       - createdBy
@@ -443,10 +311,14 @@ components:
       properties:
         projectId:
           $ref: '#/components/schemas/ProjectUrn'
-        autodeskHubId:
+        hubId:
           type: string
-        autodeskProjectId:
-          type: string
+          description: id of the hub on Konekt
+        konektId:
+          type: integer
+          description: id of the project on Konekt
+        options:
+          $ref: '#/components/schemas/ProjectIntegrationNewformaKonektOptions'
         link:
           type: string
         createdAt:
@@ -480,6 +352,134 @@ components:
             BOTH_WAY and UPDATES_ONLY_FROM_KONEKT means an update on Konekt will trigger an update on Cintoo.
 
             '
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    AccountIntegrationNewformaKonektOptions:
+      type: object
+      required:
+      - allowCreateNewUsersOnHub
+      - syncStrategy
+      properties:
+        allowCreateNewUsersOnHub:
+          type: boolean
+          description: if true it allows to create automatically new users on the Konekt Hub when synchronizing data
+        syncStrategy:
+          type: string
+          enum:
+          - CONFIG_ON_PROJECT
+          - BOTH_WAY
+          - UPDATES_ONLY_FROM_KONEKT
+          description: 'CONFIG_ON_PROJECT means the option needs to be configured on each project.
+
+
+            BOTH_WAY means an update on Cintoo triggers an update on Konekt.
+
+
+            UPDATES_ONLY_FROM_KONEKT means an update on Cintoo does not trigger an update on Konekt.
+
+
+            BOTH_WAY and UPDATES_ONLY_FROM_KONEKT means an update on Konekt will trigger an update on Cintoo.
+
+            '
+    ProjectIntegrationAutodesk:
+      type: object
+      x-tags:
+      - Autodesk
+      required:
+      - projectId
+      - autodeskHubId
+      - autodeskProjectId
+      - link
+      - createdAt
+      - createdBy
+      - updatedAt
+      - updatedBy
+      properties:
+        projectId:
+          $ref: '#/components/schemas/ProjectUrn'
+        autodeskHubId:
+          type: string
+        autodeskProjectId:
+          type: string
+        link:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+        createdBy:
+          $ref: '#/components/schemas/UserUrn'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+        updatedBy:
+          $ref: '#/components/schemas/UserUrn'
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    AccountIntegrationNewformaKonektLinkedProject:
+      type: object
+      required:
+      - id
+      - konektId
+      - options
+      properties:
+        id:
+          $ref: '#/components/schemas/ProjectUrn'
+        konektId:
+          type: integer
+        options:
+          $ref: '#/components/schemas/ProjectIntegrationNewformaKonektOptions'
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    AnnotationBulkCreateIntegrationLinksResponse:
+      type: object
+      required:
+      - created
+      properties:
+        created:
+          type: object
+          description: Each key is an annotation URN, values are integration types initialized for the annotation
+          additionalProperties:
+            x-additionalPropertiesName: urn:cintoo:annotation:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+            type: array
+            items:
+              type: string
+              enum:
+              - AUTODESK
+              - NEWFORMA_KONEKT
+              - PROCORE
+          example:
+            urn:cintoo:annotation:956b7fb8-ad08-4f63-bed2-f958f0bf2e2c:
+            - AUTODESK
+            - PROCORE
+            urn:cintoo:annotation:2d90addd-e3fb-4a0c-b54a-af09e17687e2:
+            - NEWFORMA_KONEKT
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    ProjectInKonektHub:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: id of the project on Konekt
+        name:
+          type: string
+          description: name of the project on Konekt
   responses:
     UnexpectedError:
       description: unexpected error

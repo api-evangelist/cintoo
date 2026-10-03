@@ -70,15 +70,6 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst subscriptionUUID = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/subscriptions/${subscriptionUUID}/usage-report?from=2025-09-29&includeDeleted=true`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    Date:
-      type: string
-      format: date
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18)'
-      example: '2017-07-21'
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     Error:
       type: object
       required:
@@ -99,25 +90,35 @@ components:
         errorValues:
           type: object
           description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    Uuid:
+    Date:
       type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    SubscriptionId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+      format: date
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18)'
+      example: '2017-07-21'
     UserUrn:
       type: string
       description: '"urn:cintoo:user:" followed by an UUIDv4
 
         '
+    SubscriptionUrn:
+      type: string
+      description: '"urn:cintoo:subscription:" followed by an UUIDv4
+
+        '
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
     AccountUrn:
       type: string
       description: '"urn:cintoo:account:" followed by an UUIDv4
@@ -172,35 +173,15 @@ components:
           type: integer
         tagsDownloaded:
           type: integer
-    SubscriptionUrn:
-      type: string
-      description: '"urn:cintoo:subscription:" followed by an UUIDv4
-
-        '
     date:
       type: string
       format: date
       description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18)'
       example: '2017-07-21'
-  parameters:
-    subscriptionRef:
-      name: subscriptionRef
-      in: path
-      required: true
-      description: The Id or Urn of the subscription
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/SubscriptionUrn'
-        - $ref: '#/components/schemas/SubscriptionId'
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
+    SubscriptionId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
   responses:
     UnexpectedError:
       description: unexpected error
@@ -233,6 +214,25 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
+  parameters:
+    subscriptionRef:
+      name: subscriptionRef
+      in: path
+      required: true
+      description: The Id or Urn of the subscription
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/SubscriptionUrn'
+        - $ref: '#/components/schemas/SubscriptionId'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
   securitySchemes:
     oauth2:
       type: oauth2

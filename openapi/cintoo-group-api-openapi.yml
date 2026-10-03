@@ -260,15 +260,58 @@ paths:
         source: "const host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst groupUUID = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/groups/${groupUUID}/members`;\nconst res = await fetch(url, {\n  method: \"DELETE\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    [\"userRef1\", \"userRef2\"]\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Uuid:
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    DateTime:
       type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    GroupRef:
+      oneOf:
+      - $ref: '#/components/schemas/GroupUrn'
+      - $ref: '#/components/schemas/GroupId'
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    ErrorBadRequest:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 400
+        title:
+          type: string
+          enum:
+          - Bad Request
+        detail:
+          type: string
+          description: human readable description of the error in english
     Group:
       type: object
       required:
@@ -323,84 +366,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AccountUrn'
-    DateTime:
+    UserRef:
+      oneOf:
+      - $ref: '#/components/schemas/UserUrn'
+      - $ref: '#/components/schemas/UserId'
+    Uuid:
       type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    Color:
+      type: string
+      pattern: ^#[0-9a-f]{6}$
+      example: '#0698ec'
+    GroupId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     UserId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    ErrorBadRequest:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-          enum:
-          - 400
-        title:
-          type: string
-          enum:
-          - Bad Request
-        detail:
-          type: string
-          description: human readable description of the error in english
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
     AccountUrn:
       type: string
       description: '"urn:cintoo:account:" followed by an UUIDv4
 
         '
-    UserRef:
-      oneOf:
-      - $ref: '#/components/schemas/UserUrn'
-      - $ref: '#/components/schemas/UserId'
-    GroupRef:
-      oneOf:
-      - $ref: '#/components/schemas/GroupUrn'
-      - $ref: '#/components/schemas/GroupId'
-    GroupId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     GroupUrn:
       type: string
       description: '"urn:cintoo:group:" followed by an UUIDv4
 
         '
-    Color:
-      type: string
-      pattern: ^#[0-9a-f]{6}$
-      example: '#0698ec'
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
   responses:
     UnexpectedError:
       description: unexpected error
@@ -434,13 +434,6 @@ components:
                 status: 406
                 title: Not Acceptable
   parameters:
-    groupRef:
-      name: groupRef
-      in: path
-      required: true
-      description: The Id or Urn of the group
-      schema:
-        $ref: '#/components/schemas/GroupRef'
     accountRef:
       name: accountRef
       in: path
@@ -450,6 +443,13 @@ components:
         oneOf:
         - $ref: '#/components/schemas/AccountUrn'
         - $ref: '#/components/schemas/AccountId'
+    groupRef:
+      name: groupRef
+      in: path
+      required: true
+      description: The Id or Urn of the group
+      schema:
+        $ref: '#/components/schemas/GroupRef'
   securitySchemes:
     oauth2:
       type: oauth2
