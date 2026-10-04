@@ -388,21 +388,6 @@ paths:
           $ref: '#/components/responses/UnexpectedError'
 components:
   schemas:
-    Gaussian:
-      allOf:
-      - $ref: '#/components/schemas/FileBase'
-      - $ref: '#/components/schemas/FileBlob'
-      - $ref: '#/components/schemas/FileImported'
-      - $ref: '#/components/schemas/FilePlaced'
-      - $ref: '#/components/schemas/FileScaled'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            $ref: '#/components/schemas/FileCategoryGaussian'
-          src:
-            $ref: '#/components/schemas/FileSrcGaussian'
     FileSrcGaussian:
       type: object
       required:
@@ -454,6 +439,135 @@ components:
                   format: double
                   description: Structural Similarity Index metric
                   example: 0.8322978
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    MiscFile:
+      allOf:
+      - $ref: '#/components/schemas/FileBase'
+      - $ref: '#/components/schemas/FileBlob'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            $ref: '#/components/schemas/FileCategoryMiscFile'
+    ModelReport:
+      allOf:
+      - $ref: '#/components/schemas/FileBase'
+      - $ref: '#/components/schemas/FileBlobOptional'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            $ref: '#/components/schemas/FileCategoryModelReport'
+          src:
+            $ref: '#/components/schemas/FileSrcModelReports'
+    FileCategorySiteMap:
+      type: string
+      enum:
+      - sitemap
+      description: 'Site Map files: `.map`'
+    FormatUrn:
+      type: string
+      description: '"urn:cintoo:format:" followed by a number
+
+        '
+    FileCategoryGeoImage:
+      type: string
+      enum:
+      - geoImage
+      description: 'Geo Image files: `.idd`, `.360`'
+    BlobName:
+      type: string
+      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
+    FileScaled:
+      type: object
+      properties:
+        scale:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Vector3D'
+          description: 'A vector giving the scaling that we need to apply to make the object fit with other elements of the scene.
+
+            It has ratios for the three directions: `x`, `y` and `z`
+
+            '
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    FileCategoryArchive:
+      type: string
+      enum:
+      - archive
+      description: 'Archive files: `zip`'
+    FileCategoryDocument:
+      type: string
+      enum:
+      - document
+      description: 'Document files: `.doc[x]`, `.xls[x]`, `.ppt[x]`, `.txt`, `.rtf`, `.odt`, `.pdt`, `.pub`, `.csv`'
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    Url:
+      type: string
+      format: uri
+      description: Link that will redirect to 302 signed link to download the corresponding file.
+    Vector3D:
+      type: object
+      required:
+      - x
+      - y
+      - z
+      properties:
+        x:
+          type: number
+          format: double
+        y:
+          type: number
+          format: double
+        z:
+          type: number
+          format: double
+    filesTransformationUpdate:
+      type: array
+      items:
+        allOf:
+        - $ref: '#/components/schemas/FileTransformableBody'
+        - type: object
+          required:
+          - id
+          properties:
+            id:
+              $ref: '#/components/schemas/FileUrn'
     SiteMap:
       allOf:
       - $ref: '#/components/schemas/FileBase'
@@ -464,12 +578,7 @@ components:
         properties:
           type:
             $ref: '#/components/schemas/FileCategorySiteMap'
-    FileCategoryGeoImage:
-      type: string
-      enum:
-      - geoImage
-      description: 'Geo Image files: `.idd`, `.360`'
-    Document:
+    Archive:
       allOf:
       - $ref: '#/components/schemas/FileBase'
       - $ref: '#/components/schemas/FileBlob'
@@ -478,27 +587,49 @@ components:
         - type
         properties:
           type:
-            $ref: '#/components/schemas/FileCategoryDocument'
-    FileSrcModelReports:
+            $ref: '#/components/schemas/FileCategoryArchive'
+    FilePlaced:
       type: object
       required:
-      - model
-      - elements
-      - scans
-      - tolerance
+      - translation
       properties:
-        model:
-          $ref: '#/components/schemas/FileUrn'
-        elements:
-          type: array
-          items:
-            type: string
-        scans:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileUrn'
-        tolerance:
-          type: number
+        translation:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Vector3D'
+          description: 'A vector representing the position of the image in the Workzone,
+
+            with three components in meter: `x`, `y` and `z`
+
+            '
+        rotation:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Quaternion'
+          description: 'A quaternion representing the rotation of the image,
+
+            with the pivot point being its current position defined by translation.
+
+            It has four components: `x`, `y`, `z` and `w`
+
+            '
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    FileUrn:
+      type: string
+      description: '"urn:cintoo:file:" followed by an UUIDv4
+
+        '
+    FileCategoryMiscFile:
+      type: string
+      enum:
+      - miscfile
+      description: Any other type of files
     FileFormat:
       type: object
       x-tags:
@@ -535,30 +666,155 @@ components:
           type: string
         categoryType:
           type: string
-    Video3d:
+    GeoImage:
       allOf:
       - $ref: '#/components/schemas/FileBase'
       - $ref: '#/components/schemas/FileBlob'
+      - $ref: '#/components/schemas/FileImported'
+      - $ref: '#/components/schemas/FilePlaced'
       - type: object
         required:
         - type
+        - resolution
+        - urlPreview
+        - panoramaWidth
+        - panoramaHeight
         properties:
           type:
-            $ref: '#/components/schemas/FileCategoryVideo3d'
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    FileImported:
+            $ref: '#/components/schemas/FileCategoryGeoImage'
+          resolution:
+            type: object
+            allOf:
+            - $ref: '#/components/schemas/Dimension2d'
+            description: 'The image''s resolution: has a `w` and a `h`, respectively for *width* and *height*. This is not the same as `PanoramaWidth` and `PanoramaHeight`
+
+              '
+          scanInfo:
+            type: string
+          blobPreview:
+            type: string
+            allOf:
+            - $ref: '#/components/schemas/BlobName'
+          urlPreview:
+            type: string
+            allOf:
+            - $ref: '#/components/schemas/Url'
+          panoramaWidth:
+            type: number
+            format: int
+            description: The image's *width*, in pixels
+          panoramaHeight:
+            type: number
+            format: int
+            description: The image's *height*, in pixels
+          src:
+            type: object
+            description: Contains metadata usable by the Cintoo Viewer
+            properties:
+              idd:
+                type: object
+                properties:
+                  scan_id:
+                    type: string
+                  scan_guid:
+                    type: string
+                    description: Optional external scan identifier, carried over from the import CSV.
+                  idd_type:
+                    type: string
+                    example: Corrosion
+              fileStatus:
+                type: string
+                enum:
+                - pending
+                - success
+                - failure
+                description: Cloud import job status of this IDD image (absent for legacy Connect imports, treated as success).
+    FileTransformable:
       type: object
       properties:
-        importedAt:
+        translation:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Vector3D'
+          description: 'A vector representing the position in the Workzone,
+
+            with three components in meter: `x`, `y` and `z`
+
+            '
+        rotation:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Quaternion'
+          description: 'A quaternion representing the rotation,
+
+            with the pivot point being its current position defined by translation.
+
+            It has four components: `x`, `y`, `z` and `w`
+
+            '
+        scale:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Vector3D'
+          description: 'A vector representing a scale deformation along the three axis
+
+            with three ratio components : `x`, `y` and `z`
+
+            '
+    FileCategoryGaussian:
+      type: string
+      enum:
+      - gaussian
+      description: 'Gaussian Splatting files: `.ply`, `.spz`'
+    FileBlobOptional:
+      type: object
+      properties:
+        blob:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: use `blobName` instead. `blob` will be removed the 1st of november 2025
+          allOf:
+          - $ref: '#/components/schemas/BlobName'
+        blobName:
           type:
           - string
           - 'null'
           allOf:
-          - $ref: '#/components/schemas/DateTime'
+          - $ref: '#/components/schemas/BlobName'
+        url:
+          type:
+          - string
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Url'
+    FileSrcModelReports:
+      type: object
+      required:
+      - model
+      - elements
+      - scans
+      - tolerance
+      properties:
+        model:
+          $ref: '#/components/schemas/FileUrn'
+        elements:
+          type: array
+          items:
+            type: string
+        scans:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileUrn'
+        tolerance:
+          type: number
     Media:
       allOf:
       - $ref: '#/components/schemas/FileBase'
@@ -569,16 +825,110 @@ components:
         properties:
           type:
             $ref: '#/components/schemas/FileCategoryMedia'
-    FileCategoryModel:
+    FileBlob:
+      type: object
+      required:
+      - blob
+      - blobName
+      - url
+      properties:
+        blob:
+          type: string
+          deprecated: true
+          description: use `blobName` instead. `blob` will be removed the 1st of november 2025
+          allOf:
+          - $ref: '#/components/schemas/BlobName'
+        blobName:
+          $ref: '#/components/schemas/BlobName'
+        url:
+          $ref: '#/components/schemas/Url'
+    FileCategoryMedia:
       type: string
       enum:
-      - model
-      description: 'Model files: `.3ds`, `.dae`, `.dxf`, `.ifc`, `.dwg`, `.rvt`, etc.'
-    FileCategoryVideo3d:
+      - media
+      description: 'Media files: `.png`, `.jp[e]g`, `.gif`, `.bmp`, `.tiff`'
+    AccountUrn:
       type: string
-      enum:
-      - video3d
-      description: 'Video3d files: `.mp4`'
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    File:
+      type: object
+      x-tags:
+      - File
+      oneOf:
+      - $ref: '#/components/schemas/Archive'
+      - $ref: '#/components/schemas/Document'
+      - $ref: '#/components/schemas/Gaussian'
+      - $ref: '#/components/schemas/GeoImage'
+      - $ref: '#/components/schemas/Media'
+      - $ref: '#/components/schemas/MiscFile'
+      - $ref: '#/components/schemas/Model'
+      - $ref: '#/components/schemas/ModelReport'
+      - $ref: '#/components/schemas/Scan'
+      - $ref: '#/components/schemas/SiteMap'
+      - $ref: '#/components/schemas/Video3d'
+      discriminator:
+        propertyName: type
+        mapping:
+          archive: '#/components/schemas/Archive'
+          document: '#/components/schemas/Document'
+          gaussian: '#/components/schemas/Gaussian'
+          geoImage: '#/components/schemas/GeoImage'
+          media: '#/components/schemas/Media'
+          miscfile: '#/components/schemas/MiscFile'
+          model: '#/components/schemas/Model'
+          modelReport: '#/components/schemas/ModelReport'
+          scan: '#/components/schemas/Scan'
+          sitemap: '#/components/schemas/SiteMap'
+          video3d: '#/components/schemas/Video3d'
+    FileBase:
+      type: object
+      required:
+      - id
+      - api1Id
+      - projectId
+      - workzoneId
+      - name
+      - formatId
+      - size
+      - createdAt
+      - createdBy
+      properties:
+        id:
+          $ref: '#/components/schemas/FileUrn'
+        api1Id:
+          $ref: '#/components/schemas/FileId'
+        projectId:
+          $ref: '#/components/schemas/ProjectUrn'
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneUrn'
+        name:
+          type: string
+          example: fileName
+        formatId:
+          $ref: '#/components/schemas/FormatUrn'
+        size:
+          type: integer
+          format: int64
+          minimum: 0
+          description: File size in Bytes
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+        createdBy:
+          $ref: '#/components/schemas/UserUrn'
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedBy:
+          type:
+          - string
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/UserUrn'
     Scan:
       allOf:
       - $ref: '#/components/schemas/FileBase'
@@ -661,118 +1011,26 @@ components:
           src:
             type: object
             description: Contains metadata usable by the Cintoo Viewer
-    FormatId:
-      type: integer
-      readOnly: true
-      example: 5
-    Error:
+    Quaternion:
       type: object
       required:
-      - status
-      - title
+      - x
+      - y
+      - z
+      - w
       properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    fileUpdate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          minimum: 1
-          maximum: 255
-          description: New name for the file
-    filesTransformationUpdate:
-      type: array
-      items:
-        allOf:
-        - $ref: '#/components/schemas/FileTransformableBody'
-        - type: object
-          required:
-          - id
-          properties:
-            id:
-              $ref: '#/components/schemas/FileUrn'
-    FileCategoryModelReport:
-      type: string
-      enum:
-      - modelReport
-      description: 'Model report files: `.cipm`'
-    FileUrn:
-      type: string
-      description: '"urn:cintoo:file:" followed by an UUIDv4
-
-        '
-    FileBase:
-      type: object
-      required:
-      - id
-      - api1Id
-      - projectId
-      - workzoneId
-      - name
-      - formatId
-      - size
-      - createdAt
-      - createdBy
-      properties:
-        id:
-          $ref: '#/components/schemas/FileUrn'
-        api1Id:
-          $ref: '#/components/schemas/FileId'
-        projectId:
-          $ref: '#/components/schemas/ProjectUrn'
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneUrn'
-        name:
-          type: string
-          example: fileName
-        formatId:
-          $ref: '#/components/schemas/FormatUrn'
-        size:
-          type: integer
-          format: int64
-          minimum: 0
-          description: File size in Bytes
-        createdAt:
-          $ref: '#/components/schemas/DateTime'
-        createdBy:
-          $ref: '#/components/schemas/UserUrn'
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        updatedBy:
-          type:
-          - string
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/UserUrn'
-    FileCategoryScan:
-      type: string
-      enum:
-      - scan
-      description: 'Scan files: `.fls`, `.e57`, etc.'
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+        z:
+          type: number
+          format: float
+        w:
+          type: number
+          format: float
     Dimension2d:
       type: object
       required:
@@ -783,199 +1041,15 @@ components:
           type: integer
         h:
           type: integer
-    FileCategoryMedia:
+    FileCategoryScan:
       type: string
       enum:
-      - media
-      description: 'Media files: `.png`, `.jp[e]g`, `.gif`, `.bmp`, `.tiff`'
-    BlobName:
-      type: string
-      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
-    File:
-      type: object
-      x-tags:
-      - File
-      oneOf:
-      - $ref: '#/components/schemas/Archive'
-      - $ref: '#/components/schemas/Document'
-      - $ref: '#/components/schemas/Gaussian'
-      - $ref: '#/components/schemas/GeoImage'
-      - $ref: '#/components/schemas/Media'
-      - $ref: '#/components/schemas/MiscFile'
-      - $ref: '#/components/schemas/Model'
-      - $ref: '#/components/schemas/ModelReport'
-      - $ref: '#/components/schemas/Scan'
-      - $ref: '#/components/schemas/SiteMap'
-      - $ref: '#/components/schemas/Video3d'
-      discriminator:
-        propertyName: type
-        mapping:
-          archive: '#/components/schemas/Archive'
-          document: '#/components/schemas/Document'
-          gaussian: '#/components/schemas/Gaussian'
-          geoImage: '#/components/schemas/GeoImage'
-          media: '#/components/schemas/Media'
-          miscfile: '#/components/schemas/MiscFile'
-          model: '#/components/schemas/Model'
-          modelReport: '#/components/schemas/ModelReport'
-          scan: '#/components/schemas/Scan'
-          sitemap: '#/components/schemas/SiteMap'
-          video3d: '#/components/schemas/Video3d'
-    FileCategoryMiscFile:
-      type: string
-      enum:
-      - miscfile
-      description: Any other type of files
-    bulk-files:
-      type: object
-      required:
-      - name
-      - extension
-      - size
-      - md5
-      properties:
-        name:
-          type: string
-          minimum: 1
-          maximum: 255
-        extension:
-          type: string
-        size:
-          type: integer
-          format: int64
-        md5:
-          type: string
-    FileTransformable:
-      type: object
-      properties:
-        translation:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Vector3D'
-          description: 'A vector representing the position in the Workzone,
-
-            with three components in meter: `x`, `y` and `z`
-
-            '
-        rotation:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Quaternion'
-          description: 'A quaternion representing the rotation,
-
-            with the pivot point being its current position defined by translation.
-
-            It has four components: `x`, `y`, `z` and `w`
-
-            '
-        scale:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Vector3D'
-          description: 'A vector representing a scale deformation along the three axis
-
-            with three ratio components : `x`, `y` and `z`
-
-            '
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    WorkzoneUrn:
-      type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    GeoImage:
-      allOf:
-      - $ref: '#/components/schemas/FileBase'
-      - $ref: '#/components/schemas/FileBlob'
-      - $ref: '#/components/schemas/FileImported'
-      - $ref: '#/components/schemas/FilePlaced'
-      - type: object
-        required:
-        - type
-        - resolution
-        - urlPreview
-        - panoramaWidth
-        - panoramaHeight
-        properties:
-          type:
-            $ref: '#/components/schemas/FileCategoryGeoImage'
-          resolution:
-            type: object
-            allOf:
-            - $ref: '#/components/schemas/Dimension2d'
-            description: 'The image''s resolution: has a `w` and a `h`, respectively for *width* and *height*. This is not the same as `PanoramaWidth` and `PanoramaHeight`
-
-              '
-          scanInfo:
-            type: string
-          blobPreview:
-            type: string
-            allOf:
-            - $ref: '#/components/schemas/BlobName'
-          urlPreview:
-            type: string
-            allOf:
-            - $ref: '#/components/schemas/Url'
-          panoramaWidth:
-            type: number
-            format: int
-            description: The image's *width*, in pixels
-          panoramaHeight:
-            type: number
-            format: int
-            description: The image's *height*, in pixels
-          src:
-            type: object
-            description: Contains metadata usable by the Cintoo Viewer
-            properties:
-              idd:
-                type: object
-                properties:
-                  scan_id:
-                    type: string
-                  scan_guid:
-                    type: string
-                    description: Optional external scan identifier, carried over from the import CSV.
-                  idd_type:
-                    type: string
-                    example: Corrosion
-              fileStatus:
-                type: string
-                enum:
-                - pending
-                - success
-                - failure
-                description: Cloud import job status of this IDD image (absent for legacy Connect imports, treated as success).
-    FileId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Archive:
-      allOf:
-      - $ref: '#/components/schemas/FileBase'
-      - $ref: '#/components/schemas/FileBlob'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            $ref: '#/components/schemas/FileCategoryArchive'
-    FileCategorySiteMap:
-      type: string
-      enum:
-      - sitemap
-      description: 'Site Map files: `.map`'
+      - scan
+      description: 'Scan files: `.fls`, `.e57`, etc.'
+    FormatId:
+      type: integer
+      readOnly: true
+      example: 5
     Model:
       allOf:
       - $ref: '#/components/schemas/FileBase'
@@ -1009,47 +1083,53 @@ components:
                       enum:
                       - json-br-1
                       description: the format of the Model MFI
-    FileCategoryArchive:
-      type: string
-      enum:
-      - archive
-      description: 'Archive files: `zip`'
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    FilePlaced:
-      type: object
-      required:
-      - translation
-      properties:
-        translation:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Vector3D'
-          description: 'A vector representing the position of the image in the Workzone,
-
-            with three components in meter: `x`, `y` and `z`
-
-            '
-        rotation:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Quaternion'
-          description: 'A quaternion representing the rotation of the image,
-
-            with the pivot point being its current position defined by translation.
-
-            It has four components: `x`, `y`, `z` and `w`
-
-            '
-    WorkzoneId:
+    FileId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    bulk-files:
+      type: object
+      required:
+      - name
+      - extension
+      - size
+      - md5
+      properties:
+        name:
+          type: string
+          minimum: 1
+          maximum: 255
+        extension:
+          type: string
+        size:
+          type: integer
+          format: int64
+        md5:
+          type: string
+    Document:
+      allOf:
+      - $ref: '#/components/schemas/FileBase'
+      - $ref: '#/components/schemas/FileBlob'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            $ref: '#/components/schemas/FileCategoryDocument'
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    fileUpdate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minimum: 1
+          maximum: 255
+          description: New name for the file
     FileTransformableBody:
       type: object
       properties:
@@ -1088,87 +1168,46 @@ components:
             with three ratio components : `x`, `y` and `z`
 
             '
-    Vector3D:
-      type: object
-      required:
-      - x
-      - y
-      - z
-      properties:
-        x:
-          type: number
-          format: double
-        y:
-          type: number
-          format: double
-        z:
-          type: number
-          format: double
-    FormatUrn:
+    UserUrn:
       type: string
-      description: '"urn:cintoo:format:" followed by a number
+      description: '"urn:cintoo:user:" followed by an UUIDv4
 
         '
-    Quaternion:
-      type: object
-      required:
-      - x
-      - y
-      - z
-      - w
-      properties:
-        x:
-          type: number
-          format: float
-        y:
-          type: number
-          format: float
-        z:
-          type: number
-          format: float
-        w:
-          type: number
-          format: float
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    Url:
-      type: string
-      format: uri
-      description: Link that will redirect to 302 signed link to download the corresponding file.
-    FileScaled:
-      type: object
-      properties:
-        scale:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Vector3D'
-          description: 'A vector giving the scaling that we need to apply to make the object fit with other elements of the scene.
-
-            It has ratios for the three directions: `x`, `y` and `z`
-
-            '
-    ModelReport:
+    Gaussian:
       allOf:
       - $ref: '#/components/schemas/FileBase'
-      - $ref: '#/components/schemas/FileBlobOptional'
+      - $ref: '#/components/schemas/FileBlob'
+      - $ref: '#/components/schemas/FileImported'
+      - $ref: '#/components/schemas/FilePlaced'
+      - $ref: '#/components/schemas/FileScaled'
       - type: object
         required:
         - type
         properties:
           type:
-            $ref: '#/components/schemas/FileCategoryModelReport'
+            $ref: '#/components/schemas/FileCategoryGaussian'
           src:
-            $ref: '#/components/schemas/FileSrcModelReports'
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    MiscFile:
+            $ref: '#/components/schemas/FileSrcGaussian'
+    FileCategoryModelReport:
+      type: string
+      enum:
+      - modelReport
+      description: 'Model report files: `.cipm`'
+    FileCategoryVideo3d:
+      type: string
+      enum:
+      - video3d
+      description: 'Video3d files: `.mp4`'
+    FileImported:
+      type: object
+      properties:
+        importedAt:
+          type:
+          - string
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+    Video3d:
       allOf:
       - $ref: '#/components/schemas/FileBase'
       - $ref: '#/components/schemas/FileBlob'
@@ -1177,112 +1216,32 @@ components:
         - type
         properties:
           type:
-            $ref: '#/components/schemas/FileCategoryMiscFile'
-    FileBlob:
-      type: object
-      required:
-      - blob
-      - blobName
-      - url
-      properties:
-        blob:
-          type: string
-          deprecated: true
-          description: use `blobName` instead. `blob` will be removed the 1st of november 2025
-          allOf:
-          - $ref: '#/components/schemas/BlobName'
-        blobName:
-          $ref: '#/components/schemas/BlobName'
-        url:
-          $ref: '#/components/schemas/Url'
-    FileCategoryDocument:
-      type: string
-      enum:
-      - document
-      description: 'Document files: `.doc[x]`, `.xls[x]`, `.ppt[x]`, `.txt`, `.rtf`, `.odt`, `.pdt`, `.pub`, `.csv`'
-    FileCategoryGaussian:
-      type: string
-      enum:
-      - gaussian
-      description: 'Gaussian Splatting files: `.ply`, `.spz`'
-    FileBlobOptional:
-      type: object
-      properties:
-        blob:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-          description: use `blobName` instead. `blob` will be removed the 1st of november 2025
-          allOf:
-          - $ref: '#/components/schemas/BlobName'
-        blobName:
-          type:
-          - string
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/BlobName'
-        url:
-          type:
-          - string
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Url'
-    AccountId:
+            $ref: '#/components/schemas/FileCategoryVideo3d'
+    WorkzoneId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-  responses:
-    UnexpectedError:
-      description: unexpected error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            '400':
-              value:
-                status: 400
-                title: Bad Request
-            '401':
-              value:
-                status: 401
-                title: Unauthorized
-            '403':
-              value:
-                status: 403
-                title: Forbidden
-            '404':
-              value:
-                status: 404
-                title: Not Found
-            '405':
-              value:
-                status: 405
-                title: Method Not Allowed
-            '406':
-              value:
-                status: 406
-                title: Not Acceptable
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    FileCategoryModel:
+      type: string
+      enum:
+      - model
+      description: 'Model files: `.3ds`, `.dae`, `.dxf`, `.ifc`, `.dwg`, `.rvt`, etc.'
   parameters:
-    accountRef:
-      name: accountRef
+    workzoneRef:
+      name: workzoneRef
       in: path
       required: true
-      description: The Id or Urn of the account
+      description: The Id or Urn of the work zone
       schema:
         oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
-    fileRef:
-      name: fileRef
-      in: path
-      required: true
-      description: The Id or Urn of the file
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/FileUrn'
-        - $ref: '#/components/schemas/FileId'
+        - $ref: '#/components/schemas/WorkzoneUrn'
+        - $ref: '#/components/schemas/WorkzoneId'
     projectRef:
       name: projectRef
       in: path
@@ -1337,15 +1296,56 @@ components:
           - model
           - video3d
           - gaussian
-    workzoneRef:
-      name: workzoneRef
+    accountRef:
+      name: accountRef
       in: path
       required: true
-      description: The Id or Urn of the work zone
+      description: The Id or Urn of the account
       schema:
         oneOf:
-        - $ref: '#/components/schemas/WorkzoneUrn'
-        - $ref: '#/components/schemas/WorkzoneId'
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
+    fileRef:
+      name: fileRef
+      in: path
+      required: true
+      description: The Id or Urn of the file
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/FileUrn'
+        - $ref: '#/components/schemas/FileId'
+  responses:
+    UnexpectedError:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            '400':
+              value:
+                status: 400
+                title: Bad Request
+            '401':
+              value:
+                status: 401
+                title: Unauthorized
+            '403':
+              value:
+                status: 403
+                title: Forbidden
+            '404':
+              value:
+                status: 404
+                title: Not Found
+            '405':
+              value:
+                status: 405
+                title: Method Not Allowed
+            '406':
+              value:
+                status: 406
+                title: Not Acceptable
   securitySchemes:
     oauth2:
       type: oauth2

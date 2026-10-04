@@ -254,68 +254,10 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst roleId = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/roles/${roleId}`;\nconst res = await fetch(url, {\n  method: \"PUT\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    {\n          \"description\": \"Better description\",\n          \"color\": \"#E529B0\"\n      }\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    RoleId:
+    AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    RoleUrn:
-      type: string
-      description: '"urn:cintoo:role:" followed by an UUIDv4
-
-        '
-    RoleLegacyPermissions:
-      type: array
-      description: "Permissions given by the role, in the legacy format, among:\n  - `create_project`: Update, delete or restore projects created by a project manager\n  - `workzone`: Create, modify & delete Work Zones\n  - `view3d`: Overview, 3D view, Scan View\n  - `annotate`: Create, edit and delete annotations, assign notes to Team Members\n  - `measure`: Add and view 3D measurements\n  - `share`: Can share project\n  - `upload`: Upload or delete laser scans or 360° images and manage versions\n  - `download`: Export in E57 or download Reality Data via Cintoo Connect\n  - `upload_doc`: Upload and download documents and 3D models from BIM platforms or from desktop\n  - `manage_users`: Add / remove new Team Members and define permissions\n  - `create_asset`: Import, create, edit and delete tags\n  - `view_asset`: View and export tags\n  - `view_annotation`: View annotations\n  - `manage_savedview`: Create, edit and delete saved views\n  - `view_savedview`: View saved views\n  - `manage_cipm`: Manage Progress Monitoring Jobs\n"
-      minItems: 1
-      items:
-        type: string
-        enum:
-        - create_project
-        - workzone
-        - view3d
-        - annotate
-        - measure
-        - share
-        - upload
-        - download
-        - upload_doc
-        - manage_users
-        - create_asset
-        - view_asset
-        - view_annotation
-        - manage_savedview
-        - view_savedview
-        - manage_cipm
     Role:
       type: object
       required:
@@ -370,7 +312,7 @@ components:
           $ref: '#/components/schemas/RolePermissions'
         legacyPermissions:
           $ref: '#/components/schemas/RoleLegacyPermissions'
-    ErrorBadRequest:
+    Error:
       type: object
       required:
       - status
@@ -379,38 +321,17 @@ components:
         status:
           type: integer
           format: int32
-          enum:
-          - 400
         title:
           type: string
-          enum:
-          - Bad Request
         detail:
           type: string
           description: human readable description of the error in english
-    roleUpdate:
-      type: object
-      properties:
-        name:
+        errorCode:
           type: string
-          example: BIM / VDC Manager
-        description:
-          type: string
-          example: Can do anything except creating projects
-        color:
-          $ref: '#/components/schemas/Color'
-        permissions:
-          type:
-          - array
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/RolePermissions'
-        legacyPermissions:
-          type:
-          - array
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/RoleLegacyPermissions'
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
     roleCreate:
       type: object
       required:
@@ -428,6 +349,11 @@ components:
           $ref: '#/components/schemas/RolePermissions'
         legacyPermissions:
           $ref: '#/components/schemas/RoleLegacyPermissions'
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
     Color:
       type: string
       pattern: ^#[0-9a-f]{6}$
@@ -472,39 +398,94 @@ components:
         - workzone:progress-monitoring-jobs:write
         - workzone:own-progress-monitoring-jobs:read
         - workzone:own-progress-monitoring-jobs:write
-    Uuid:
+    ErrorBadRequest:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 400
+        title:
+          type: string
+          enum:
+          - Bad Request
+        detail:
+          type: string
+          description: human readable description of the error in english
+    RoleLegacyPermissions:
+      type: array
+      description: "Permissions given by the role, in the legacy format, among:\n  - `create_project`: Update, delete or restore projects created by a project manager\n  - `workzone`: Create, modify & delete Work Zones\n  - `view3d`: Overview, 3D view, Scan View\n  - `annotate`: Create, edit and delete annotations, assign notes to Team Members\n  - `measure`: Add and view 3D measurements\n  - `share`: Can share project\n  - `upload`: Upload or delete laser scans or 360° images and manage versions\n  - `download`: Export in E57 or download Reality Data via Cintoo Connect\n  - `upload_doc`: Upload and download documents and 3D models from BIM platforms or from desktop\n  - `manage_users`: Add / remove new Team Members and define permissions\n  - `create_asset`: Import, create, edit and delete tags\n  - `view_asset`: View and export tags\n  - `view_annotation`: View annotations\n  - `manage_savedview`: Create, edit and delete saved views\n  - `view_savedview`: View saved views\n  - `manage_cipm`: Manage Progress Monitoring Jobs\n"
+      minItems: 1
+      items:
+        type: string
+        enum:
+        - create_project
+        - workzone
+        - view3d
+        - annotate
+        - measure
+        - share
+        - upload
+        - download
+        - upload_doc
+        - manage_users
+        - create_asset
+        - view_asset
+        - view_annotation
+        - manage_savedview
+        - view_savedview
+        - manage_cipm
+    roleUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: BIM / VDC Manager
+        description:
+          type: string
+          example: Can do anything except creating projects
+        color:
+          $ref: '#/components/schemas/Color'
+        permissions:
+          type:
+          - array
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/RolePermissions'
+        legacyPermissions:
+          type:
+          - array
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/RoleLegacyPermissions'
+    RoleUrn:
       type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
+      description: '"urn:cintoo:role:" followed by an UUIDv4
+
+        '
+    RoleId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     AccountUrn:
       type: string
       description: '"urn:cintoo:account:" followed by an UUIDv4
 
         '
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-  parameters:
-    roleRef:
-      name: roleRef
-      in: path
-      required: true
-      description: The Id or Urn of the role
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/RoleUrn'
-        - $ref: '#/components/schemas/RoleId'
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -537,6 +518,25 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
+  parameters:
+    roleRef:
+      name: roleRef
+      in: path
+      required: true
+      description: The Id or Urn of the role
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/RoleUrn'
+        - $ref: '#/components/schemas/RoleId'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
   securitySchemes:
     oauth2:
       type: oauth2

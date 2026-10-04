@@ -289,11 +289,6 @@ paths:
         source: "const host = \"aec.cintoo.com\";\nconst accountId = \"...\";\nconst projectId = \"...\";\nconst cropId = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountId}/projects/${projectId}/crops/${cropId}/cover`;\nconst res = await fetch(url, {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    {\n          \"name\":\"cover.png\",\n          \"extension\":\"png\",\n          \"size\":448459,\n          \"md5\":\"da04845eaedb7db7f5b6f32c4076821f\",\n        }\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
     Error:
       type: object
       required:
@@ -314,36 +309,32 @@ components:
         errorValues:
           type: object
           description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    CropUrn:
-      type: string
-      description: '"urn:cintoo:crop:" followed by an UUIDv4
-
-        '
+    WorkzoneRef:
+      oneOf:
+      - $ref: '#/components/schemas/WorkzoneUrn'
+      - $ref: '#/components/schemas/WorkzoneId'
     BlobName:
       type: string
       description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
-    ProjectUrn:
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Uuid:
       type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    WorkzoneUrn:
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
       type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    AccountUrn:
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    Url:
       type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    cropUpdate:
+      format: uri
+      description: Link that will redirect to 302 signed link to download the corresponding file.
+    cropCreate:
       type: object
       required:
       - workzoneId
@@ -396,23 +387,11 @@ components:
           type:
           - string
           - 'null'
-    WorkzoneId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    CropId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneRef:
-      oneOf:
-      - $ref: '#/components/schemas/WorkzoneUrn'
-      - $ref: '#/components/schemas/WorkzoneId'
-    DateTime:
+    ProjectUrn:
       type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
     Crop:
       type: object
       required:
@@ -500,19 +479,30 @@ components:
           $ref: '#/components/schemas/UserUrn'
         updatedAt:
           $ref: '#/components/schemas/DateTime'
-    Url:
+    CropUrn:
       type: string
-      format: uri
-      description: Link that will redirect to 302 signed link to download the corresponding file.
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+      description: '"urn:cintoo:crop:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
     AccountId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    cropCreate:
+    CropId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    cropUpdate:
       type: object
       required:
       - workzoneId
@@ -565,7 +555,26 @@ components:
           type:
           - string
           - 'null'
+    WorkzoneId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
   parameters:
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
     cropRef:
       name: cropRef
       in: path
@@ -584,15 +593,6 @@ components:
         oneOf:
         - $ref: '#/components/schemas/AccountUrn'
         - $ref: '#/components/schemas/AccountId'
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
     workzonesFilter:
       name: workzones
       in: query

@@ -323,6 +323,94 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst projectUUID = \"...\";\nconst groupUUID = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/projects/${projectUUID}/members/groups/${groupUUID}`;\nconst res = await fetch(url, {\n  method: \"DELETE\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nif (res.status !== 204) {\n  const data = await res.json();\n  console.log(data);\n}\n"
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    UserRef:
+      oneOf:
+      - $ref: '#/components/schemas/UserUrn'
+      - $ref: '#/components/schemas/UserId'
+    WorkzoneRef:
+      oneOf:
+      - $ref: '#/components/schemas/WorkzoneUrn'
+      - $ref: '#/components/schemas/WorkzoneId'
+    UserOldId:
+      type: string
+      pattern: ^[-_0-9a-zA-Z]+$
+      description: Base64url encoding of "user-{id}"
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    GroupRef:
+      oneOf:
+      - $ref: '#/components/schemas/GroupUrn'
+      - $ref: '#/components/schemas/GroupId'
+    GroupUrn:
+      type: string
+      description: '"urn:cintoo:group:" followed by an UUIDv4
+
+        '
+    AccountRoles:
+      type: string
+      enum:
+      - administrator
+      - projectLister
+      - projectManager
+    RoleId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    RoleRef:
+      oneOf:
+      - $ref: '#/components/schemas/RoleUrn'
+      - $ref: '#/components/schemas/RoleId'
+    RoleUrn:
+      type: string
+      description: '"urn:cintoo:role:" followed by an UUIDv4
+
+        '
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     ErrorForbidden:
       type: object
       required:
@@ -341,6 +429,11 @@ components:
         detail:
           type: string
           description: human readable description of the error in english
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
     User:
       type: object
       required:
@@ -387,117 +480,57 @@ components:
           example:
           - administrator
           - projectManager
-    UserRef:
-      oneOf:
-      - $ref: '#/components/schemas/UserUrn'
-      - $ref: '#/components/schemas/UserId'
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    GroupId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     UserId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    GroupUrn:
-      type: string
-      description: '"urn:cintoo:group:" followed by an UUIDv4
-
-        '
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    GroupRef:
-      oneOf:
-      - $ref: '#/components/schemas/GroupUrn'
-      - $ref: '#/components/schemas/GroupId'
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
-    AccountRoles:
-      type: string
-      enum:
-      - administrator
-      - projectLister
-      - projectManager
-    RoleId:
+    GroupId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
+    WorkzoneId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     WorkzoneUrn:
       type: string
       pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
       description: '"urn:cintoo:workzone:" followed by an UUIDv4
 
         '
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    WorkzoneId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneRef:
-      oneOf:
-      - $ref: '#/components/schemas/WorkzoneUrn'
-      - $ref: '#/components/schemas/WorkzoneId'
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    UserOldId:
-      type: string
-      pattern: ^[-_0-9a-zA-Z]+$
-      description: Base64url encoding of "user-{id}"
-    RoleUrn:
-      type: string
-      description: '"urn:cintoo:role:" followed by an UUIDv4
-
-        '
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    RoleRef:
-      oneOf:
-      - $ref: '#/components/schemas/RoleUrn'
-      - $ref: '#/components/schemas/RoleId'
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+  parameters:
+    userRef:
+      name: userRef
+      in: path
+      required: true
+      description: The Id or Urn of the user
+      schema:
+        $ref: '#/components/schemas/UserRef'
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
+    groupRef:
+      name: groupRef
+      in: path
+      required: true
+      description: The Id or Urn of the group
+      schema:
+        $ref: '#/components/schemas/GroupRef'
+    accountRef:
+      name: accountRef
+      in: path
+      required: true
+      description: The Id or Urn of the account
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -530,39 +563,6 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
-  parameters:
-    accountRef:
-      name: accountRef
-      in: path
-      required: true
-      description: The Id or Urn of the account
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
-    groupRef:
-      name: groupRef
-      in: path
-      required: true
-      description: The Id or Urn of the group
-      schema:
-        $ref: '#/components/schemas/GroupRef'
-    userRef:
-      name: userRef
-      in: path
-      required: true
-      description: The Id or Urn of the user
-      schema:
-        $ref: '#/components/schemas/UserRef'
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
   securitySchemes:
     oauth2:
       type: oauth2

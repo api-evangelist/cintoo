@@ -216,7 +216,27 @@ paths:
         source: "const host = \"aec.cintoo.com\";\nconst accountId = \"...\";\nconst userId = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountId}/members/${userId}/roles`;\nconst res = await fetch(url, {\n  method: \"PUT\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    [\"administrator\", \"projectManager\", \"projectLister\"]\n  ),\n});\n\nconsole.log(res.status);\nif (res.status !== 204) {\n  const data = await res.json();\n  console.log(data);\n}\n"
 components:
   schemas:
-    Error:
+    AccountPermissions:
+      type: object
+      required:
+      - isOwner
+      - isAdmin
+      - isManager
+      - isProjectLister
+      properties:
+        isOwner:
+          type: boolean
+        isAdmin:
+          type: boolean
+        isManager:
+          type: boolean
+        isProjectLister:
+          type: boolean
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    ErrorForbidden:
       type: object
       required:
       - status
@@ -225,22 +245,15 @@ components:
         status:
           type: integer
           format: int32
+          enum:
+          - 403
         title:
           type: string
+          enum:
+          - Forbidden
         detail:
           type: string
           description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
     AccountRegion:
       type: object
       required:
@@ -284,16 +297,94 @@ components:
         default:
           description: true if this region is the default one for this account
           type: boolean
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
     UserUrn:
       type: string
       description: '"urn:cintoo:user:" followed by an UUIDv4
 
         '
+    Account:
+      type: object
+      required:
+      - id
+      - type
+      - api1Id
+      - name
+      - ownerId
+      - permissions
+      - subscriptions
+      - regions
+      x-tags:
+      - Account
+      properties:
+        id:
+          readOnly: true
+          $ref: '#/components/schemas/AccountUrn'
+        type:
+          type: string
+          enum:
+          - account
+        name:
+          type: string
+          example: My Account
+        createdAt:
+          type: string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedAt:
+          type: string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        ownerId:
+          $ref: '#/components/schemas/UserUrn'
+        permissions:
+          $ref: '#/components/schemas/AccountPermissions'
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountRegion'
+    AccountRoles:
+      type: string
+      enum:
+      - administrator
+      - projectLister
+      - projectManager
+    UserRef:
+      oneOf:
+      - $ref: '#/components/schemas/UserUrn'
+      - $ref: '#/components/schemas/UserId'
     SubscriptionUrn:
       type: string
       description: '"urn:cintoo:subscription:" followed by an UUIDv4
 
         '
+    UserId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     Subscription:
       type: object
       required:
@@ -356,112 +447,21 @@ components:
           description: 'When true, the account owner is automatically invited to every new project in the subscription. This property is only included in responses when the requester is the account owner.
 
             '
-    AccountPermissions:
-      type: object
-      required:
-      - isOwner
-      - isAdmin
-      - isManager
-      - isProjectLister
-      properties:
-        isOwner:
-          type: boolean
-        isAdmin:
-          type: boolean
-        isManager:
-          type: boolean
-        isProjectLister:
-          type: boolean
-    AccountRoles:
-      type: string
-      enum:
-      - administrator
-      - projectLister
-      - projectManager
-    ErrorForbidden:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-          enum:
-          - 403
-        title:
-          type: string
-          enum:
-          - Forbidden
-        detail:
-          type: string
-          description: human readable description of the error in english
-    UserRef:
-      oneOf:
-      - $ref: '#/components/schemas/UserUrn'
-      - $ref: '#/components/schemas/UserId'
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
     AccountUrn:
       type: string
       description: '"urn:cintoo:account:" followed by an UUIDv4
 
         '
-    Account:
-      type: object
-      required:
-      - id
-      - type
-      - api1Id
-      - name
-      - ownerId
-      - permissions
-      - subscriptions
-      - regions
-      x-tags:
-      - Account
-      properties:
-        id:
-          readOnly: true
-          $ref: '#/components/schemas/AccountUrn'
-        type:
-          type: string
-          enum:
-          - account
-        name:
-          type: string
-          example: My Account
-        createdAt:
-          type: string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        updatedAt:
-          type: string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        ownerId:
-          $ref: '#/components/schemas/UserUrn'
-        permissions:
-          $ref: '#/components/schemas/AccountPermissions'
-        subscriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Subscription'
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountRegion'
-    UserId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
   responses:
     UnexpectedError:
       description: unexpected error
@@ -495,6 +495,13 @@ components:
                 status: 406
                 title: Not Acceptable
   parameters:
+    userRef:
+      name: userRef
+      in: path
+      required: true
+      description: The Id or Urn of the user
+      schema:
+        $ref: '#/components/schemas/UserRef'
     accountRef:
       name: accountRef
       in: path
@@ -504,13 +511,6 @@ components:
         oneOf:
         - $ref: '#/components/schemas/AccountUrn'
         - $ref: '#/components/schemas/AccountId'
-    userRef:
-      name: userRef
-      in: path
-      required: true
-      description: The Id or Urn of the user
-      schema:
-        $ref: '#/components/schemas/UserRef'
   securitySchemes:
     oauth2:
       type: oauth2

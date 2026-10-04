@@ -281,41 +281,10 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst accountId = \"...\";\nconst projectId = \"...\";\nconst workzoneId = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountId}/projects/${projectId}/workzones/${workzoneId}/copy`;\nconst res = await fetch(url, {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    { \"destinationName\": \"My copy\" }\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    ErrorForbidden:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-          enum:
-          - 403
-        title:
-          type: string
-          enum:
-          - Forbidden
-        detail:
-          type: string
-          description: human readable description of the error in english
-    UserRef:
+    SubscriptionRef:
       oneOf:
-      - $ref: '#/components/schemas/UserUrn'
-      - $ref: '#/components/schemas/UserId'
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    UserId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    SubscriptionId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+      - $ref: '#/components/schemas/SubscriptionUrn'
+      - $ref: '#/components/schemas/SubscriptionId'
     Error:
       type: object
       required:
@@ -336,11 +305,129 @@ components:
         errorValues:
           type: object
           description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    UserUrn:
+    workzoneCreate:
+      type: object
+      required:
+      - name
+      - parentWorkzoneId
+      properties:
+        name:
+          type: string
+        parentWorkzoneId:
+          $ref: '#/components/schemas/WorkzoneRef'
+        description:
+          type: string
+        coverUrl:
+          type: string
+    UserRef:
+      oneOf:
+      - $ref: '#/components/schemas/UserUrn'
+      - $ref: '#/components/schemas/UserId'
+    WorkzoneRef:
+      oneOf:
+      - $ref: '#/components/schemas/WorkzoneUrn'
+      - $ref: '#/components/schemas/WorkzoneId'
+    BlobName:
       type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
+      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    SubscriptionId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
 
         '
+    ErrorBadRequest:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 400
+        title:
+          type: string
+          enum:
+          - Bad Request
+        detail:
+          type: string
+          description: human readable description of the error in english
+    SubscriptionUrn:
+      type: string
+      description: '"urn:cintoo:subscription:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    Workzone:
+      type: object
+      required:
+      - id
+      - type
+      - api1Id
+      - projectId
+      - rootWorkzoneId
+      - name
+      - description
+      - roleIds
+      - modificationInfo
+      - statsInfo
+      x-tags:
+      - Workzone
+      properties:
+        id:
+          readOnly: true
+          $ref: '#/components/schemas/WorkzoneUrn'
+        type:
+          type: string
+          enum:
+          - workzone
+        projectId:
+          $ref: '#/components/schemas/ProjectUrn'
+        parentId:
+          $ref: '#/components/schemas/WorkzoneUrn'
+          description: '`WorkzoneUrn` of the parent Workzone. Null if the work zone is a rootWorkzone.'
+        rootWorkzoneId:
+          $ref: '#/components/schemas/WorkzoneUrn'
+        name:
+          type: string
+          example: New Workzone
+        description:
+          type: string
+        roleIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleUrn'
+        coverBlobName:
+          $ref: '#/components/schemas/BlobName'
+        coverUrl:
+          type: string
+        modificationInfo:
+          $ref: '#/components/schemas/ModificationInfo'
+        statsInfo:
+          $ref: '#/components/schemas/WorkzoneStatsInfo'
     ModificationInfo:
       type: object
       required:
@@ -394,15 +481,16 @@ components:
       oneOf:
       - $ref: '#/components/schemas/ProjectUrn'
       - $ref: '#/components/schemas/ProjectId'
-    BlobName:
+    RoleUrn:
       type: string
-      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
+      description: '"urn:cintoo:role:" followed by an UUIDv4
 
         '
-    ErrorBadRequest:
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    ErrorForbidden:
       type: object
       required:
       - status
@@ -412,144 +500,43 @@ components:
           type: integer
           format: int32
           enum:
-          - 400
+          - 403
         title:
           type: string
           enum:
-          - Bad Request
+          - Forbidden
         detail:
           type: string
           description: human readable description of the error in english
+    UserUrn:
+      type: string
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    UserId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    WorkzoneId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     WorkzoneUrn:
       type: string
       pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
       description: '"urn:cintoo:workzone:" followed by an UUIDv4
 
         '
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
-    workzoneCreate:
-      type: object
-      required:
-      - name
-      - parentWorkzoneId
-      properties:
-        name:
-          type: string
-        parentWorkzoneId:
-          $ref: '#/components/schemas/WorkzoneRef'
-        description:
-          type: string
-        coverUrl:
-          type: string
-    SubscriptionRef:
-      oneOf:
-      - $ref: '#/components/schemas/SubscriptionUrn'
-      - $ref: '#/components/schemas/SubscriptionId'
-    WorkzoneId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneRef:
-      oneOf:
-      - $ref: '#/components/schemas/WorkzoneUrn'
-      - $ref: '#/components/schemas/WorkzoneId'
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    SubscriptionUrn:
-      type: string
-      description: '"urn:cintoo:subscription:" followed by an UUIDv4
-
-        '
-    RoleUrn:
-      type: string
-      description: '"urn:cintoo:role:" followed by an UUIDv4
-
-        '
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Workzone:
-      type: object
-      required:
-      - id
-      - type
-      - api1Id
-      - projectId
-      - rootWorkzoneId
-      - name
-      - description
-      - roleIds
-      - modificationInfo
-      - statsInfo
-      x-tags:
-      - Workzone
-      properties:
-        id:
-          readOnly: true
-          $ref: '#/components/schemas/WorkzoneUrn'
-        type:
-          type: string
-          enum:
-          - workzone
-        projectId:
-          $ref: '#/components/schemas/ProjectUrn'
-        parentId:
-          $ref: '#/components/schemas/WorkzoneUrn'
-          description: '`WorkzoneUrn` of the parent Workzone. Null if the work zone is a rootWorkzone.'
-        rootWorkzoneId:
-          $ref: '#/components/schemas/WorkzoneUrn'
-        name:
-          type: string
-          example: New Workzone
-        description:
-          type: string
-        roleIds:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleUrn'
-        coverBlobName:
-          $ref: '#/components/schemas/BlobName'
-        coverUrl:
-          type: string
-        modificationInfo:
-          $ref: '#/components/schemas/ModificationInfo'
-        statsInfo:
-          $ref: '#/components/schemas/WorkzoneStatsInfo'
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
   parameters:
-    allowRemoveOnParents:
-      name: allowRemoveOnParents
-      in: query
-      required: false
-      description: 'If true the operation is allowed to remove from a parent.
-
-
-        If false and the operation needs to remove from a parent, a bad request error will be returned.
-
-        '
-      schema:
-        type: boolean
-        default: false
-    accountRef:
-      name: accountRef
+    workzoneRef:
+      name: workzoneRef
       in: path
       required: true
-      description: The Id or Urn of the account
+      description: The Id or Urn of the work zone
       schema:
         oneOf:
-        - $ref: '#/components/schemas/AccountUrn'
-        - $ref: '#/components/schemas/AccountId'
+        - $ref: '#/components/schemas/WorkzoneUrn'
+        - $ref: '#/components/schemas/WorkzoneId'
     userRef:
       name: userRef
       in: path
@@ -566,15 +553,28 @@ components:
         oneOf:
         - $ref: '#/components/schemas/ProjectUrn'
         - $ref: '#/components/schemas/ProjectId'
-    workzoneRef:
-      name: workzoneRef
+    accountRef:
+      name: accountRef
       in: path
       required: true
-      description: The Id or Urn of the work zone
+      description: The Id or Urn of the account
       schema:
         oneOf:
-        - $ref: '#/components/schemas/WorkzoneUrn'
-        - $ref: '#/components/schemas/WorkzoneId'
+        - $ref: '#/components/schemas/AccountUrn'
+        - $ref: '#/components/schemas/AccountId'
+    allowRemoveOnParents:
+      name: allowRemoveOnParents
+      in: query
+      required: false
+      description: 'If true the operation is allowed to remove from a parent.
+
+
+        If false and the operation needs to remove from a parent, a bad request error will be returned.
+
+        '
+      schema:
+        type: boolean
+        default: false
   responses:
     UnexpectedError:
       description: unexpected error

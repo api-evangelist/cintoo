@@ -48,6 +48,36 @@ paths:
       - lang: TypeScript
         source: "\nconst host = \"aec.cintoo.com\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/values/permissions`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
+  schemas:
+    Permission:
+      type: object
+      required:
+      - name
+      x-tags:
+      - Permissions
+      properties:
+        name:
+          type: string
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
   responses:
     UnexpectedError:
       description: unexpected error
@@ -80,36 +110,6 @@ components:
               value:
                 status: 406
                 title: Not Acceptable
-  schemas:
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    Permission:
-      type: object
-      required:
-      - name
-      x-tags:
-      - Permissions
-      properties:
-        name:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2
