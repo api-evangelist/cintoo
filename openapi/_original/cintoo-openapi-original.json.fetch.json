@@ -1,0 +1,12 @@
+{
+ "url": "https://aec.cintoo.com/api/2/openapi.json",
+ "requested_url": "https://aec.cintoo.com/api/2/openapi.json",
+ "status": 200,
+ "content_type": "application/json;charset=UTF-8",
+ "bytes": 585546,
+ "sha256": "a726ca8f0116ce9c115164acd9dab2fa5d8b75655652d7f1b70f80af77796a45",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.971), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
