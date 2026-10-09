@@ -1,17 +1,23 @@
-generated: '2026-07-18'
+generated: '2026-09-23'
 method: generated
-source: openapi/cintoo-openapi-original.json
+source: openapi/cintoo-account-api-openapi.yml, openapi/cintoo-annotation-api-openapi.yml, openapi/cintoo-autodesk-api-openapi.yml,
+  openapi/cintoo-crop-api-openapi.yml, openapi/cintoo-export-scene-api-openapi.yml, openapi/cintoo-file-api-openapi.yml,
+  openapi/cintoo-group-api-openapi.yml, openapi/cintoo-integrations-api-openapi.yml, openapi/cintoo-konekt-api-openapi.yml,
+  openapi/cintoo-measurement-api-openapi.yml, openapi/cintoo-members-api-openapi.yml, openapi/cintoo-permissions-api-openapi.yml,
+  openapi/cintoo-project-api-openapi.yml, openapi/cintoo-role-api-openapi.yml, openapi/cintoo-share-link-api-openapi.yml,
+  openapi/cintoo-subscription-api-openapi.yml, openapi/cintoo-tag-api-openapi.yml, openapi/cintoo-tag-list-api-openapi.yml,
+  openapi/cintoo-usage-report-api-openapi.yml, openapi/cintoo-user-api-openapi.yml, openapi/cintoo-workzone-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 100
   by_action_class:
-    connected: 37
-    acting: 63
+    connected: 38
+    acting: 62
   by_consequence:
-    read: 37
-    write: 63
+    read: 38
+    write: 62
   human_in_the_loop_required: 0
 operations:
 - path: /api/2/accounts
@@ -34,39 +40,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/subscriptions
-  method: get
-  operationId: getSubscriptions
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/subscriptions/{subscriptionRef}
-  method: get
-  operationId: getSubscription
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/subscriptions/{subscriptionRef}/usage-report
-  method: get
-  operationId: getUsageReport
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/users/bulk-invite
-  method: post
-  operationId: inviteUsers
+- path: /api/2/accounts/{accountRef}/members
+  method: delete
+  operationId: removeUsersFromAccount
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -80,9 +56,25 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/users
+- path: /api/2/accounts/{accountRef}/members/{userRef}/roles
+  method: put
+  operationId: updateUserAccountRoles
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations
   method: get
-  operationId: getUsers
+  operationId: getAnnotationsFromProject
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -90,9 +82,371 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/users/{userRef}
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations
+  method: post
+  operationId: createAnnotation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}
   method: get
-  operationId: getUser
+  operationId: getAnnotationById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}
+  method: put
+  operationId: updateAnnotation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}
+  method: delete
+  operationId: deleteAnnotation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}/comments
+  method: post
+  operationId: createAnnotationComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
+  method: get
+  operationId: getAutodeskProjectIntegration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
+  method: post
+  operationId: createAutodeskProjectIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
+  method: put
+  operationId: updateAutodeskProjectIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
+  method: delete
+  operationId: deleteAutodeskProjectIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/integrations/autodesk/connection
+  method: get
+  operationId: getAutodeskConnection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/integrations/autodesk/connection
+  method: delete
+  operationId: deleteAutodeskConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/integrations/autodesk/connection/url
+  method: get
+  operationId: getAutodeskConnectionUrl
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops
+  method: get
+  operationId: getCrops
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops
+  method: post
+  operationId: createCrop
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}
+  method: get
+  operationId: getCrop
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}
+  method: put
+  operationId: putCrop
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}
+  method: delete
+  operationId: deleteCrop
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}/cover
+  method: post
+  operationId: signCropCoverURL
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/jobs/export-to-mesh
+  method: post
+  operationId: postExportToMesh
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/files
+  method: get
+  operationId: getFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/files/{fileRef}
+  method: patch
+  operationId: updateFileName
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/files/bulk-transformation
+  method: post
+  operationId: UpdateBulkFilesTransformation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/blobs/{blobRef}
+  method: get
+  operationId: getBlob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/blobs
+  method: post
+  operationId: getBlobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/bulk-files
+  method: post
+  operationId: signUploadURL
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/bulk-files
+  method: put
+  operationId: registerFiles
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/values/formats
+  method: get
+  operationId: listFormats
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -184,109 +538,35 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/roles
-  method: get
-  operationId: getRoles
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/roles
-  method: post
-  operationId: createRole
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/members
-  method: delete
-  operationId: removeUsersFromAccount
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/members/{userRef}/roles
-  method: put
-  operationId: updateUserAccountRoles
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/roles/{roleRef}
-  method: get
-  operationId: getRole
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/roles/{roleRef}
-  method: delete
-  operationId: deleteRole
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/roles/{roleRef}
-  method: put
-  operationId: updateRole
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /api/2/accounts/{accountRef}/integrations
   method: get
   operationId: getAccountIntegrations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/bulk-create-integration
+  method: post
+  operationId: createAnnotationIntegrationLinks
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations
+  method: get
+  operationId: getProjectIntegrations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -384,6 +664,158 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
+  method: get
+  operationId: getKonektProjectIntegration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
+  method: post
+  operationId: createKonektProjectIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
+  method: put
+  operationId: updateKonektProjectIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
+  method: delete
+  operationId: deleteKonektProjectIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/measurements
+  method: get
+  operationId: getMeasurements
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members
+  method: get
+  operationId: getProjectMembers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members
+  method: post
+  operationId: addProjectMembers
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members/bulk-remove
+  method: post
+  operationId: removeMembersFromProject
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members/users/{userRef}
+  method: delete
+  operationId: removeUserFromProject
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members/groups/{groupRef}
+  method: delete
+  operationId: removeGroupFromProject
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/values/permissions
+  method: get
+  operationId: listPermissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/2/accounts/{accountRef}/projects
   method: get
   operationId: getProjects
@@ -516,9 +948,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones
+- path: /api/2/values/spatial-references
   method: get
-  operationId: getWorkzones
+  operationId: listSpatialReferences
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -526,25 +958,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones
-  method: post
-  operationId: createWorkzone
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members
+- path: /api/2/accounts/{accountRef}/roles
   method: get
-  operationId: getProjectMembers
+  operationId: getRoles
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -552,9 +968,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members
+- path: /api/2/accounts/{accountRef}/roles
   method: post
-  operationId: addProjectMembers
+  operationId: createRole
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -568,73 +984,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members/bulk-remove
-  method: post
-  operationId: removeMembersFromProject
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members/users/{userRef}
-  method: delete
-  operationId: removeUserFromProject
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/members/groups/{groupRef}
-  method: delete
-  operationId: removeGroupFromProject
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/members/users/{userRef}
-  method: delete
-  operationId: removeUserFromWorkzone
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/files
+- path: /api/2/accounts/{accountRef}/roles/{roleRef}
   method: get
-  operationId: getFiles
+  operationId: getRole
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -642,9 +994,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/files/{fileRef}
-  method: patch
-  operationId: updateFileName
+- path: /api/2/accounts/{accountRef}/roles/{roleRef}
+  method: delete
+  operationId: deleteRole
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -658,9 +1010,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/files/bulk-transformation
-  method: post
-  operationId: UpdateBulkFilesTransformation
+- path: /api/2/accounts/{accountRef}/roles/{roleRef}
+  method: put
+  operationId: updateRole
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -742,9 +1094,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/blobs/{blobRef}
+- path: /api/2/accounts/{accountRef}/subscriptions
   method: get
-  operationId: getBlob
+  operationId: getSubscriptions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -752,73 +1104,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/blobs
-  method: post
-  operationId: getBlobs
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/bulk-files
-  method: post
-  operationId: signUploadURL
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/bulk-files
-  method: put
-  operationId: registerFiles
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/copy
-  method: post
-  operationId: copyWorkzone
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations
+- path: /api/2/accounts/{accountRef}/subscriptions/{subscriptionRef}
   method: get
-  operationId: getAnnotationsFromProject
+  operationId: getSubscription
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -826,25 +1114,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations
-  method: post
-  operationId: createAnnotation
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists/{tagListRef}/tags
   method: get
-  operationId: getAnnotationById
+  operationId: getTagsOnList
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -852,41 +1124,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}
-  method: put
-  operationId: updateAnnotation
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}
-  method: delete
-  operationId: deleteAnnotation
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/{annotationRef}/comments
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists/{tagListRef}/tags/bulk
   method: post
-  operationId: createAnnotationComment
+  operationId: bulkTags
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -900,9 +1140,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/annotations/bulk-create-integration
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists/{tagListRef}/tags/bulk-move
   method: post
-  operationId: createAnnotationIntegrationLinks
+  operationId: bulkMoveTags
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -916,226 +1156,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations
-  method: get
-  operationId: getProjectIntegrations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
-  method: get
-  operationId: getKonektProjectIntegration
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
-  method: post
-  operationId: createKonektProjectIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
-  method: put
-  operationId: updateKonektProjectIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/konekt
-  method: delete
-  operationId: deleteKonektProjectIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
-  method: get
-  operationId: getAutodeskProjectIntegration
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
-  method: post
-  operationId: createAutodeskProjectIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
-  method: put
-  operationId: updateAutodeskProjectIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/integrations/autodesk
-  method: delete
-  operationId: deleteAutodeskProjectIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops
-  method: get
-  operationId: getCrops
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops
-  method: post
-  operationId: createCrop
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}
-  method: get
-  operationId: getCrop
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}
-  method: put
-  operationId: putCrop
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}
-  method: delete
-  operationId: deleteCrop
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/crops/{cropRef}/cover
-  method: post
-  operationId: signCropCoverURL
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/measurements
-  method: get
-  operationId: getMeasurements
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists
   method: get
   operationId: getTagsOnProject
@@ -1258,94 +1278,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists/{tagListRef}/tags
-  method: get
-  operationId: getTagsOnList
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists/{tagListRef}/tags/bulk
-  method: post
-  operationId: bulkTags
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/tag-lists/{tagListRef}/tags/bulk-move
-  method: post
-  operationId: bulkMoveTags
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/accounts/{accountRef}/projects/{projectRef}/jobs/export-to-mesh
-  method: post
-  operationId: postExportToMesh
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/2/values/permissions
-  method: get
-  operationId: listPermissions
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/values/formats
-  method: get
-  operationId: listFormats
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/2/values/spatial-references
-  method: get
-  operationId: listSpatialReferences
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /api/2/values/ai-detection-classes
   method: get
   operationId: listAIDetectionClasses
@@ -1356,9 +1288,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/integrations/autodesk/connection
+- path: /api/2/accounts/{accountRef}/subscriptions/{subscriptionRef}/usage-report
   method: get
-  operationId: getAutodeskConnection
+  operationId: getUsageReport
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1366,9 +1298,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/2/integrations/autodesk/connection
-  method: delete
-  operationId: deleteAutodeskConnection
+- path: /api/2/accounts/{accountRef}/users/bulk-invite
+  method: post
+  operationId: inviteUsers
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1382,9 +1314,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/2/integrations/autodesk/connection/url
+- path: /api/2/accounts/{accountRef}/users
   method: get
-  operationId: getAutodeskConnectionUrl
+  operationId: getUsers
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1392,3 +1324,71 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /api/2/accounts/{accountRef}/users/{userRef}
+  method: get
+  operationId: getUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones
+  method: get
+  operationId: getWorkzones
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones
+  method: post
+  operationId: createWorkzone
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/members/users/{userRef}
+  method: delete
+  operationId: removeUserFromWorkzone
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/2/accounts/{accountRef}/projects/{projectRef}/workzones/{workzoneRef}/copy
+  method: post
+  operationId: copyWorkzone
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
