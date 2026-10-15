@@ -1,11 +1,139 @@
-generated: '2026-07-18'
-method: derived
-source: openapi/cintoo-openapi-original.json
+generated: '2026-10-14'
+method: none
+source: openapi/cintoo-account-api-openapi.yml, openapi/cintoo-annotation-api-openapi.yml, openapi/cintoo-autodesk-api-openapi.yml,
+  openapi/cintoo-crop-api-openapi.yml, openapi/cintoo-export-scene-api-openapi.yml, openapi/cintoo-file-api-openapi.yml,
+  openapi/cintoo-group-api-openapi.yml, openapi/cintoo-integrations-api-openapi.yml, openapi/cintoo-konekt-api-openapi.yml,
+  openapi/cintoo-measurement-api-openapi.yml, openapi/cintoo-members-api-openapi.yml, openapi/cintoo-permissions-api-openapi.yml,
+  openapi/cintoo-project-api-openapi.yml, openapi/cintoo-role-api-openapi.yml, openapi/cintoo-share-link-api-openapi.yml,
+  openapi/cintoo-subscription-api-openapi.yml, openapi/cintoo-tag-api-openapi.yml, openapi/cintoo-tag-list-api-openapi.yml,
+  openapi/cintoo-usage-report-api-openapi.yml, openapi/cintoo-user-api-openapi.yml, openapi/cintoo-workzone-api-openapi.yml
 schemes:
 - name: oauth2
-  source: openapi/cintoo-openapi-original.json
+  source: openapi/cintoo-account-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-annotation-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-autodesk-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-crop-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-export-scene-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-file-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-group-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-integrations-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-konekt-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-measurement-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-members-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-permissions-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-project-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-role-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-share-link-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-subscription-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-tag-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-tag-list-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-usage-report-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-user-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://aec.cintoo.com/oauth/authorize
+    tokenUrl: https://aec.cintoo.com/oauth/token
+- name: oauth2
+  source: openapi/cintoo-workzone-api-openapi.yml
   flows:
   - flow: authorizationCode
     authorizationUrl: https://aec.cintoo.com/oauth/authorize
     tokenUrl: https://aec.cintoo.com/oauth/token
 scopes: []
+note: The OAuth2 security scheme(s) in the OpenAPI declare no scopes, and no security requirement
+  references one.
