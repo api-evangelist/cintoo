@@ -241,10 +241,6 @@ paths:
           $ref: '#/components/responses/UnexpectedError'
 components:
   schemas:
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     Error:
       type: object
       required:
@@ -265,46 +261,49 @@ components:
         errorValues:
           type: object
           description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    ProjectIntegrationAutodesk:
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    ErrorConflict:
       type: object
-      x-tags:
-      - Autodesk
       required:
-      - projectId
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 409
+        title:
+          type: string
+          enum:
+          - Conflict
+        detail:
+          type: string
+          description: human readable description of the error in english
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    projectIntegrationAutodeskUpdate:
+      type: object
+      required:
       - autodeskHubId
       - autodeskProjectId
-      - link
-      - createdAt
-      - createdBy
-      - updatedAt
-      - updatedBy
       properties:
-        projectId:
-          $ref: '#/components/schemas/ProjectUrn'
         autodeskHubId:
           type: string
+          minLength: 1
         autodeskProjectId:
           type: string
-        link:
-          type: string
-        createdAt:
-          $ref: '#/components/schemas/DateTime'
-        createdBy:
-          $ref: '#/components/schemas/UserUrn'
-        updatedAt:
-          $ref: '#/components/schemas/DateTime'
-        updatedBy:
-          $ref: '#/components/schemas/UserUrn'
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    UserUrn:
-      type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
-
-        '
+          minLength: 1
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     AutodeskConnection:
       type: object
       x-tags:
@@ -357,55 +356,16 @@ components:
                       type: string
                     name:
                       type: string
-    projectIntegrationAutodeskUpdate:
-      type: object
-      required:
-      - autodeskHubId
-      - autodeskProjectId
-      properties:
-        autodeskHubId:
-          type: string
-          minLength: 1
-        autodeskProjectId:
-          type: string
-          minLength: 1
-    ErrorConflict:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-          enum:
-          - 409
-        title:
-          type: string
-          enum:
-          - Conflict
-        detail:
-          type: string
-          description: human readable description of the error in english
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
     Uuid:
       type: string
       description: UUIDv4
       format: uuid
       example: 156fff1a-0ef7-4335-891a-627928a19e29
-    DateTime:
+    UserUrn:
       type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
     projectIntegrationAutodeskCreate:
       type: object
       required:
@@ -418,16 +378,47 @@ components:
         autodeskProjectId:
           type: string
           minLength: 1
-  parameters:
-    redirectUri:
-      name: redirectUri
-      in: query
-      required: true
-      description: 'The URL to redirect the user once the OAuth flow is successful.
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
 
         '
-      schema:
-        type: string
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    ProjectIntegrationAutodesk:
+      type: object
+      x-tags:
+      - Autodesk
+      required:
+      - projectId
+      - autodeskHubId
+      - autodeskProjectId
+      - link
+      - createdAt
+      - createdBy
+      - updatedAt
+      - updatedBy
+      properties:
+        projectId:
+          $ref: '#/components/schemas/ProjectUrn'
+        autodeskHubId:
+          type: string
+        autodeskProjectId:
+          type: string
+        link:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+        createdBy:
+          $ref: '#/components/schemas/UserUrn'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+        updatedBy:
+          $ref: '#/components/schemas/UserUrn'
+  parameters:
     projectRef:
       name: projectRef
       in: path
@@ -437,6 +428,15 @@ components:
         oneOf:
         - $ref: '#/components/schemas/ProjectUrn'
         - $ref: '#/components/schemas/ProjectId'
+    redirectUri:
+      name: redirectUri
+      in: query
+      required: true
+      description: 'The URL to redirect the user once the OAuth flow is successful.
+
+        '
+      schema:
+        type: string
     accountRef:
       name: accountRef
       in: path

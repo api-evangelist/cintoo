@@ -224,36 +224,6 @@ paths:
         source: "const host = \"aec.cintoo.com\";\nconst accountUUID = \"...\";\nconst projectUUID = \"...\";\nconst annotationUUID = \"...\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/accounts/${accountUUID}/projects/${projectUUID}/annotations/${annotationUUID}/comments`;\nconst res = await fetch(url, {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify(\n    {\"description\":\"my comment\"}\n  ),\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    FormatUrn:
-      type: string
-      description: '"urn:cintoo:format:" followed by a number
-
-        '
-    AnnotationAttachmentUrn:
-      type: string
-      description: '"urn:cintoo:annotation-attachment:" followed by an UUIDv4
-
-        '
     SavedViewData:
       oneOf:
       - type: object
@@ -275,30 +245,113 @@ components:
             type: string
             description: structure will be defined in the future
         additionalProperties: true
-    BlobName:
-      type: string
-      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
     ProjectId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    AnnotationId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
+    annotationCreate:
+      type: object
+      required:
+      - workzoneId
+      - annotationType
+      - title
+      - position
+      - savedView
+      properties:
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneUrn'
+        annotationType:
+          type: string
+          enum:
+          - Private note
+          - Note
+          - Issue
+          - Resolved
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type:
+          - string
+          - 'null'
+        assignedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserUrn'
+        dueDate:
+          type: string
+          format: date
+        priority:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 5
+          - 8
+          - 10
+        imgBlobName:
+          type: string
+        position:
+          $ref: '#/components/schemas/Point3D'
+        normal:
+          $ref: '#/components/schemas/Point3D'
+        savedView:
+          $ref: '#/components/schemas/SavedViewData'
+        modelElementGUIDs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        labels:
+          type: array
+          items:
+            type: string
+        attachments:
+          type: array
+          items:
+            type: string
+            example: '{blobName}'
+          description: blob names
     ProjectUrn:
       type: string
       description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    AnnotationCommentUrn:
+      type: string
+      description: '"urn:cintoo:annotation-comment:" followed by an UUIDv4
+
+        '
+    AnnotationAttachmentUrn:
+      type: string
+      description: '"urn:cintoo:annotation-attachment:" followed by an UUIDv4
 
         '
     FileUrn:
@@ -306,11 +359,11 @@ components:
       description: '"urn:cintoo:file:" followed by an UUIDv4
 
         '
-    AnnotationCommentUrn:
+    Uuid:
       type: string
-      description: '"urn:cintoo:annotation-comment:" followed by an UUIDv4
-
-        '
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
     annotationCommentCreate:
       type: object
       required:
@@ -325,11 +378,6 @@ components:
             type: string
             example: '{blobName}'
           description: blob names
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
     AnnotationIntegration:
       type: object
       required:
@@ -348,6 +396,38 @@ components:
           type:
           - string
           - 'null'
+    Point3D:
+      type: object
+      required:
+      - x
+      - y
+      - z
+      properties:
+        x:
+          type: number
+          format: double
+        y:
+          type: number
+          format: double
+        z:
+          type: number
+          format: double
+    BlobName:
+      type: string
+      description: "A `BlobName`: the actual filename of the file in the blob storage.\n\nTo retrieve a blob, two methods are available:\n- using the unitary endpoint [Download a blob](#tag/Project/operation/getBlob), which will automatically forward\n  to the final URL, which is a pre-signed URL, expiring after 3 hours by default.\n- using the bulk endpoint [Get pre-signed urls for multiple blobs](#tag/Project/operation/getBlobs), which will\n  return the list of pre-signed URLs.\n\nWhile the first option is the easiest, as it forwards automatically to the final URL transparently,\nthe second option should be preferred as much as possible to improve performances.\n"
+    AnnotationId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
     ModificationInfo:
       type: object
       required:
@@ -378,6 +458,38 @@ components:
           - $ref: '#/components/schemas/UserUrn'
         isDeleted:
           type: boolean
+    AnnotationCommentAttachmentUrn:
+      type: string
+      description: '"urn:cintoo:annotation-comment-attachment:" followed by an UUIDv4
+
+        '
+    WorkzoneUrn:
+      type: string
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+
+        '
+    AnnotationCommentAttachment:
+      type: object
+      required:
+      - id
+      - type
+      - attachedTo
+      - file
+      x-tags:
+      - Annotation
+      properties:
+        id:
+          readOnly: true
+          $ref: '#/components/schemas/AnnotationCommentAttachmentUrn'
+        type:
+          type: string
+          enum:
+          - annotation-comment-attachment
+        attachedTo:
+          $ref: '#/components/schemas/AnnotationCommentUrn'
+        file:
+          $ref: '#/components/schemas/FileAttribute'
     FileAttribute:
       type: object
       required:
@@ -409,45 +521,14 @@ components:
           - 'null'
           allOf:
           - $ref: '#/components/schemas/BlobName'
-    AnnotationComment:
-      type: object
-      required:
-      - id
-      - type
-      - modificationInfo
-      - attachedTo
-      - description
-      - descriptionText
-      - attachments
-      x-tags:
-      - Annotation
-      properties:
-        id:
-          readOnly: true
-          $ref: '#/components/schemas/AnnotationCommentUrn'
-        type:
-          type: string
-          enum:
-          - annotation-comment
-        modificationInfo:
-          $ref: '#/components/schemas/ModificationInfo'
-        attachedTo:
-          $ref: '#/components/schemas/AnnotationUrn'
-        description:
-          type:
-          - string
-          - 'null'
-        descriptionText:
-          type: string
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AnnotationCommentAttachment'
-    AnnotationUrn:
+    Date:
       type: string
-      description: '"urn:cintoo:annotation:" followed by an UUIDv4
+      format: date
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18)'
+      example: '2017-07-21'
+    FormatUrn:
+      type: string
+      description: '"urn:cintoo:format:" followed by a number
 
         '
     Annotation:
@@ -573,15 +654,68 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnnotationIntegration'
-    Date:
+    AnnotationComment:
+      type: object
+      required:
+      - id
+      - type
+      - modificationInfo
+      - attachedTo
+      - description
+      - descriptionText
+      - attachments
+      x-tags:
+      - Annotation
+      properties:
+        id:
+          readOnly: true
+          $ref: '#/components/schemas/AnnotationCommentUrn'
+        type:
+          type: string
+          enum:
+          - annotation-comment
+        modificationInfo:
+          $ref: '#/components/schemas/ModificationInfo'
+        attachedTo:
+          $ref: '#/components/schemas/AnnotationUrn'
+        description:
+          type:
+          - string
+          - 'null'
+        descriptionText:
+          type: string
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AnnotationCommentAttachment'
+    UserUrn:
       type: string
-      format: date
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18)'
-      example: '2017-07-21'
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+      description: '"urn:cintoo:user:" followed by an UUIDv4
+
+        '
+    AnnotationAttachment:
+      type: object
+      required:
+      - id
+      - type
+      - attachedTo
+      - file
+      x-tags:
+      - Annotation
+      properties:
+        id:
+          readOnly: true
+          $ref: '#/components/schemas/AnnotationAttachmentUrn'
+        type:
+          type: string
+          enum:
+          - annotation-attachment
+        attachedTo:
+          $ref: '#/components/schemas/AnnotationUrn'
+        file:
+          $ref: '#/components/schemas/FileAttribute'
     annotationUpdate:
       type: object
       required:
@@ -643,155 +777,24 @@ components:
             type: string
             example: '{blobName}'
           description: blob names
-    UserUrn:
+    AnnotationUrn:
       type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
+      description: '"urn:cintoo:annotation:" followed by an UUIDv4
 
         '
-    WorkzoneUrn:
-      type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
-
-        '
-    Point3D:
-      type: object
-      required:
-      - x
-      - y
-      - z
-      properties:
-        x:
-          type: number
-          format: double
-        y:
-          type: number
-          format: double
-        z:
-          type: number
-          format: double
-    AnnotationCommentAttachment:
-      type: object
-      required:
-      - id
-      - type
-      - attachedTo
-      - file
-      x-tags:
-      - Annotation
-      properties:
-        id:
-          readOnly: true
-          $ref: '#/components/schemas/AnnotationCommentAttachmentUrn'
-        type:
-          type: string
-          enum:
-          - annotation-comment-attachment
-        attachedTo:
-          $ref: '#/components/schemas/AnnotationCommentUrn'
-        file:
-          $ref: '#/components/schemas/FileAttribute'
-    annotationCreate:
-      type: object
-      required:
-      - workzoneId
-      - annotationType
-      - title
-      - position
-      - savedView
-      properties:
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneUrn'
-        annotationType:
-          type: string
-          enum:
-          - Private note
-          - Note
-          - Issue
-          - Resolved
-        title:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type:
-          - string
-          - 'null'
-        assignedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserUrn'
-        dueDate:
-          type: string
-          format: date
-        priority:
-          type: integer
-          enum:
-          - 0
-          - 1
-          - 5
-          - 8
-          - 10
-        imgBlobName:
-          type: string
-        position:
-          $ref: '#/components/schemas/Point3D'
-        normal:
-          $ref: '#/components/schemas/Point3D'
-        savedView:
-          $ref: '#/components/schemas/SavedViewData'
-        modelElementGUIDs:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        labels:
-          type: array
-          items:
-            type: string
-        attachments:
-          type: array
-          items:
-            type: string
-            example: '{blobName}'
-          description: blob names
-    AnnotationCommentAttachmentUrn:
-      type: string
-      description: '"urn:cintoo:annotation-comment-attachment:" followed by an UUIDv4
-
-        '
-    AnnotationAttachment:
-      type: object
-      required:
-      - id
-      - type
-      - attachedTo
-      - file
-      x-tags:
-      - Annotation
-      properties:
-        id:
-          readOnly: true
-          $ref: '#/components/schemas/AnnotationAttachmentUrn'
-        type:
-          type: string
-          enum:
-          - annotation-attachment
-        attachedTo:
-          $ref: '#/components/schemas/AnnotationUrn'
-        file:
-          $ref: '#/components/schemas/FileAttribute'
   parameters:
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
+    includeAttachments:
+      name: includeAttachments
+      in: query
+      required: false
+      description: 'If true the operation retrieves information about files attached to each annotation or comment,
+
+        else the attachments field will not be returned.
+
+        '
       schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
+        type: boolean
+        default: false
     includeComments:
       name: includeComments
       in: query
@@ -813,18 +816,15 @@ components:
         oneOf:
         - $ref: '#/components/schemas/AnnotationUrn'
         - $ref: '#/components/schemas/AnnotationId'
-    includeAttachments:
-      name: includeAttachments
-      in: query
-      required: false
-      description: 'If true the operation retrieves information about files attached to each annotation or comment,
-
-        else the attachments field will not be returned.
-
-        '
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
       schema:
-        type: boolean
-        default: false
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
     accountRef:
       name: accountRef
       in: path

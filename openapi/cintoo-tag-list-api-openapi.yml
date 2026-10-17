@@ -427,230 +427,6 @@ paths:
         source: "\nconst host = \"aec.cintoo.com\";\nconst token = \"...\";\n\nconst url = `https://${host}/api/2/values/ai-detection-classes`;\nconst res = await fetch(url, {\n  headers: {\n    \"Authorization\": `Bearer ${token}`,\n  },\n});\n\nconsole.log(res.status);\nconst data = await res.json();\nconsole.log(data);\n"
 components:
   schemas:
-    tagListPnIdElementsBulkAdd:
-      type: object
-      required:
-      - pages
-      properties:
-        pages:
-          type: array
-          minItems: 1
-          items:
-            type: object
-            description: 'A page worth of detected elements. At least one of `instruments` or `pipes` must be present
-
-              and non-empty; the other may be omitted or empty.
-
-              '
-            required:
-            - attachmentId
-            - index
-            properties:
-              attachmentId:
-                type: string
-                minLength: 1
-                maxLength: 255
-                description: 'Attachment id string, matching the attachment id already stored on the tag list.
-
-                  '
-              index:
-                type: integer
-                minimum: 1
-                description: 'Position of the page within its attachment. Together with `attachmentId` it identifies an
-
-                  existing page on the tag list; the page is not created by this operation. If the pair
-
-                  does not match a page already registered on the tag list, the request fails.
-
-                  '
-              instruments:
-                type:
-                - array
-                - 'null'
-                description: 'Detected instruments on the page. Each entry creates one *instrumentation* tag whose
-
-                  shape is the closed polygon derived from the bounding box.
-
-                  '
-                items:
-                  type: object
-                  required:
-                  - name
-                  - location
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                      description: 'Name of the instrument.
-
-                        '
-                    class:
-                      type:
-                      - string
-                      - 'null'
-                      description: Detected object class (e.g. `valve`, `pump`).
-                    confidence:
-                      type:
-                      - number
-                      - 'null'
-                      description: Detector confidence in `[0, 1]`.
-                    location:
-                      type: array
-                      minItems: 2
-                      maxItems: 2
-                      description: 'Bounding box as two corner points `[ [xMin, yMin], [xMax, yMax] ]`.
-
-                        '
-                      items:
-                        type: array
-                        minItems: 2
-                        maxItems: 2
-                        items:
-                          type: number
-              pipes:
-                type:
-                - array
-                - 'null'
-                description: 'Detected pipe polylines on the page. Each entry creates one *pipe* tag whose shape
-
-                  is the flattened polyline.
-
-                  '
-                items:
-                  type: object
-                  required:
-                  - name
-                  - segments
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                      description: 'Name of the pipe.
-
-                        '
-                    segments:
-                      type: array
-                      minItems: 2
-                      description: Polyline points, each as `[x, y]`.
-                      items:
-                        type: array
-                        minItems: 2
-                        maxItems: 2
-                        items:
-                          type: number
-    Error:
-      type: object
-      required:
-      - status
-      - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        detail:
-          type: string
-          description: human readable description of the error in english
-        errorCode:
-          type: string
-          description: detailed code describing error, can be used to map to a localized message
-        errorValues:
-          type: object
-          description: values implied in the error, typically an input parameter, can be used to include in a localized message
-    AIDetectionClass:
-      type: object
-      required:
-      - name
-      - category
-      properties:
-        name:
-          type: string
-          description: Identifier of the AI detection class
-        category:
-          type: string
-          description: Category associated with the class
-    WorkzoneRef:
-      oneOf:
-      - $ref: '#/components/schemas/WorkzoneUrn'
-      - $ref: '#/components/schemas/WorkzoneId'
-    ProjectId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    Uuid:
-      type: string
-      description: UUIDv4
-      format: uuid
-      example: 156fff1a-0ef7-4335-891a-627928a19e29
-    DateTime:
-      type: string
-      format: date-time
-      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
-      example: '2017-08-18T12:41:31Z'
-    tagListUpdate:
-      type: object
-      required:
-      - workzoneId
-      - tagListType
-      - name
-      properties:
-        workzoneId:
-          $ref: '#/components/schemas/WorkzoneRef'
-        tagListType:
-          type: string
-          minLength: 1
-          maxLength: 36
-          description: 'The tag list type determines how to display and handle it on the webapp. Currently only `2d` and `3d` are
-
-            supported by the webapp.
-
-            '
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        color:
-          type:
-          - string
-          - 'null'
-          maxLength: 20
-        metadataDefinition:
-          type:
-          - array
-          - 'null'
-          minItems: 0
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/TagListMetadataDefinition'
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TagListAttachmentInput'
-    TagListUrn:
-      type: string
-      description: '"urn:cintoo:tag-list:" followed by an UUIDv4
-
-        '
-    ProjectUrn:
-      type: string
-      description: '"urn:cintoo:project:" followed by an UUIDv4
-
-        '
-    FileUrn:
-      type: string
-      description: '"urn:cintoo:file:" followed by an UUIDv4
-
-        '
     TagList:
       type: object
       x-tags:
@@ -723,6 +499,101 @@ components:
           $ref: '#/components/schemas/DateTime'
         tagsVersion:
           type: integer
+    TagListUrn:
+      type: string
+      description: '"urn:cintoo:tag-list:" followed by an UUIDv4
+
+        '
+    ProjectId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    tagListUpdate:
+      type: object
+      required:
+      - workzoneId
+      - tagListType
+      - name
+      properties:
+        workzoneId:
+          $ref: '#/components/schemas/WorkzoneRef'
+        tagListType:
+          type: string
+          minLength: 1
+          maxLength: 36
+          description: 'The tag list type determines how to display and handle it on the webapp. Currently only `2d` and `3d` are
+
+            supported by the webapp.
+
+            '
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        color:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        metadataDefinition:
+          type:
+          - array
+          - 'null'
+          minItems: 0
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/TagListMetadataDefinition'
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TagListAttachmentInput'
+    ProjectUrn:
+      type: string
+      description: '"urn:cintoo:project:" followed by an UUIDv4
+
+        '
+    AccountUrn:
+      type: string
+      description: '"urn:cintoo:account:" followed by an UUIDv4
+
+        '
+    Error:
+      type: object
+      required:
+      - status
+      - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        detail:
+          type: string
+          description: human readable description of the error in english
+        errorCode:
+          type: string
+          description: detailed code describing error, can be used to map to a localized message
+        errorValues:
+          type: object
+          description: values implied in the error, typically an input parameter, can be used to include in a localized message
+    FileUrn:
+      type: string
+      description: '"urn:cintoo:file:" followed by an UUIDv4
+
+        '
+    Uuid:
+      type: string
+      description: UUIDv4
+      format: uuid
+      example: 156fff1a-0ef7-4335-891a-627928a19e29
     tagListCreate:
       type: object
       required:
@@ -846,11 +717,14 @@ components:
             - nature
             - confidence
             - needValidation
-    AccountUrn:
-      type: string
-      description: '"urn:cintoo:account:" followed by an UUIDv4
-
-        '
+    FileId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    AccountId:
+      allOf:
+      - $ref: '#/components/schemas/Uuid'
+      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
     TagListAttachmentInput:
       type: object
       description: 'Attachment shape accepted when creating or updating a tag list. Optional fields may be omitted;
@@ -913,31 +787,150 @@ components:
                 type:
                 - boolean
                 - 'null'
-    TagListId:
+    WorkzoneId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    FileId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
+    DateTime:
+      type: string
+      format: date-time
+      description: 'The date-time notation as defined by RFC 3339, section 5.6 (ex: 2017-08-18T12:41:31Z)'
+      example: '2017-08-18T12:41:31Z'
+    AIDetectionClass:
+      type: object
+      required:
+      - name
+      - category
+      properties:
+        name:
+          type: string
+          description: Identifier of the AI detection class
+        category:
+          type: string
+          description: Category associated with the class
     FileRef:
       oneOf:
       - $ref: '#/components/schemas/FileUrn'
       - $ref: '#/components/schemas/FileId'
-    TagListRef:
-      oneOf:
-      - $ref: '#/components/schemas/TagListUrn'
-      - $ref: '#/components/schemas/TagListId'
-    AccountId:
-      allOf:
-      - $ref: '#/components/schemas/Uuid'
-      example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    UserUrn:
+    WorkzoneUrn:
       type: string
-      description: '"urn:cintoo:user:" followed by an UUIDv4
+      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      description: '"urn:cintoo:workzone:" followed by an UUIDv4
 
         '
+    tagListPnIdElementsBulkAdd:
+      type: object
+      required:
+      - pages
+      properties:
+        pages:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: 'A page worth of detected elements. At least one of `instruments` or `pipes` must be present
+
+              and non-empty; the other may be omitted or empty.
+
+              '
+            required:
+            - attachmentId
+            - index
+            properties:
+              attachmentId:
+                type: string
+                minLength: 1
+                maxLength: 255
+                description: 'Attachment id string, matching the attachment id already stored on the tag list.
+
+                  '
+              index:
+                type: integer
+                minimum: 1
+                description: 'Position of the page within its attachment. Together with `attachmentId` it identifies an
+
+                  existing page on the tag list; the page is not created by this operation. If the pair
+
+                  does not match a page already registered on the tag list, the request fails.
+
+                  '
+              instruments:
+                type:
+                - array
+                - 'null'
+                description: 'Detected instruments on the page. Each entry creates one *instrumentation* tag whose
+
+                  shape is the closed polygon derived from the bounding box.
+
+                  '
+                items:
+                  type: object
+                  required:
+                  - name
+                  - location
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Name of the instrument.
+
+                        '
+                    class:
+                      type:
+                      - string
+                      - 'null'
+                      description: Detected object class (e.g. `valve`, `pump`).
+                    confidence:
+                      type:
+                      - number
+                      - 'null'
+                      description: Detector confidence in `[0, 1]`.
+                    location:
+                      type: array
+                      minItems: 2
+                      maxItems: 2
+                      description: 'Bounding box as two corner points `[ [xMin, yMin], [xMax, yMax] ]`.
+
+                        '
+                      items:
+                        type: array
+                        minItems: 2
+                        maxItems: 2
+                        items:
+                          type: number
+              pipes:
+                type:
+                - array
+                - 'null'
+                description: 'Detected pipe polylines on the page. Each entry creates one *pipe* tag whose shape
+
+                  is the flattened polyline.
+
+                  '
+                items:
+                  type: object
+                  required:
+                  - name
+                  - segments
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                      description: 'Name of the pipe.
+
+                        '
+                    segments:
+                      type: array
+                      minItems: 2
+                      description: Polyline points, each as `[x, y]`.
+                      items:
+                        type: array
+                        minItems: 2
+                        maxItems: 2
+                        items:
+                          type: number
     TagListAttachment:
       type: object
       description: 'Attachment as returned by the API. All fields are always present (nullable ones are returned as
@@ -991,26 +984,24 @@ components:
                 maxLength: 255
               hidden:
                 type: boolean
-    WorkzoneId:
+    WorkzoneRef:
+      oneOf:
+      - $ref: '#/components/schemas/WorkzoneUrn'
+      - $ref: '#/components/schemas/WorkzoneId'
+    TagListId:
       allOf:
       - $ref: '#/components/schemas/Uuid'
       example: 8196e320-8a4d-4d29-b0a9-077cd7ed3368
-    WorkzoneUrn:
+    UserUrn:
       type: string
-      pattern: ^urn:cintoo:workzone:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      description: '"urn:cintoo:workzone:" followed by an UUIDv4
+      description: '"urn:cintoo:user:" followed by an UUIDv4
 
         '
+    TagListRef:
+      oneOf:
+      - $ref: '#/components/schemas/TagListUrn'
+      - $ref: '#/components/schemas/TagListId'
   parameters:
-    projectRef:
-      name: projectRef
-      in: path
-      required: true
-      description: The Id or Urn of the project
-      schema:
-        oneOf:
-        - $ref: '#/components/schemas/ProjectUrn'
-        - $ref: '#/components/schemas/ProjectId'
     tagListRef:
       name: tagListRef
       in: path
@@ -1020,6 +1011,15 @@ components:
         oneOf:
         - $ref: '#/components/schemas/TagListUrn'
         - $ref: '#/components/schemas/TagListId'
+    projectRef:
+      name: projectRef
+      in: path
+      required: true
+      description: The Id or Urn of the project
+      schema:
+        oneOf:
+        - $ref: '#/components/schemas/ProjectUrn'
+        - $ref: '#/components/schemas/ProjectId'
     accountRef:
       name: accountRef
       in: path
