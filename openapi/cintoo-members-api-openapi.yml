@@ -630,3 +630,9 @@ x-tagGroups:
   tags:
   - tuto_upload_file
   - understand_tag_data
+x-provenance:
+  method: harvested
+  publisher: Cintoo
+  source: https://aec.cintoo.com/api/2/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
