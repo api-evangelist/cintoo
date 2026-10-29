@@ -64,6 +64,161 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cintoo is a company surfaced as a portfolio company of partech and added to the API Evangelist network as a stub for enrichment. Sector: Infrastructure SaaS. This profile is a lead awaiting the enrichment pipeline.
+Cintoo is a cloud-based reality-capture and digital-twin platform that transforms 3D laser-scan point-cloud data into high-fidelity, streamable 3D meshes hosted in the cloud. Teams across AEC (architecture, engineering, construction), BIM, GIS, and asset management use Cintoo Cloud to store, visualize, classify, annotate, measure, and share reality-capture data, and to run scan-to-BIM and digital-twin workflows. The Cintoo Open API 2.0.0 (OpenAPI 3.0.3, currently beta) exposes 100 operations across accounts, subscriptions, users, groups, roles, projects, work zones, files, annotations, crops, measurements, tags, share links, and integrations (Autodesk, Konekt), secured with OAuth2 authorization-code and JWT Bearer tokens. Cintoo was surfaced as a portfolio company of Partech and enriched from its public developer surface by the API Evangelist pipeline.
 
-Backed by: partech
+**Areas:** Company · Infrastructure Saas · Reality Capture · Digital Twin · Point Cloud · 3D · AEC · BIM · Construction · Scan-to-BIM · GIS
+
+## Cintoo on APIs.io
+
+Everything profiled for Cintoo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cintoo/](https://apis.io/providers/cintoo/)** — or go straight to one of the APIs or properties below.
+
+### APIs (21)
+
+- [Cintoo Account API](https://apis.io/apis/cintoo/cintoo-account-api/) — The Account API from Cintoo — 4 operation(s) for account.
+- [Cintoo Annotation API](https://apis.io/apis/cintoo/cintoo-annotation-api/) — The Annotation API from Cintoo — 3 operation(s) for annotation.
+- [Cintoo Autodesk API](https://apis.io/apis/cintoo/cintoo-autodesk-api/) — The Autodesk API from Cintoo — 3 operation(s) for autodesk.
+- [Cintoo Crop API](https://apis.io/apis/cintoo/cintoo-crop-api/) — The Crop API from Cintoo — 3 operation(s) for crop.
+- [Cintoo Export Scene API](https://apis.io/apis/cintoo/cintoo-export-scene-api/) — The Export Scene API from Cintoo — 1 operation(s) for export scene.
+- [Cintoo File API](https://apis.io/apis/cintoo/cintoo-file-api/) — The File API from Cintoo — 7 operation(s) for file.
+- [Cintoo Group API](https://apis.io/apis/cintoo/cintoo-group-api/) — The Group API from Cintoo — 3 operation(s) for group.
+- [Cintoo Integrations API](https://apis.io/apis/cintoo/cintoo-integrations-api/) — The Integrations API from Cintoo — 3 operation(s) for integrations.
+- [Cintoo Konekt API](https://apis.io/apis/cintoo/cintoo-konekt-api/) — The Konekt API from Cintoo — 4 operation(s) for konekt.
+- [Cintoo Measurement API](https://apis.io/apis/cintoo/cintoo-measurement-api/) — The Measurement API from Cintoo — 1 operation(s) for measurement.
+- [Cintoo Members API](https://apis.io/apis/cintoo/cintoo-members-api/) — The Members API from Cintoo — 4 operation(s) for members.
+- [Cintoo Permissions API](https://apis.io/apis/cintoo/cintoo-permissions-api/) — The Permissions API from Cintoo — 1 operation(s) for permissions.
+- [Cintoo Project API](https://apis.io/apis/cintoo/cintoo-project-api/) — The Project API from Cintoo — 5 operation(s) for project.
+- [Cintoo Role API](https://apis.io/apis/cintoo/cintoo-role-api/) — The Role API from Cintoo — 2 operation(s) for role.
+- [Cintoo Share Link API](https://apis.io/apis/cintoo/cintoo-share-link-api/) — The Share Link API from Cintoo — 2 operation(s) for share link.
+- [Cintoo Subscription API](https://apis.io/apis/cintoo/cintoo-subscription-api/) — The Subscription API from Cintoo — 2 operation(s) for subscription.
+- [Cintoo Tag API](https://apis.io/apis/cintoo/cintoo-tag-api/) — The Tag API from Cintoo — 3 operation(s) for tag.
+- [Cintoo Tag List API](https://apis.io/apis/cintoo/cintoo-tag-list-api/) — The Tag List API from Cintoo — 7 operation(s) for tag list.
+- [Cintoo Usage Report API](https://apis.io/apis/cintoo/cintoo-usage-report-api/) — The Usage Report API from Cintoo — 1 operation(s) for usage report.
+- [Cintoo User API](https://apis.io/apis/cintoo/cintoo-user-api/) — The User API from Cintoo — 3 operation(s) for user.
+- [Cintoo Workzone API](https://apis.io/apis/cintoo/cintoo-workzone-api/) — The Workzone API from Cintoo — 3 operation(s) for workzone.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cintoo](https://apis.io/servers/cintoo/cintoo/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Cintoo Agentic Access](https://apis.io/agentic-access/cintoo/cintoo-agentic-access/)
+
+#### Collections (21)
+
+Postman and Open Collection request collections.
+
+- [Cintoo Open Account API](https://apis.io/collections/cintoo/open-cintoo-account-api/)
+- [Cintoo Open Account Annotation API](https://apis.io/collections/cintoo/open-cintoo-annotation-api/)
+- [Cintoo Open Account Autodesk API](https://apis.io/collections/cintoo/open-cintoo-autodesk-api/)
+- [Cintoo Open Account Crop API](https://apis.io/collections/cintoo/open-cintoo-crop-api/)
+- [Cintoo Open Account Export Scene API](https://apis.io/collections/cintoo/open-cintoo-export-scene-api/)
+- [Cintoo Open Account File API](https://apis.io/collections/cintoo/open-cintoo-file-api/)
+- [Cintoo Open Account Group API](https://apis.io/collections/cintoo/open-cintoo-group-api/)
+- [Cintoo Open Account Integrations API](https://apis.io/collections/cintoo/open-cintoo-integrations-api/)
+- [Cintoo Open Account Konekt API](https://apis.io/collections/cintoo/open-cintoo-konekt-api/)
+- [Cintoo Open Account Measurement API](https://apis.io/collections/cintoo/open-cintoo-measurement-api/)
+- [Cintoo Open Account Members API](https://apis.io/collections/cintoo/open-cintoo-members-api/)
+- [Cintoo Open Account Permissions API](https://apis.io/collections/cintoo/open-cintoo-permissions-api/)
+- [Cintoo Open Account Project API](https://apis.io/collections/cintoo/open-cintoo-project-api/)
+- [Cintoo Open Account Role API](https://apis.io/collections/cintoo/open-cintoo-role-api/)
+- [Cintoo Open Account Share Link API](https://apis.io/collections/cintoo/open-cintoo-share-link-api/)
+- [Cintoo Open Account Subscription API](https://apis.io/collections/cintoo/open-cintoo-subscription-api/)
+- [Cintoo Open Account Tag API](https://apis.io/collections/cintoo/open-cintoo-tag-api/)
+- [Cintoo Open Account Tag List API](https://apis.io/collections/cintoo/open-cintoo-tag-list-api/)
+- [Cintoo Open Account Usage Report API](https://apis.io/collections/cintoo/open-cintoo-usage-report-api/)
+- [Cintoo Open Account User API](https://apis.io/collections/cintoo/open-cintoo-user-api/)
+- [Cintoo Open Account Workzone API](https://apis.io/collections/cintoo/open-cintoo-workzone-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Cintoo Openapi Overlay](https://apis.io/overlays/cintoo/cintoo-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cintoo Authentication](https://apis.io/security/cintoo/cintoo-authentication/)
+- [Cintoo Domain Security](https://apis.io/security/cintoo/cintoo-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Cintoo Scopes](https://apis.io/scopes/cintoo/cintoo-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cintoo.com)
+- [Documentation](https://aec.cintoo.com/api/2)
+- [Support](https://help.cintoo.com/en/support/home)
+- [Blog](https://cintoo.com/en/blog)
+- [Terms of service](https://cintoo.com/en/terms-and-conditions)
+- [Privacy policy](https://cintoo.com/en/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 41.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 49.6 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 21.1 |
+
+**Agent readiness 33.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cintoo/](https://apis.io/providers/cintoo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cintoo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cintoo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
